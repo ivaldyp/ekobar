@@ -1,0 +1,45 @@
+@font-face {
+	font-family: 'Myriad Pro Regular';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Myriad Pro Regular'), url('./font/myriadpro/MYRIADPRO-REGULAR.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Myriad Pro Bold';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Myriad Pro Bold'), url('./font/myriadpro/MYRIADPRO-BOLD.woff') format('woff');
+}
+
+.login-body {
+	padding: 100px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.no-outline {
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+}
+
+.no-outline:focus {
+	border-color: #5793ce;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.content {
+	background-color: white;
+	border-radius: 15px;
+	padding-bottom: 10px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.cust-nav {
+	color: #002853;
+	font-family: 'Myriad Pro Regular'; 
+	font-size: 24px;
+}
