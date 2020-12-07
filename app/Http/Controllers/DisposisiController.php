@@ -514,8 +514,8 @@ class DisposisiController extends Controller
 										  where sts = 1") );
 		$maxnoform = json_decode(json_encode($maxnoform), true);
 
-		if (is_null($maxnoform)) {
-			$maxnoform = '1.20.512.'.substr(date('Y'), -2).'100001';
+		if (is_null($maxnoform[0]['maks']) || $maxnoform[0]['maks'] == '') {
+			$maxnoform = '1.21.515.'.substr(date('Y'), -2).'100001';
 		} else {
 			$splitmaxform = explode(".", $maxnoform[0]['maks']);
 			$maxnoform = $splitmaxform[0] . '.' . $splitmaxform[1] . '.' . $splitmaxform[2] . '.' . substr(date('Y'), -2) . substr(($splitmaxform[3]+1), -6);
@@ -560,7 +560,7 @@ class DisposisiController extends Controller
 														  ,[disposisi]
 													  FROM [biroekodt].[dbo].[glo_org_jabatan]
 													  where disposisi = 'Y'
-													  and jabatan like '%kepala badan%'
+													  and jabatan like '%biro%'
 													  order by jabatan asc") );
 		$jabatans = json_decode(json_encode($jabatans), true);
 
@@ -579,7 +579,7 @@ class DisposisiController extends Controller
 
 	public function disposisiubah(Request $request)
 	{
-		// if (file_exists("C:/xampp/htdocs/portal/public/publicfile/disp/1.20.512.20102228/disp19.pdf" )) {
+		// if (file_exists("C:/xampp/htdocs/portal/public/publicfile/disp/1.21.515.20102228/disp19.pdf" )) {
 		$dispmaster = DB::select( DB::raw("SELECT TOP (100) [ids]
 												  ,[sts]
 												  ,[uname]
@@ -677,7 +677,7 @@ class DisposisiController extends Controller
 														  ,[disposisi]
 													  FROM [biroekodt].[dbo].[glo_org_jabatan]
 													  where disposisi = 'Y'
-													  and jabatan like '%kepala badan%'
+													  and jabatan like '%biro%'
 													  order by jabatan asc") );
 		$jabatans = json_decode(json_encode($jabatans), true);
 
@@ -755,7 +755,7 @@ class DisposisiController extends Controller
 			$selesai = 'Y';
 			$child = 0;
 		} else {
-			if (count($request->jabatans) > 1 || strpos(strtolower($request->jabatans[0]),"kepala badan") === false ) {
+			if (count($request->jabatans) > 1 || strpos(strtolower($request->jabatans[0]),"biro") === false ) {
 				return redirect('/disposisi/tambah disposisi')
 						->with('message', 'Hanya boleh memilh Kepala Badan untuk memulai alur disposisi')
 						->with('msg_num', 2);
@@ -788,7 +788,7 @@ class DisposisiController extends Controller
 										  where sts = 1") );
 			$maxnoform = json_decode(json_encode($maxnoform), true);
 			if (is_null($maxnoform)) {
-			$maxnoform = '1.20.512.'.substr(date('Y'), -2).'100001';
+			$maxnoform = '1.21.515.'.substr(date('Y'), -2).'100001';
 			} else {
 				$splitmaxform = explode(".", $maxnoform[0]['maks']);
 				$maxnoform = $splitmaxform[0] . '.' . $splitmaxform[1] . '.' . $splitmaxform[2] . '.' . substr(date('Y'), -2) . substr(($splitmaxform[3]+1), -6);
@@ -865,7 +865,7 @@ class DisposisiController extends Controller
 			'tgl'       => date('Y-m-d H:i:s'),
 			'ip'        => '',
 			'logbuat'   => '',
-			'kd_skpd'	=> '1.20.512',
+			'kd_skpd'	=> '1.21.515',
 			'kd_unit'	=> $request->kd_unit,
 			'no_form' => $maxnoform,
 			'kd_surat' => $request->kd_surat,
@@ -921,7 +921,7 @@ class DisposisiController extends Controller
 								CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  biroekodt.dbo.emp_dik,biroekodt.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
 								CROSS APPLY (SELECT TOP 1 * FROM biroekodt.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
 								,biroekodt.dbo.glo_skpd as b,biroekodt.dbo.glo_org_unitkerja as c,biroekodt.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1' 
-								and tbjab.idjab like '".$request->jabatans[$i]."' and ked_emp = 'aktif'") )[0];
+								and tbunit.kd_unit like '01' and ked_emp = 'aktif'") )[0];
 					$findidemp = json_decode(json_encode($findidemp), true);
 
 					$insertsurat = [
@@ -930,7 +930,7 @@ class DisposisiController extends Controller
 						'tgl'       => date('Y-m-d H:i:s'),
 						'ip'        => '',
 						'logbuat'   => '',
-						'kd_skpd'	=> '1.20.512',
+						'kd_skpd'	=> '1.21.515',
 						'kd_unit'	=> $request->kd_unit,
 						'no_form' => $maxnoform,
 						'kd_surat' => null,
@@ -1030,7 +1030,7 @@ class DisposisiController extends Controller
 			$selesai = 'Y';
 			$child = 0;
 		} else {
-			if (count($request->jabatans) > 1 || strpos(strtolower($request->jabatans[0]),"kepala badan") === false ) {
+			if (count($request->jabatans) > 1 || strpos(strtolower($request->jabatans[0]),"biro") === false ) {
 				return redirect('/disposisi/ubah disposisi?ids='.$request->ids)
 						->with('message', 'Hanya boleh memilh Kepala Badan untuk memulai alur disposisi')
 						->with('signdate', $request->signdate)
@@ -1187,7 +1187,7 @@ class DisposisiController extends Controller
 								CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  biroekodt.dbo.emp_dik,biroekodt.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
 								CROSS APPLY (SELECT TOP 1 * FROM biroekodt.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
 								,biroekodt.dbo.glo_skpd as b,biroekodt.dbo.glo_org_unitkerja as c,biroekodt.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1' 
-								and tbjab.idjab like '".$request->jabatans[$i]."' and ked_emp = 'aktif'") )[0];
+								and tbunit.kd_unit like '01' and ked_emp = 'aktif'") )[0];
 					$findidemp = json_decode(json_encode($findidemp), true);
 
 					$insertsurat = [
@@ -1196,7 +1196,7 @@ class DisposisiController extends Controller
 						'tgl'       => date('Y-m-d H:i:s'),
 						'ip'        => '',
 						'logbuat'   => '',
-						'kd_skpd'	=> '1.20.512',
+						'kd_skpd'	=> '1.21.515',
 						'kd_unit'	=> $request->kd_unit,
 						'no_form' => $request->no_form,
 						'kd_surat' => null,
@@ -1253,7 +1253,7 @@ class DisposisiController extends Controller
 			// 			'tgl'       => date('Y-m-d H:i:s'),
 			// 			'ip'        => '',
 			// 			'logbuat'   => '',
-			// 			'kd_skpd'	=> '1.20.512',
+			// 			'kd_skpd'	=> '1.21.515',
 			// 			'kd_unit'	=> $request->kd_unit,
 			// 			'no_form' => $maxnoform,
 			// 			'kd_surat' => null,
@@ -1838,19 +1838,38 @@ class DisposisiController extends Controller
 			$jabatans = 0;
 			$stafs = 0;
 		} else {
+			// $jabatans = DB::select( DB::raw("SELECT [sts]
+			// 									  ,[uname]
+			// 									  ,[tgl]
+			// 									  ,[ip]
+			// 									  ,[logbuat]
+			// 									  ,[kd_skpd]
+			// 									  ,[jns_jab]
+			// 									  ,[jabatan]
+			// 									  ,[disposisi]
+			// 								  FROM [biroekodt].[dbo].[glo_org_jabatan]
+			// 								  where disposisi = 'Y'
+			// 								  order by jabatan asc") );
+			// $jabatans = json_decode(json_encode($jabatans), true);
+
 			$jabatans = DB::select( DB::raw("SELECT [sts]
-												  ,[uname]
-												  ,[tgl]
-												  ,[ip]
-												  ,[logbuat]
-												  ,[kd_skpd]
-												  ,[jns_jab]
-												  ,[jabatan]
-												  ,[disposisi]
-											  FROM [biroekodt].[dbo].[glo_org_jabatan]
-											  where disposisi = 'Y'
-											  order by jabatan asc") );
+											      ,[uname]
+											      ,[tgl]
+											      ,[ip]
+											      ,[logbuat]
+											      ,[kd_skpd]
+											      ,[kd_unit]
+											      ,[nm_unit]
+											      ,[cp_unit]
+											      ,[notes]
+											      ,[child]
+											      ,[sao]
+											      ,[tgl_unit]
+											  FROM [biroekodt].[dbo].[glo_org_unitkerja]
+											  WHERE LEN(kd_unit) < 10  
+											  ORDER BY nm_unit asc ") );
 			$jabatans = json_decode(json_encode($jabatans), true);
+
 			if (Auth::user()->id_emp && strlen($_SESSION['biroeko_data']['idunit']) < 8) {
 				$stafs = 0;
 			}
@@ -2040,7 +2059,7 @@ class DisposisiController extends Controller
 								CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  biroekodt.dbo.emp_dik,biroekodt.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
 								CROSS APPLY (SELECT TOP 1 * FROM biroekodt.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
 								,biroekodt.dbo.glo_skpd as b,biroekodt.dbo.glo_org_unitkerja as c,biroekodt.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1' 
-								and tbjab.idjab like '".$uniqjabatans[$i]."' and ked_emp = 'aktif'") );
+								and tbunit.kd_unit like '".$uniqjabatans[$i]."' and ked_emp = 'aktif'") );
 					$findidjabatan = json_decode(json_encode($findidjabatan), true);
 
 					if (isset($findidjabatan[0])) {
@@ -2050,7 +2069,7 @@ class DisposisiController extends Controller
 							'tgl'       => date('Y-m-d H:i:s'),
 							'ip'        => '',
 							'logbuat'   => '',
-							'kd_skpd'	=> '1.20.512',
+							'kd_skpd'	=> '1.21.515',
 							'kd_unit'	=> $request->kd_unit,
 							'no_form' => $request->no_form,
 							'kd_surat' => null,
@@ -2110,7 +2129,7 @@ class DisposisiController extends Controller
 							'tgl'       => date('Y-m-d H:i:s'),
 							'ip'        => '',
 							'logbuat'   => '',
-							'kd_skpd'	=> '1.20.512',
+							'kd_skpd'	=> '1.21.515',
 							'kd_unit'	=> $request->kd_unit,
 							'no_form' => $request->no_form,
 							'kd_surat' => null,

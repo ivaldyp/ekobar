@@ -225,7 +225,7 @@
 																<td class="col-md-6 data-input">
 																	<select class="select2 m-b-10 select2-multiple" multiple="multiple" name="jabatans[]" id="jabatans">
 																		@foreach($jabatans as $key => $jabatan)
-																			<option value="{{ $jabatan['jabatan'] }}"> {{ $jabatan['jabatan'] }} </option>
+																			<option value="{{ $jabatan['kd_unit'] }}"> {{ ucwords(strtolower($jabatan['nm_unit'])) }} </option>
 																		@endforeach
 																	</select>
 																</td>
@@ -351,11 +351,12 @@
 								<a href="/{{ env('APP_NAME') }}/disposisi/disposisi?yearnow={{$yearnow}}&signnow={{$signnow}}&monthnow={{$monthnow}}"><button type="button" class="btn btn-default pull-right m-r-10" onclick="goBack()">Kembali</button></a>
 								<div class="clearfix"></div>
 							</div>
-						</div>	
-						<div class="panel panel-info">
 							<div class="panel-heading">  
 								
 							</div>
+						</div>	
+						<div class="panel panel-info">
+							
 						</div>
 					</form>
 				</div>

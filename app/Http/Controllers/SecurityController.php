@@ -248,7 +248,7 @@ class SecurityController extends Controller
 				'passid'		=> '',
 				'idgroup' 		=> $request->idgroup,
 				'idtop'			=> '',
-				'kd_skpd'		=> '1.20.512',
+				'kd_skpd'		=> '1.21.515',
 				'kd_unit'		=> null,
 				'nama_user'		 => ($request->name ? $request->name : ''),
 				'deskripsi_user' => ($request->deskripsi_user ? $request->deskripsi_user : ''),

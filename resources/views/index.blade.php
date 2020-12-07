@@ -8,9 +8,9 @@
 	<body style="background-color: #fbe6a5" class="login-body">
 		<div class="content col-md-12" style="background-color: white">
 			<!-- <nav class="navbar navbar-expand-sm bg-light"> -->
-			<nav class="navbar navbar-expand-sm">
+			<!-- <nav class="navbar navbar-expand-sm">
 				<div class="container">
-				  	<img src="{{ ('/disp-biro-eko/public/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="10%" class="navbar-brand">
+				  	<img src="{{ ('/disp-biro-eko/public/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="100" class="navbar-brand">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 						  	<a class="nav-link cust-nav" href="#">Manual Book</a>
@@ -29,11 +29,12 @@
 						</li>
 					</ul>
 				</div>
-			</nav>
+			</nav> -->
 
 			<div class="container">
 				<div class="row ">
 					<div class="col-md-6">
+						<img src="{{ ('/disp-biro-eko/public/landing/img/excel-logo-dki2.png') }}" alt="BPAD" width="60" class="navbar-brand" style="margin-top: 50px;">
 						<div class="row">
 							<p style="font-family: 'Myriad Pro Bold'; color: #5793ce; font-size: 24px; ">Selamat datang di </p>
 						</div>
@@ -65,11 +66,11 @@
 						</div>
 						<div class="row">
 							<footer class="page-footer">
-								<div class="footer-copyright text-center py-3" style="color: #002853; font-family: 'Myriad Pro Regular'; font-size: 18px ">&#169; 2020 BPAD Provinsi DKI Jakarta</div>
+								<div class="footer-copyright text-center py-3" style="color: #002853; font-family: 'Myriad Pro Regular'; font-size: 18px ">&#169; 2020 Provinsi DKI Jakarta</div>
 							</footer>
 						</div>
 					</div>
-					<div class="col-md-6" align="center">
+					<div class="col-md-6" align="center" style="padding-top: 65px;">
 						<img src="{{ ('/disp-biro-eko/public/img/photo/ico-laporan.png32') }}" width="90%">
 					</div>
 				</div>

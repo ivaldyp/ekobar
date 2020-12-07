@@ -86,7 +86,7 @@ class KepegawaianController extends Controller
 					and idunit like '$idunit%' AND ked_emp = 'AKTIF' 
 					order by idunit asc, nm_emp ASC") );
 		$employees = json_decode(json_encode($employees), true);
-		
+
 		$kedudukans = Glo_org_kedemp::get();
 
 		return view('pages.birekokepegawaian.pegawai')
@@ -429,7 +429,7 @@ class KepegawaianController extends Controller
 				'logbuat'   => '',
 				'noid' => $new_id_emp,
 				'tmt_jab' => (isset($request->tmt_jab) ? date('Y-m-d',strtotime(str_replace('/', '-', $request->tmt_jab))) : null),
-				'idskpd' => '1.20.512',
+				'idskpd' => '1.21.515',
 				'idunit' => $request->idunit,
 				'idlok' => $request->idlok,
 				'tmt_sk_jab' => (isset($request->tmt_sk_jab) ? date('Y-m-d',strtotime(str_replace('/', '-', $request->tmt_sk_jab))) : null),
@@ -638,7 +638,7 @@ class KepegawaianController extends Controller
 		// Emp_jab::where('noid', $id_emp)
 		// 	->update([
 		// 		// JABATAN
-		// 		'idskpd' => '1.20.512',
+		// 		'idskpd' => '1.21.515',
 		// 		'jns_jab' => $jns_jab,
 		// 		'idjab' => $idjab,
 		// 		'idunit' => $request->idunit,
@@ -906,7 +906,7 @@ class KepegawaianController extends Controller
 				'logbuat'   => '',
 				'noid' => $request->noid,
 				'tmt_jab' => (isset($request->tmt_jab) ? date('Y-m-d',strtotime(str_replace('/', '-', $request->tmt_jab))) : null),
-				'idskpd' => '1.20.512',
+				'idskpd' => '1.21.515',
 				'idunit' => $request->idunit,
 				'idlok' => $request->idlok,
 				'tmt_sk_jab' => (isset($request->tmt_sk_jab) ? date('Y-m-d',strtotime(str_replace('/', '-', $request->tmt_sk_jab))) : null),
@@ -1395,7 +1395,7 @@ class KepegawaianController extends Controller
 
 		$maxnoform = Fr_suratkeluar::max('no_form');
 		if (is_null($maxnoform)) {
-			$newnoform = '1.20.512.20200001';
+			$newnoform = '1.21.515.20200001';
 		} else {
 			$splitnoform = explode(".", $maxnoform); 
 			$newnoform = $splitnoform[0] . "." . $splitnoform[1] . "." . $splitnoform[2] . "." . ($splitnoform[3]+1);
@@ -1426,7 +1426,7 @@ class KepegawaianController extends Controller
 			'tgl'       => date('Y-m-d H:i:s'),
 			'ip'        => '',
 			'logbuat'   => '',
-			'kd_skpd' => '1.20.512',
+			'kd_skpd' => '1.21.515',
 			'kd_unit' => '01',
 			'no_form' => $newnoform,
 			'tgl_terima' => (isset($request->tgl_terima) ? date('Y-m-d',strtotime(str_replace('/', '-', $request->tgl_terima))) : null),

@@ -121,7 +121,6 @@
 													<th>Id</th>
 													<th>NIP / NRK</th>
 													<th>Nama</th>
-													<th>Unit</th>
 													<th class="col-md-1">Tgl Lahir</th>
 													<th class="col-md-1" >Jns Kel</th>
 													<th class="col-md-1">TMT</th>
@@ -144,9 +143,8 @@
 													<td>{{ $employee['nip_emp'] ? $employee['nip_emp'] :' -' }} <br>
 														<span class="text-muted">{{ $employee['nrk_emp'] ? $employee['nrk_emp'] :'' }}</span>
 													</td>
-													<td>{{ $employee['nm_emp'] }}</td>
-													<td>{{ $employee['nm_unit'] }}<br>
-														<span class="text-muted">{{ $employee['nm_lok'] }}</span>
+													<td>{{ $employee['nm_emp'] }} <br>
+														<span class="text-muted">{{ $employee['nm_unit'] }}</span>
 													</td>
 													<td>{{ date('d/M/Y', strtotime(str_replace('/', '-', $employee['tgl_lahir'] ))) }}</td>
 													<td>{{ $employee['jnkel_emp'] }}</td>

@@ -767,7 +767,7 @@ class ProfilController extends Controller
 					'tgl'       => date('Y-m-d H:i:s'),
 					'ip'        => '',
 					'logbuat'   => '',
-					'kd_skpd'	=> '1.20.512',
+					'kd_skpd'	=> '1.21.515',
 					'kd_unit'	=> '01',
 					'no_form' => $request->no_form,
 					'kd_surat' => '',
@@ -924,7 +924,7 @@ class ProfilController extends Controller
 							'tgl'       => date('Y-m-d H:i:s'),
 							'ip'        => '',
 							'logbuat'   => '',
-							'kd_skpd'	=> '1.20.512',
+							'kd_skpd'	=> '1.21.515',
 							'kd_unit'	=> '01',
 							'no_form' => $request->prevnoform,
 							'kd_surat' => '',
@@ -973,7 +973,7 @@ class ProfilController extends Controller
 								'tgl'       => date('Y-m-d H:i:s'),
 								'ip'        => '',
 								'logbuat'   => '',
-								'kd_skpd'	=> '1.20.512',
+								'kd_skpd'	=> '1.21.515',
 								'kd_unit'	=> '01',
 								'no_form' => $request->no_form,
 								'kd_surat' => '',
@@ -1070,7 +1070,7 @@ class ProfilController extends Controller
 
 		// $maxnoform = Fr_disposisi::max('no_form');
 		// if (is_null($maxnoform)) {
-		// 	$maxnoform = '1.20.512.20100001';
+		// 	$maxnoform = '1.21.515.20100001';
 		// }
 		// $splitnoform = explode(".", $maxnoform); 
 		$newnoform = $request->newnoform;
@@ -1087,7 +1087,7 @@ class ProfilController extends Controller
 			'tgl'       => date('Y-m-d H:i:s'),
 			'ip'        => '',
 			'logbuat'   => '',
-			'kd_skpd'	=> '1.20.512',
+			'kd_skpd'	=> '1.21.515',
 			'kd_unit'	=> '01',
 			'no_form' => $newnoform,
 			'kd_surat' => '',
@@ -1141,7 +1141,7 @@ class ProfilController extends Controller
 				'tgl'       => date('Y-m-d H:i:s'),
 				'ip'        => '',
 				'logbuat'   => '',
-				'kd_skpd'	=> '1.20.512',
+				'kd_skpd'	=> '1.21.515',
 				'kd_unit'	=> '01',
 				'no_form' => $newnoform,
 				'kd_surat' => '',
