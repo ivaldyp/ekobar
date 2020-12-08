@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/logout', 'HomeController@logout');
+Route::post('/home/password', 'HomeController@password');
 
 Auth::routes();
 
