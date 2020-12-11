@@ -412,10 +412,6 @@
 											</div>
 										</div>
 									</div>
-									<div class="data-input">
-										<h4>Ubah Foto <span class="text-danger" style="font-size: 12px">Hanya berupa JPG, JPEG, dan PNG</span> </h4>
-										<input type="file" name="filefoto">
-									</div>
 									<button class="btn btn-success pull-right data-input" type="submit">Simpan</button>
 									<button class="btn btn-info pull-right btn-edit-id m-r-10" type="button">Ubah</button>
 									<div class="clearfix"></div>

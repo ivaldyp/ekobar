@@ -1867,7 +1867,7 @@ class DisposisiController extends Controller
 											      ,[tgl_unit]
 											  FROM [biroekodt].[dbo].[glo_org_unitkerja]
 											  WHERE LEN(kd_unit) < 10  
-											  ORDER BY nm_unit asc ") );
+											  ORDER BY LEN(kd_unit) asc, nm_unit asc ") );
 			$jabatans = json_decode(json_encode($jabatans), true);
 
 			if (Auth::user()->id_emp && strlen($_SESSION['biroeko_data']['idunit']) < 8) {

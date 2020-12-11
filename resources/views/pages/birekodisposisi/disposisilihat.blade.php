@@ -225,7 +225,9 @@
 																<td class="col-md-6 data-input">
 																	<select class="select2 m-b-10 select2-multiple" multiple="multiple" name="jabatans[]" id="jabatans">
 																		@foreach($jabatans as $key => $jabatan)
-																			<option value="{{ $jabatan['kd_unit'] }}"> {{ ucwords(strtolower($jabatan['nm_unit'])) }} </option>
+																			<option 
+
+																			value="{{ $jabatan['kd_unit'] }}"> {{ ucwords(strtolower($jabatan['nm_unit'])) }} </option>
 																		@endforeach
 																	</select>
 																</td>
@@ -411,8 +413,7 @@
 
 			var tujuanidunit = $("#tujuanidunit").val();
 			var tujuanidemp = $("#tujuanidemp").val();
-			console.log(tujuanidunit);
-			console.log(tujuanidemp);
+
 			if (tujuanidunit.length == 10) {
 				$('#stafs').select2('val', tujuanidemp);
 			}

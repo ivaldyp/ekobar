@@ -141,7 +141,7 @@ class HomeController extends Controller
 		$menus = $this->display_menus($all_menu, 0, 0, $_SESSION['biroeko_data']['idgroup']);
 		// $menus = '';
 
-		$_SESSION['menus'] = $menus;
+		$_SESSION['biroeko_menus'] = $menus;
 
 		$countpegawai = DB::select( DB::raw("
 							SELECT count(id_emp) as total FROM biroekodt.dbo.emp_data as a
