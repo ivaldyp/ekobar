@@ -129,11 +129,10 @@
 														<th>Isi</th>
 														<th>Sifat</th>
 														<th>User input</th>
-														<th>Tanda Terima</th>
 														@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
 														<th>Action</th>
 														@endif
-														@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER')
+														@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER' || $_SESSION['biroeko_data']['idgroup'] == 'SKPD INTERNAL')
 														<th>Reset</th>
 														@endif
 													</tr>
@@ -210,9 +209,7 @@
 																@endif
 															</td>
 															<td>{{ $thisusrinput }}<br><span class="text-muted">{{ date('d-M-Y',strtotime($thistglinput)) }}</span></td>
-															<td>
-																<button type="button" class="btn btn-warning btn-outline btn-circle m-r-5 btn-print" data-full="{{ json_encode($sent) }}"><i class="ti-printer"></i></button>
-															</td>
+															
 															<td style="vertical-align: middle;">
 																
 																<form method="GET" action="/{{ env('APP_NAME') }}/disposisi/ubah disposisi">
@@ -230,7 +227,7 @@
 																
 																	
 															</td>
-															@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER')
+															@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER' || $_SESSION['biroeko_data']['idgroup'] == 'SKPD INTERNAL')
 															<td style="vertical-align: middle;">
 																<button type="button" class="btn btn-danger btn-reset btn-outline btn-circle m-r-5" data-ids="{{ $sent['ids'] }}" data-no_form="{{ $sent['no_form'] }}"
 																><i class="ti-back-left"></i></button>
@@ -256,11 +253,10 @@
 														<th>Isi</th>
 														<th>Sifat</th>
 														<th>User input</th>
-														<th>Tanda Terima</th>
 														@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
 														<th>Action</th>
 														@endif
-														@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER')
+														@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER' || $_SESSION['biroeko_data']['idgroup'] == 'SKPD INTERNAL')
 														<th>Reset</th>
 														@endif
 													</tr>
@@ -337,9 +333,7 @@
 																@endif
 															</td>
 															<td>{{ $thisusrinput }}<br><span class="text-muted">{{ date('d-M-Y',strtotime($thistglinput)) }}</span></td>
-															<td>
-																<button type="button" class="btn btn-warning btn-outline btn-circle m-r-5 btn-print" data-full="{{ json_encode($draft) }}"><i class="ti-printer"></i></button>
-															</td>
+															
 															<td style="vertical-align: middle;">
 																
 																<form method="GET" action="/{{ env('APP_NAME') }}/disposisi/ubah disposisi">
@@ -357,7 +351,7 @@
 																
 																	
 															</td>
-															@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER')
+															@if($_SESSION['biroeko_data']['idgroup'] == 'SUPERUSER' || $_SESSION['biroeko_data']['idgroup'] == 'SKPD INTERNAL')
 															<td style="vertical-align: middle;">
 																<button type="button" class="btn btn-danger btn-reset btn-outline btn-circle m-r-5" data-ids="{{ $draft['ids'] }}" data-no_form="{{ $draft['no_form'] }}"
 																><i class="ti-back-left"></i></button>
@@ -383,7 +377,6 @@
 														<th>Isi</th>
 														<th>Sifat</th>
 														<th>User input</th>
-														<th>Tanda Terima</th>
 														@if($access['zupd'] == 'y' || $access['zdel'] == 'y')
 														<th>Action</th>
 														@endif
@@ -461,9 +454,7 @@
 																@endif
 															</td>
 															<td>{{ $thisusrinput }}<br><span class="text-muted">{{ date('d-M-Y',strtotime($thistglinput)) }}</span></td>
-															<td>
-																<button type="button" class="btn btn-warning btn-outline btn-circle m-r-5 btn-print" data-full="{{ json_encode($draft) }}"><i class="ti-printer"></i></button>
-															</td>
+															
 															<td style="vertical-align: middle;">
 																
 																<form method="GET" action="/{{ env('APP_NAME') }}/disposisi/ubah disposisi">
