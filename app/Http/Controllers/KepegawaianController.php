@@ -83,7 +83,7 @@ class KepegawaianController extends Controller
 					CROSS APPLY (SELECT TOP 1 iddik,prog_sek,no_sek,th_sek,nm_sek,gelar_dpn_sek,gelar_blk_sek,ijz_cpns,gambar,nm_dik FROM  biroekodt.dbo.emp_dik,biroekodt.dbo.glo_dik WHERE a.id_emp = emp_dik.noid AND emp_dik.iddik=glo_dik.dik AND emp_dik.sts='1' AND glo_dik.sts='1' ORDER BY th_sek DESC) tbdik
 					CROSS APPLY (SELECT TOP 1 * FROM biroekodt.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
 					,biroekodt.dbo.glo_skpd as b,biroekodt.dbo.glo_org_unitkerja as c,biroekodt.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1'
-					and idunit like '$idunit%' AND ked_emp = 'AKTIF' 
+					and idunit like '$idunit%' AND ked_emp = '$kednow' 
 					order by idunit asc, nm_emp ASC") );
 		$employees = json_decode(json_encode($employees), true);
 
