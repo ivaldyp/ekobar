@@ -10,8 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $connection = 'sqlsrv2';
-    protected $table = 'new_login';
+    protected $connection = 'sqlsrv';
+    protected $table = 'sec_logins';
     protected $primaryKey = 'ids';
     // public $incrementing = false;
 

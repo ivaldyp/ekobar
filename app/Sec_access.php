@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sec_access extends Model
 {
-    protected $connection = 'sqlsrv2';
+    protected $connection = 'sqlsrv';
     protected $primaryKey = null; 
     protected $table = "sec_access";
     public $timestamps = false;

@@ -20,6 +20,12 @@ class SecurityController extends Controller
 {
 	use SessionCheckTraits;
 
+	public function __construct()
+	{
+		// $this->middleware('auth');
+		$this->db = env('DB_DATABASE');
+	}
+
 	// // // GRUP USER // // // 
 
 	public function display_roles($query, $idgroup, $access, $parent, $level = 0)
@@ -29,10 +35,10 @@ class SecurityController extends Controller
 		}
 
 		$query = Sec_menu::
-				join('biroekodt.dbo.sec_access', 'biroekodt.dbo.sec_access.idtop', '=', 'biroekodt.dbo.Sec_menu.ids')
-                ->where('biroekodt.dbo.sec_access.idgroup', $idgroup)
-                ->where('biroekodt.dbo.Sec_menu.sao', $parent)
-                ->orderBy('biroekodt.dbo.Sec_menu.urut')
+				join($this->db.'.dbo.sec_access', $this->db.'.dbo.sec_access.top', '=', $this->db.'.dbo.Sec_menu.ids')
+                ->where($this->db.'.dbo.sec_access.idgroup', $idgroup)
+                ->where($this->db.'.dbo.Sec_menu.sao', $parent)
+                ->orderBy($this->db.'.dbo.Sec_menu.urut')
 				->get();
 
 		$result = '';
@@ -77,7 +83,7 @@ class SecurityController extends Controller
 		$currentpath = explode("?", $currentpath)[0];
 		$currentpath = explode(env('APP_NAME'), $currentpath)[1];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], $thismenu['ids']);
 
 		$groups = Sec_access::
 					distinct('idgroup')
@@ -115,7 +121,7 @@ class SecurityController extends Controller
 	public function forminsertgrup(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 4);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 4);
 
 		$namecheck = Sec_access::
 						where('idgroup', $request->idgroup)
@@ -155,7 +161,7 @@ class SecurityController extends Controller
 	public function formupdategrup(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 4);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 4);
 
 		!(isset($request->zviw)) ? $zviw = '' : $zviw = 'y';
 		!(isset($request->zadd)) ? $zadd = '' : $zadd = 'y';
@@ -182,7 +188,7 @@ class SecurityController extends Controller
 	public function formdeletegrup(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 4);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 4);
 
 		$cari1 = Sec_logins::
 					where('idgroup', $request->idgroup)
@@ -220,14 +226,14 @@ class SecurityController extends Controller
 		$currentpath = explode("?", $currentpath)[0];
 		$currentpath = explode(env('APP_NAME'), $currentpath)[1];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], $thismenu['ids']);
 
 		$idgroup = Sec_access::
 					distinct('idgroup')
 					->orderBy('idgroup', 'asc')
 					->get('idgroup');
 
-		return view('pages.birekosecurity.tambahuser')
+		return view('pages.kobarsecurity.tambahuser')
 				->with('access', $access)
 				->with('idgroup', $idgroup);
 	}
@@ -235,7 +241,7 @@ class SecurityController extends Controller
 	public function forminsertuser(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 5);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 5);
 
 		$data = [
 				'sts'			=> 1,
@@ -291,7 +297,7 @@ class SecurityController extends Controller
 		$currentpath = explode("?", $currentpath)[0];
 		$currentpath = explode(env('APP_NAME'), $currentpath)[1];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], $thismenu['ids']);
 
 		$users = Sec_logins::
 					orderBy('idgroup')
@@ -303,7 +309,7 @@ class SecurityController extends Controller
 					->orderBy('idgroup', 'asc')
 					->get('idgroup');
 
-		return view('pages.birekosecurity.manageuser')
+		return view('pages.kobarsecurity.manageuser')
 				->with('access', $access)
 				->with('idgroup', $idgroup)
 				->with('users', $users);
@@ -312,7 +318,7 @@ class SecurityController extends Controller
 	public function formupdateuser(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 6);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 6);
 
 		$query = Sec_logins::
 					where('ids', $request->ids)
@@ -332,7 +338,7 @@ class SecurityController extends Controller
 	public function formupdatepassuser(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 6);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 6);
 		
 		Sec_logins::
 			where('ids', $request->ids)
@@ -348,7 +354,7 @@ class SecurityController extends Controller
 	public function formdeleteuser(Request $request)
 	{
 		$this->checkSessionTime();
-		// $access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], 6);
+		// $access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], 6);
 
 		$query = Sec_logins::
 					where('usname', $request->usname)

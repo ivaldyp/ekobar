@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('APP_NAME') }}{{ ('/public/img/excel/excel-logo-dki2.png') }}">
 
-    <title>Biro Perekonomian</title>
+    <title>e-Kode Barang</title>
     @yield('css')
 </head>
 
@@ -63,7 +63,7 @@
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Menu</span></h3> 
                 </div>
-                {!! $_SESSION['biroeko_menus'] !!}
+                {!! $_SESSION['kobar_menus'] !!}
             </div>
         </div>
         <!-- ============================================================== -->

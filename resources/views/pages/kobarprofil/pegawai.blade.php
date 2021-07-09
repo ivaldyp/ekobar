@@ -13,7 +13,7 @@
 	<!-- Custom CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- Date picker plugins css -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
@@ -439,7 +439,7 @@
 
 													<td style="vertical-align: middle;">
 														<strong>Lokasi</strong>
-														<br>Biro Perekonomian
+														<br>-
 													</td>
 
 													<?php if ($jab['tmt_jab']) : ?>
@@ -708,7 +708,7 @@
 			, success: function(response, newValue) {
 				$.ajax({
 					type: "POST",
-					url: "/disp-biro-eko/post",
+					url: "/ekobar/post",
 					data: { somefield: "Some field value", another: "another", _token: '{{csrf_token()}}' },
 					success: function(data){
 						alert(data);

@@ -12,7 +12,7 @@
     <!-- Custom CSS -->
     <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/style.css') }}" rel="stylesheet">
     <!-- color CSS -->
-    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/purple-dark.css') }}" id="theme" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
     <!-- page CSS -->
     <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
 

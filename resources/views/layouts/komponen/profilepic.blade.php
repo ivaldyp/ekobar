@@ -1,7 +1,7 @@
 <li class="dropdown">
 	<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
-	  	<!-- <?php if ($_SESSION['biroeko_data']['foto'] && $_SESSION['biroeko_data']['foto'] != '') : ?>
-			<img src="{{ config('app.openfileimg') }}/{{ $_SESSION['biroeko_data']['foto'] }}" width="36" class=" img-circle" alt="img">
+	  	<!-- <?php if ($_SESSION['kobar_data']['foto'] && $_SESSION['kobar_data']['foto'] != '') : ?>
+			<img src="{{ config('app.openfileimg') }}/{{ $_SESSION['kobar_data']['foto'] }}" width="36" class=" img-circle" alt="img">
 		<?php else : ?>
 			<img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
 		<?php endif ?> -->
@@ -12,7 +12,7 @@
 	<ul class="dropdown-menu dropdown-user animated flipInY">
 		<li>
 			<div class="dw-user-box">                
-				<div class="u-text"><h4><?php echo isset($_SESSION['biroeko_data']['nm_emp']) ? $_SESSION['biroeko_data']['nm_emp'] : $_SESSION['biroeko_data']['nama_user']; ?></h4><p class="text-muted"><?php echo isset($_SESSION['biroeko_data']['email_emp']) ? $_SESSION['biroeko_data']['email_emp'] : ''; ?></p><h4><?php echo $_SESSION['biroeko_data']['idgroup']; ?></h4></div>
+				<div class="u-text"><h4><?php echo isset($_SESSION['kobar_data']['nm_emp']) ? $_SESSION['kobar_data']['nm_emp'] : $_SESSION['kobar_data']['nama_user']; ?></h4><p class="text-muted"><?php echo isset($_SESSION['kobar_data']['email_emp']) ? $_SESSION['kobar_data']['email_emp'] : ''; ?></p><h4><?php echo $_SESSION['kobar_data']['idgroup']; ?></h4></div>
 			</div>
 		</li>
 		<li role="separator" class="divider"></li>

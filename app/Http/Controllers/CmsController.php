@@ -21,6 +21,7 @@ class CmsController extends Controller
 	public function __construct()
 	{
 		$this->middleware('auth');
+		$this->db = env('DB_DATABASE');
 	}
 
 	// ------------------ MENU ------------------ //
@@ -36,7 +37,7 @@ class CmsController extends Controller
 
 		$query = DB::select( DB::raw("
 					SELECT *
-					FROM biroekodt.dbo.sec_menu
+					FROM ".$this->db.".dbo.sec_menu
 					WHERE $sao
 					ORDER BY urut, ids
 				"));
@@ -53,7 +54,7 @@ class CmsController extends Controller
 								<td style="padding-left:'.$padding.'px; '.(($level == 0) ? 'font-weight: bold;"' : '').'">'.$menu['desk'].' '.(($menu['child'] == 1)? '<i class="fa fa-arrow-down"></i>' : '').'</td>
 								<td>'.($menu['zket'] ? $menu['zket'] : '-').'</td>
 								<td>'.($menu['iconnew'] ? $menu['iconnew'] : '-').'</td>
-								<td>'.($menu['urlnew'] ? $menu['urlnew'] : '-').'</td>
+								<td style="word-wrap: normal;">'.($menu['urlnew'] ? (strlen($menu['urlnew']) > 30 ? substr($menu['urlnew'],0,27) . " ..." : $menu['urlnew'] ) : '-').'</td>
 								<td class="text-center">'.intval($menu['urut']).'</td>
 								<td class="text-center">'.(($menu['child'] == 1)? '<i style="color:green;" class="fa fa-check"></i>' : '<i style="color:red;" class="fa fa-times"></i>').'</td>
 								<td class="text-center">'.(($menu['tampilnew'] == 1)? '<i style="color:green;" class="fa fa-check"></i>' : '<i style="color:red;" class="fa fa-times"></i>').'</td>
@@ -93,13 +94,13 @@ class CmsController extends Controller
 		$currentpath = explode("?", $currentpath)[0];
 		$currentpath = explode(env('APP_NAME'), $currentpath)[1];
 		$thismenu = Sec_menu::where('urlnew', $currentpath)->first('ids');
-		$access = $this->checkAccess($_SESSION['biroeko_data']['idgroup'], $thismenu['ids']);
+		$access = $this->checkAccess($_SESSION['kobar_data']['idgroup'], $thismenu['ids']);
 
 		$all_menu = [];
 
 		$menus = $this->display_roles($all_menu, $request->name, $access, 0);
 		
-		return view('pages.birekocms.menu')
+		return view('pages.kobarcms.menu')
 				->with('access', $access)
 				->with('menus', $menus);
 	}
@@ -280,7 +281,7 @@ class CmsController extends Controller
 					->orderBy('idgroup')
 					->get();
 
-		return view('pages.birekocms.menuakses')
+		return view('pages.kobarcms.menuakses')
 				->with('now_idtop', $idtop)
 				->with('now_desk', $desk)
 				->with('accesses', $accesses);
