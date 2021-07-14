@@ -1,73 +1,82 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Login</title>
+		<link href="/{{ env('APP_NAME') }}{{ ('/public/landing/bootstrap400/css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="/{{ env('APP_NAME') }}{{ ('/public/landing/css/custom.css') }}" rel="stylesheet">
+	</head>
+	<body style="background-color: #fbe6a5" class="login-body">
+		<div class="content col-md-12" style="background-color: white">
+			<!-- <nav class="navbar navbar-expand-sm bg-light"> -->
+			<nav class="navbar navbar-expand-sm">
+				<div class="container">
+				  	<img src="/{{ env('APP_NAME') }}{{ ('/public/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="100" class="navbar-brand">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+						  	<a class="nav-link cust-nav" href="#">Manual Book</a>
+						</li>
+						<li class="nav-item">
+						  	<a class="nav-link cust-nav" href="#">Bisnis Proses</a>
+						</li>
+						<li class="nav-item">
+						  	<a class="nav-link cust-nav" href="#">Video Tutorial</a>
+						</li>
+						<li class="nav-item">
+						  	<a class="nav-link cust-nav" href="#">SOP</a>
+						</li>
+						<li class="nav-item">
+						  	<a class="nav-link cust-nav" href="#">FAQ</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+			<div class="container">
+				<div class="row ">
+					<div class="col-md-6">
+						
+						<div class="row">
+							<p style="font-family: 'Myriad Pro Bold'; color: #5793ce; font-size: 24px; ">Selamat datang di </p>
+						</div>
+						<div class="row">
+							<p style="font-family: 'Myriad Pro Regular'; color: #002853; font-size: 48px; "><span style="font-family: 'Myriad Pro Bold'; color: #002853; font-size: 48px;">Es-</span>KOBAR<br></p>
+						</div>
+						<!-- <div class="row">
+							<p style="font-family: 'Myriad Pro Regular'; text-align: justify; font-size: 20px">Sistem yang menunjukkan laporan BMD</p>
+						</div> -->
+						<div class="row">
+							<form method="POST" action="{{ route('login') }}">
+								@csrf
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+								@if(Auth::check())
+								<button type="submit" class="btn btn-warning" style="color: white">MASUK</button>
+								@else
+								<div class="form-group">
+									<label for="name" style="font-family: 'Myriad Pro Regular'; font-size: 18px; color: #5793ce;">Username</label>
+									<input required="" autocomplete="off" type="text" name="name" class="form-control no-outline @error('name') is-invalid @enderror">	
+								</div>
+								<div class="form-group">
+									<label for="password" style="font-family: 'Myriad Pro Regular'; font-size: 18px; color: #5793ce;">Password</label>
+									<input required="" autocomplete="off" type="password" name="password" class="form-control no-outline @error('password') is-invalid @enderror">	
+								</div>
+								<button type="submit" class="btn btn-warning" style="color: white">LOGIN</button>
+								@endif
+								
+							</form>
+						</div>
+						<div class="row">
+							<footer class="page-footer">
+								<div class="footer-copyright text-center py-3" style="color: #002853; font-family: 'Myriad Pro Regular'; font-size: 18px ">&#169; 2020 Provinsi DKI Jakarta</div>
+							</footer>
+						</div>
+					</div>
+					<div class="col-md-6" align="center" style="padding-top: 65px;">
+						<img src="/{{ env('APP_NAME') }}{{ ('/public/img/photo/ico-laporan.png32') }}" width="90%">
+					</div>
+				</div>
+			</div>
+		</div>
 
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="name" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection
+		<script src="/{{ env('APP_NAME') }}{{ ('/public/landing/bootstrap400/js/bootstrap.min.js') }}"></script>
+	</body>
+</html>

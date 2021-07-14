@@ -15,31 +15,13 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/', 'LandingController@index');
 Route::get('/logout', 'HomeController@logout');
 Route::post('/home/password', 'HomeController@password');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::group(['prefix' => 'disposisi'], function () {
-	Route::get('/formdisposisi', 'DisposisiController@formdisposisi');
-	Route::get('/hapusfiledisposisi', 'DisposisiController@disposisihapusfile');
-	Route::get('/tambah disposisi', 'DisposisiController@disposisitambah');
-	Route::get('/ubah disposisi', 'DisposisiController@disposisiubah');
-	Route::post('form/tambahdisposisi', 'DisposisiController@forminsertdisposisi');
-	Route::post('form/ubahdisposisi', 'DisposisiController@formupdatedisposisi');
-	Route::get('form/hapusdisposisi', 'DisposisiController@formdeletedisposisi');
-	Route::get('form/resetdisposisi', 'DisposisiController@formresetdisposisi');
-
-	Route::get('/disposisi', 'DisposisiController@disposisi');
-	Route::get('/lihat disposisi', 'DisposisiController@disposisilihat');
-	Route::post('form/lihatdisposisi', 'DisposisiController@formlihatdisposisi');
-	Route::get('form/hapusdisposisiemp', 'DisposisiController@formdeletedisposisiemp');
-
-	Route::get('/excel', 'DisposisiController@printexcel');
-	Route::get('/log', 'DisposisiController@log');
-});
 
 Route::group(['prefix' => 'profil'], function () {
 	Route::get('/pegawai', 'ProfilController@pegawai');
@@ -56,36 +38,6 @@ Route::group(['prefix' => 'cms'], function () {
 	Route::post('/form/hapusmenu', 'CmsController@formdeletemenu');
 	Route::get('/menuakses', 'CmsController@menuakses');
 	Route::post('/form/ubahaccess', 'CmsController@formupdateaccess');
-});
-
-Route::group(['prefix' => 'kepegawaian'], function () {
-	Route::get('/setup/unit', 'KepegawaianSetupController@unitall');
-	Route::post('/form/tambahunit', 'KepegawaianSetupController@forminsertunit');
-	Route::post('/form/ubahunit', 'KepegawaianSetupController@formupdateunit');
-	Route::post('/form/hapusunit', 'KepegawaianSetupController@formdeleteunit');
-
-	Route::get('/excel', 'KepegawaianController@printexcel');
-	Route::get('/excelpegawai', 'KepegawaianController@printexcelpegawai');
-
-	Route::get('/data pegawai', 'KepegawaianController@pegawaiall');
-	Route::get('/tambah pegawai', 'KepegawaianController@pegawaitambah');
-	Route::get('/ubah pegawai', 'KepegawaianController@pegawaiubah');
-	Route::post('/form/tambahpegawai', 'KepegawaianController@forminsertpegawai');
-	Route::post('/form/ubahpegawai', 'KepegawaianController@formupdatepegawai');
-	Route::post('/form/hapuspegawai', 'KepegawaianController@formdeletepegawai');
-	Route::post('/form/ubahpassuser', 'KepegawaianController@formupdatepassuser');
-	Route::post('/form/ubahstatuspegawai', 'KepegawaianController@formupdatestatuspegawai');
-	Route::post('/form/tambahdikpegawai', 'KepegawaianController@forminsertdikpegawai');
-	Route::post('/form/ubahdikpegawai', 'KepegawaianController@formupdatedikpegawai');
-	Route::post('/form/hapusdikpegawai', 'KepegawaianController@formdeletedikpegawai');
-	Route::post('/form/tambahgolpegawai', 'KepegawaianController@forminsertgolpegawai');
-	Route::post('/form/ubahgolpegawai', 'KepegawaianController@formupdategolpegawai');
-	Route::post('/form/hapusgolpegawai', 'KepegawaianController@formdeletegolpegawai');
-	Route::post('/form/tambahjabpegawai', 'KepegawaianController@forminsertjabpegawai');
-	Route::post('/form/ubahjabpegawai', 'KepegawaianController@formupdatejabpegawai');
-	Route::post('/form/hapusjabpegawai', 'KepegawaianController@formdeletejabpegawai');
-
-	Route::get('/status disposisi', 'KepegawaianController@statusdisposisi');
 });
 
 Route::group(['prefix' => 'security'], function () {

@@ -2,15 +2,15 @@
 
 @section('css')
     <!-- Bootstrap Core CSS -->
-    <link href="{{ ('/disp-biro-eko/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Menu CSS -->
-    <link href="{{ ('/disp-biro-eko/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
     <!-- animation CSS -->
-    <link href="{{ ('/disp-biro-eko/public/ample/css/animate.css') }}" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/animate.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ ('/disp-biro-eko/public/ample/css/style.css') }}" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/style.css') }}" rel="stylesheet">
     <!-- color CSS -->
-    <link href="{{ ('/disp-biro-eko/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
+    <link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -140,18 +140,18 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-    <script src="{{ ('/disp-biro-eko/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <script src="{{ ('/disp-biro-eko/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Menu Plugin JavaScript -->
-    <script src="{{ ('/disp-biro-eko/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
     <!--slimscroll JavaScript -->
-    <script src="{{ ('/disp-biro-eko/public/ample/js/jquery.slimscroll.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/jquery.slimscroll.js') }}"></script>
     <!--Wave Effects -->
-    <script src="{{ ('/disp-biro-eko/public/ample/js/waves.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/waves.js') }}"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="{{ ('/disp-biro-eko/public/ample/js/custom.min.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
     <!--Style Switcher -->
-    <script src="{{ ('/disp-biro-eko/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+    <script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 @endsection
