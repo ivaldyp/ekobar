@@ -22,7 +22,7 @@ session_start();
 class HomeController extends Controller
 {
 	use SessionCheckTraits;
-	use SessionCheckNotif;
+	// use SessionCheckNotif;
 
 	private $db;
 
@@ -137,7 +137,7 @@ class HomeController extends Controller
 		$this->checkSessionTime();
 		
 		unset($_SESSION['user_kobar']);
-		unset($_SESSION['notifs_kobar']);
+		// unset($_SESSION['notifs_kobar']);
 
 		date_default_timezone_set('Asia/Jakarta');
 
@@ -152,7 +152,7 @@ class HomeController extends Controller
 			'lastlogin' => date('Y-m-d H:i:s'),
 		]);	
 
-		$notifs = $this->checknotif(Auth::user()->usname);
+		// $notifs = $this->checknotif(Auth::user()->usname);
 		
 		// if (is_null(Auth::user()->usname)) {
 		// 	$iduser = Auth::user()->id_emp;
@@ -190,7 +190,7 @@ class HomeController extends Controller
 		// 	$notifs = $this->checknotif(Auth::user()->usname);
 		// }
 
-		$_SESSION['kobar_notifs'] = $notifs;
+		// $_SESSION['kobar_notifs'] = $notifs;
 		$_SESSION['kobar_data'] = $user_data;
 
 		$all_menu = [];

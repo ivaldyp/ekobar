@@ -126,7 +126,7 @@
 										</div>
 										<div class="form-group">
 											<div class="col-md-6">
-												<input type="text" name="cari" class="form-control" placeholder="Cari" value="{{ $searchnow }}" autocomplete="off">
+												<input type="text" name="cari" class="form-control" placeholder="Cari" value="{{ $searchnow }}" autocomplete="off" required="">
 											</div>
 										</div>
 										<div class="col-md-12"> 
@@ -142,7 +142,7 @@
 								<form method="GET" action="/{{ env('APP_NAME') }}/">
 									<div class="form-group">
 										<div class="col-md-3">
-											<select class="form-control" name="kat" id="kat" onchange="this.form.submit()">
+											<select class="form-control" name="kat" id="kat">
 												<option <?php if ($katnow == "nabar"): ?> selected <?php endif ?> value="nabar">Nama Barang</option>
 												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Nama Komponen</option>
 												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Nama Barang dan Komponen</option>
@@ -151,11 +151,9 @@
 									</div>
 									<div class="form-group">
 										<div class="col-md-5">
-											<input type="text" name="cari" class="form-control" placeholder="Cari" value="{{ $searchnow }}" autocomplete="off">
+											<input type="text" name="cari" class="form-control" placeholder="Cari" value="{{ $searchnow }}" autocomplete="off" required="">
 										</div>
 									</div>
-										
-										
 									<button type="submit" class="btn btn-info">Cari</button>
 								</form>
 							</div>
@@ -174,13 +172,20 @@
 										</tr>
 									</thead>
 									<tbody>
+										@if (!(isset($datas[0]))) 
+										<tr>
+											<td colspan="6" class="text-center" style="color: red;"><b>Data tidak ditemukan</b></td>
+										</tr>
+										@else
+										@for($i=0; $i < count($datas); $i++)
+										<?php $flag = 0; ?>
 										<tr>
 											<td></td>
-											<td><b>117010307001</b></td>
-											<td>Sapu Dan Sikat</td>
-											<td><b>ASET LANCAR</b><br> <span class="text-muted">PERSEDIAAN</span></td>
-											<td>BARANG PAKAI HABIS</td>
-											<td>ALAT/BAHAN UNTUK KEGIATAN KANTOR<br><span class="text-muted">PERABOT KANTOR</span></td>
+											<td><b>{{ $datas[$i]->KOBAR_PERMENDAGRI }}</b></td>
+											<td>{{ $datas[$i]->NABAR_PERMENDAGRI }}</td>
+											<td><b>{{ $datas[$i]->KELOMPOK }}</b><br> <span class="text-muted">{{ $datas[$i]->JENIS }}</span></td>
+											<td>{{ $datas[$i]->OBJEK }}</td>
+											<td>{{ $datas[$i]->RINCIAN_OBJEK }}<br><span class="text-muted">{{ $datas[$i]->SUBRINCIAN_OBJEK }}</span></td>
 											<td>														
 												<div class="white-box">
 													<div class="table-responsive">
@@ -197,108 +202,38 @@
 																</tr>
 															</thead>
 															<tbody>
+																@if (!(isset($datas[0]->KOMPONEN_KODE)))
 																<tr>
-																	<td>1</td>
-																	<td><b>1.1.7.01.03.07.001.00002</b><br>Gagang Sapu</span></td>
-																	<td>Batang</td>
-																	<td>Bahan Kayu</td>
-																	<td>Rp 2.590</td>
+																	<td colspan="6" class="text-center" style="color: red;"><b>Data tidak ditemukan</b></td>
 																</tr>
+																@else
+																<?php $num = 1 ?>
+																@while(true)
 																<tr>
-																	<td>2</td>
-																	<td><b>1.1.7.01.03.07.001.00027</b><br>Sapu Laba - Laba</span></td>
-																	<td>Buah</td>
-																	<td>Tangkai Almunium 2 Mtr (Rak Ball)</td>
-																	<td>Rp 61.370</td>
+																	<td>{{ $num }}</td>
+																	<td><b>{{ $datas[$i]->KOMPONEN_KODE }}</b><br>{{ $datas[$i]->KOMPONEN_NAMA }}</span></td>
+																	<td>{{ $datas[$i]->SATUAN }}</td>
+																	<td>{{ $datas[$i]->SPESIFIKASI }}</td>
+																	<td>Rp {{ number_format($datas[$i]->HARGA,2,',','.') }}</td>
 																</tr>
-																<tr>
-																	<td>3</td>
-																	<td><b>1.1.7.01.03.07.001.00074</b><br>Sapu Dorong</span></td>
-																	<td>Buah</td>
-																	<td>Spesifikasi : lebar kain 80 cm terbuat dari katun halus, tinggi tiang 140 cm berbahan gagang stainless/ alumunium</td>
-																	<td>Rp 202.500</td>
-																</tr>
+
+																@if(isset($datas[$i+1]->KOBAR_PERMENDAGRI) && $datas[$i]->KOBAR_PERMENDAGRI == $datas[$i+1]->KOBAR_PERMENDAGRI)
+																<?php $i++; $num++; ?>
+																@else
+																<?php $flag = 1; ?>
+																@endif
+
+																<?php if ($flag == 1) break; ?>
+																@endwhile
+																@endif
 															</tbody>
 														</table>
 													</div>
 												</div>
 											</td>
 										</tr>
-										<tr>
-											<td></td>
-											<td><b>135050101006</b></td>
-											<td>Tanaman Hias</td>
-											<td><b>ASET TETAP</b><br> <span class="text-muted">ASET TETAP LAINNYA</span></td>
-											<td>TANAMAN</td>
-											<td>TANAMAN<br><span class="text-muted">TANAMAN</span></td>
-											<td>														
-												<div class="white-box">
-													<div class="table-responsive">
-														<table class="table table-hover table-bordered">
-															<thead>
-																<tr>
-																	<th>No</th>
-																	<th class="col-md-3">KOMPONEN</th>
-																	<th class="col-md-2">SATUAN</th>
-																	<th class="col-md-4">KETERANGAN</th>
-																	<th class="col-md-2">HARGA</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td><b>1.3.5.05.01.01.006.00194</b><br>Bunga SapuTangan (Maniltoa gemmipara)</span></td>
-																	<td>Batang Pohon</td>
-																	<td>Tinggi 400 - 450 cm, dia batang 10-12 cm</td>
-																	<td>Rp 1.500.000</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td></td>
-											<td><b>912260101002</b></td>
-											<td>HONORARIUM TENAGA AHLI NASIONAL</td>
-											<td><b>BEBAN OPERASI - LO</b><br> <span class="text-muted">BEBAN BARANG DAN JASA</span></td>
-											<td>HONORARIUM NON PNS</td>
-											<td>HONORARIUM TENAGA AHLI/INSTRUKTUR/NARASUMBER<br><span class="text-muted">HONORARIUM TENAGA AHLI</span></td>
-											<td>														
-												<div class="white-box">
-													<div class="table-responsive">
-														<table class="table table-hover table-bordered">
-															<thead>
-																<tr>
-																	<th>No</th>
-																	<th class="col-md-3">KOMPONEN</th>
-																	<th class="col-md-2">SATUAN</th>
-																	<th class="col-md-4">KETERANGAN</th>
-																	<th class="col-md-2">HARGA</th>
-																</tr>
-															</thead>
-															<tbody>
-																<tr>
-																	<td>1</td>
-																	<td><b>9.1.2.26.01.01.002.00293</b><br>Sapu Ijuk</span></td>
-																	<td>Buah</td>
-																	<td>Bahan serabut dan kayu</td>
-																	<td>Rp 25.990</td>
-																</tr>
-																<tr>
-																	<td>2</td>
-																	<td><b>9.1.2.26.01.01.002.00294</b><br>Sapu Lidi</span></td>
-																	<td>Buah</td>
-																	<td>Bahan batang kelapa</td>
-																	<td>Rp 23.630</td>
-																</tr>
-															</tbody>
-														</table>
-													</div>
-												</div>
-											</td>
-										</tr>
+										@endfor
+										@endif
 									</tbody>
 								</table>
 							</div>
