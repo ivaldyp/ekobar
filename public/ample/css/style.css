@@ -1633,13 +1633,13 @@ table.dataTable thead .sorting:after {
 }
 .panel-blue,
 .panel-info {
-  border-color: #707cd2;
+  border-color: #2cabe3;
 }
 .panel-blue .panel-heading,
 .panel-info .panel-heading {
-  border-color: #707cd2;
+  border-color: #2cabe3;
   color: white;
-  background-color: #707cd2;
+  background-color: #2cabe3;
 }
 .panel-blue .panel-heading a,
 .panel-info .panel-heading a {
@@ -1651,7 +1651,7 @@ table.dataTable thead .sorting:after {
 }
 .panel-blue a,
 .panel-info a {
-  color: #707cd2;
+  color: #2cabe3;
 }
 .panel-blue a:hover,
 .panel-info a:hover {

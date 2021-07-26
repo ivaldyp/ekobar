@@ -69,9 +69,9 @@ class HomeController extends Controller
 
 			$result .= $arrLevel[$level];
 
-			// if ($level == 0) {
-			// 	$result .= '<li id="li_portal"> <a href="/portal" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">Portal BPAD</span></a></li>';
-			// }
+			if ($level == 0) {
+				$result .= '<li id="li_portal"> <a href="/'.env('app_name').'" class="waves-effect"> <i class="fa fa-globe fa-fw"></i> <span class="hide-menu">Kode Barang</span></a></li>';
+			}
 		
 			foreach ($query as $menu) {
 				if (is_null($menu['urlnew'])) {

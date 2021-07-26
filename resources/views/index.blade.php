@@ -11,6 +11,8 @@
 	<title>Kode Barang</title>
 	<!-- Bootstrap Core CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<!-- <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" /> -->
 	<!-- Footable CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/css/footable.core.css') }}" rel="stylesheet">
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
@@ -159,6 +161,7 @@
 							</div>
 							
 							<div class="table-responsive">
+								@if (!(isset($datas[0]))) 
 								<table id="demo-foo-row-toggler" class="table table-bordered m-b-0 m-t-20 toggle-circle">
 									<thead>
 										<tr>
@@ -172,25 +175,40 @@
 										</tr>
 									</thead>
 									<tbody>
-										@if (!(isset($datas[0]))) 
 										<tr>
 											<td colspan="6" class="text-center" style="color: red;"><b>Data tidak ditemukan</b></td>
 										</tr>
-										@else
+									</tbody>
+								</table>
+								@else
+								<table id="demo-foo-row-toggler" class="table table-bordered m-b-0 m-t-20 toggle-circle">
+									<thead>
+										<tr>
+											<th data-toggle="true"> </th>
+											<th>Kode Barang</th>
+											<th> Nama </th>
+											<th> Jenis </th>
+											<th> Objek </th>
+											<th> Rincian </th>
+											<th data-hide="all"> </th>
+										</tr>
+									</thead>
+									<tbody>
 										@for($i=0; $i < count($datas); $i++)
 										<?php $flag = 0; ?>
 										<tr>
 											<td></td>
-											<td><b>{{ $datas[$i]->KOBAR_PERMENDAGRI }}</b></td>
-											<td>{{ $datas[$i]->NABAR_PERMENDAGRI }}</td>
-											<td><b>{{ $datas[$i]->KELOMPOK }}</b><br> <span class="text-muted">{{ $datas[$i]->JENIS }}</span></td>
-											<td>{{ $datas[$i]->OBJEK }}</td>
-											<td>{{ $datas[$i]->RINCIAN_OBJEK }}<br><span class="text-muted">{{ $datas[$i]->SUBRINCIAN_OBJEK }}</span></td>
+											<td><b>{{ $datas[$i]['KOBAR'] }}</b></td>
+											<td>{{ $datas[$i]['NABAR'] }}</td>
+											<td><b>{{ $datas[$i]['KELOMPOK'] }}</b><br> <span class="text-muted">{{ $datas[$i]['JENIS'] }}</span></td>
+											<td>{{ $datas[$i]['OBJEK'] }}</td>
+											<td>{{ $datas[$i]['RINCIAN_OBJEK'] }}<br><span class="text-muted">{{ $datas[$i]['SUB_RINCIAN_OBJEK'] }}</span></td>
 											<td>														
 												<div class="white-box">
 													<div class="table-responsive">
 														<h5 class="box-title m-b-0">Tabel Komponen</h5>
-														<p class="text-muted m-b-20"><b>117010307001</b> - Sapu Dan Sikat</p>
+														<p class="text-muted m-b-20"><b> </b> </p>
+														@if (!(isset($datas[$i]['KOMPONEN_KODE'])))
 														<table class="table table-hover table-bordered">
 															<thead>
 																<tr>
@@ -202,22 +220,34 @@
 																</tr>
 															</thead>
 															<tbody>
-																@if (!(isset($datas[0]->KOMPONEN_KODE)))
 																<tr>
 																	<td colspan="6" class="text-center" style="color: red;"><b>Data tidak ditemukan</b></td>
 																</tr>
-																@else
+															</tbody>
+														</table>
+														@else
+														<table id="" class="table myTable table-hover table-bordered">
+															<thead>
+																<tr>
+																	<th>No</th>
+																	<th class="col-md-3">KOMPONEN</th>
+																	<th class="col-md-2">SATUAN</th>
+																	<th class="col-md-4">KETERANGAN</th>
+																	<th class="col-md-2">HARGA</th>
+																</tr>
+															</thead>
+															<tbody>
 																<?php $num = 1 ?>
 																@while(true)
 																<tr>
 																	<td>{{ $num }}</td>
-																	<td><b>{{ $datas[$i]->KOMPONEN_KODE }}</b><br>{{ $datas[$i]->KOMPONEN_NAMA }}</span></td>
-																	<td>{{ $datas[$i]->SATUAN }}</td>
-																	<td>{{ $datas[$i]->SPESIFIKASI }}</td>
-																	<td>Rp {{ number_format($datas[$i]->HARGA,2,',','.') }}</td>
+																	<td><b>{{ $datas[$i]['KOMPONEN_KODE'] }}</b><br>{{ $datas[$i]['KOMPONEN_NAMA'] }}</span></td>
+																	<td>{{ $datas[$i]['SATUAN'] ?? '-' }}</td>
+																	<td>{{ $datas[$i]['SPESIFIKASI'] ?? '-' }}</td>
+																	<td>Rp {{ $datas[$i]['HARGA'] ? number_format($datas[$i]['HARGA'],2,',','.') : '-' }}</td>
 																</tr>
 
-																@if(isset($datas[$i+1]->KOBAR_PERMENDAGRI) && $datas[$i]->KOBAR_PERMENDAGRI == $datas[$i+1]->KOBAR_PERMENDAGRI)
+																@if(isset($datas[$i+1]['KOBAR_PERMENDAGRI']) && $datas[$i]['KOBAR_PERMENDAGRI'] == $datas[$i+1]['KOBAR_PERMENDAGRI'])
 																<?php $i++; $num++; ?>
 																@else
 																<?php $flag = 1; ?>
@@ -225,17 +255,17 @@
 
 																<?php if ($flag == 1) break; ?>
 																@endwhile
-																@endif
 															</tbody>
 														</table>
+														@endif
 													</div>
 												</div>
 											</td>
 										</tr>
 										@endfor
-										@endif
 									</tbody>
 								</table>
+								@endif
 							</div>
 								
 							@endif
@@ -263,6 +293,7 @@
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 	<!-- Footable -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/js/footable.all.min.js') }}"></script>
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
@@ -270,6 +301,12 @@
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/footable-init.js') }}"></script>
 	<!--Style Switcher -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('.myTable').DataTable();
+		});
+	</script>
 </body>
 
 </html>

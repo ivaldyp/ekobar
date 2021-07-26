@@ -56,3 +56,17 @@ Route::group(['prefix' => 'security'], function () {
 	Route::post('/form/ubahpassuser', 'SecurityController@formupdatepassuser');
 	Route::post('/form/hapususer', 'SecurityController@formdeleteuser');
 });
+
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+Route::group(['prefix' => 'form'], function () {
+	Route::get('/getmaxnewkobar', 'FormController@getmaxnewkobar');
+
+	Route::get('/tambahkobar', 'FormController@pagetambahkobar');
+	Route::post('/tambahkobar', 'FormController@forminsertkobar');
+	Route::get('/kodekomponen', 'FormController@pagekodekomponen');
+	Route::post('/kodekomponen', 'FormController@formupdatekomponen');
+});
