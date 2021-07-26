@@ -250,7 +250,7 @@ class FormController extends Controller
 			]);
 
 		return redirect()->back()
-					->with('message', 'Kode komponen '.$request->nabar.' berhasil ditambah')
+					->with('message', 'Kode komponen '.$komponen.' berhasil diupdate')
 					->with('msg_num', 1);
 	}
 

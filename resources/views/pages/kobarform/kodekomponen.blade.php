@@ -169,7 +169,8 @@
 									@foreach($komponens as $key => $datas)
 									<tr>
 										<td>
-											{{ $datas['KOBAR_PERMENDAGRI'] }}
+											<b>{{ $datas['KOBAR_PERMENDAGRI'] }}</b><br>
+											{{ $datas['NABAR_PERMENDAGRI'] }}
 										</td>
 										<td>
 											<b>{{ $datas['KOMPONEN_KODE'] }}</b><br>
