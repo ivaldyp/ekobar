@@ -105,7 +105,7 @@
 								</tbody>
 							</table>
 							@else
-							<table id="" class="myTable table table-bordered m-b-0 m-t-20 toggle-circle">
+							<table id="" class="myTable table table-bordered m-b-0 m-t-20">
 								<thead>
 									<tr>
 										<th>No</th>

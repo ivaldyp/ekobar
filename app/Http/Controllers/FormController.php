@@ -76,9 +76,29 @@ class FormController extends Controller
 	{
 		$kobars = Nabar::
 					where('KOBAR', 'like', '%000')
+					->where('sts', 1)
 					->OrderBy('KOBAR')->get(['KOBAR','NABAR','KELOMPOK','JENIS','OBJEK','RINCIAN_OBJEK','SUB_RINCIAN_OBJEK','KOBAR_KODE']);
 
 		return view('pages.kobarform.tambahkobar')
+			->with('kobars', $kobars);
+	}
+
+	public function pageubahkobar(Request $request)
+	{
+		if ($request->nabar) {
+			$nabarcari = $request->nabar;
+			$kobars = Nabar::
+						where('NABAR', 'LIKE', '%'.$nabarcari.'%')
+						->where('sts', 1)
+						->OrderBy('KOBAR')
+						->get();
+		} else {
+			$nabarcari = NULL;
+			$kobars = NULL;
+		}
+
+		return view('pages.kobarform.ubahkobar')
+			->with('nabar', $nabarcari)
 			->with('kobars', $kobars);
 	}
 
@@ -88,6 +108,7 @@ class FormController extends Controller
 			$nabarcari = $request->nabar;
 			$kobars = Nabar::
 						where('NABAR', 'LIKE', '%'.$nabarcari.'%')
+						->where('sts', 1)
 						->OrderBy('KOBAR')
 						->get();
 		} else {
@@ -119,18 +140,69 @@ class FormController extends Controller
 		$kobar = $request->newkobar;
 		$kobarclean = str_replace(".", "", $kobar);
 
-		$formkelompok = $request->formkelompok;
-		$formjenis = $request->formjenis;
-		$formobjek = $request->formobjek;
-		$formrincian_objek = $request->formrincian_objek;
-		$formsub_rincian_objek = $request->formsub_rincian_objek;
+		if (is_null($request->formparent) || $request->formparent == 'type') {
+			if (substr($kobar, 4) == "0") {
+				$formparent = str_replace(".", "", substr($kobar, 0, 1));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+			} elseif (substr($kobar, 6, 2) == "00") {
+				$formparent = str_replace(".", "", substr($kobar, 0, 3));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+			} elseif (substr($kobar, 9, 2) == "00") {
+				$formparent = str_replace(".", "", substr($kobar, 0, 5));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+			} elseif (substr($kobar, 12, 2) == "00") {
+				$formparent = str_replace(".", "", substr($kobar, 0, 8));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+			} elseif (substr($kobar, 15, 3) == "000") {
+				$formparent = str_replace(".", "", substr($kobar, 0, 11));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);  
+			} else {
+				$formparent = str_replace(".", "", substr($kobar, 0, 14));
+				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+			}
+		} else {
+			$formparent = $request->formparent;
+		}
 
-		$cek = Nabar::where('KOBAR', 'like', $kobarclean)->first();
+		$cek = Nabar::
+				where('KOBAR', 'like', $kobarclean)
+				->where('sts', 1)
+				->first();
 		if ($cek) {
 			return redirect()->back()->with('message', 'Kode Barang sudah ada');
 		}
 
-		$parent = Nabar::where('KOBAR', 'like', $request->formparent)->first();
+		$filekobar = '';
+
+		if (isset($request->img)) {
+			$file = $request->img;
+
+			if ($file->getSize() > 600000) {
+				return redirect()->back()->with('message', 'Ukuran file terlalu besar (Maksimal 500KB)');     
+			} 
+
+			if (strtolower($file->getClientOriginalExtension()) != "png" && strtolower($file->getClientOriginalExtension()) != "jpg" && strtolower($file->getClientOriginalExtension()) != "jpeg") {
+				return redirect()->back()->with('message', 'File yang diunggah harus berbentuk JPG / JPEG / PNG');     
+			}
+
+			$filekobar .= "KOBAR_" . $kobarclean . "." . $file->getClientOriginalExtension();
+
+			$tujuan_upload = config('app.savefileimgkobar');
+			$tujuan_upload .= "\\" . $kobarclean . "\\";
+
+			if (file_exists($tujuan_upload . $filekobar )) {
+				unlink($tujuan_upload . $filekobar);
+			}
+
+			$file->move($tujuan_upload, $filekobar);
+		}
+			
+		if ($filekobar == '') {
+			$filekobar = NULL;
+		}
+
+		$parent = Nabar::where('KOBAR', 'like', $formparent)->first();
+
 
 		if (substr($kobar, 4) == "0") {
 			$kobarcut = substr($kobar, 0, 3);
@@ -157,14 +229,14 @@ class FormController extends Controller
 				'KOBAR_PANJANG'     => $kobar,
 				'KOBAR_KODE'       	=> $kobarcut,
 				'NABAR'        		=> $nabar,
-				'KATEGORI'   		=> $formkelompok ?? NULL,
-				'SUBKATEGORI'     	=> $formjenis ?? NULL,
-				'NAMA_KIB108'   	=> $formkelompok . " - " . $formjenis,
-				'KELOMPOK'   		=> $parent['KELOMPOK'],
-				'JENIS'  			=> $parent['JENIS'],
-				'OBJEK' 			=> $parent['OBJEK'],
-				'RINCIAN_OBJEK' 	=> $parent['RINCIAN_OBJEK'],
-				'SUB_RINCIAN_OBJEK' => $parent['SUB_RINCIAN_OBJEK'],
+				'KATEGORI'   		=> $parent['KELOMPOK'] ?? NULL,
+				'SUBKATEGORI'     	=> $parent['JENIS'] ?? NULL,
+				'NAMA_KIB108'   	=> $parent['KELOMPOK'] . " - " . $parent['JENIS'],
+				'KELOMPOK'   		=> $parent['KELOMPOK'] ?? NULL,
+				'JENIS'  			=> $parent['JENIS'] ?? NULL,
+				'OBJEK' 			=> $parent['OBJEK'] ?? NULL,
+				'RINCIAN_OBJEK' 	=> $parent['RINCIAN_OBJEK'] ?? NULL,
+				'SUB_RINCIAN_OBJEK' => $parent['SUB_RINCIAN_OBJEK'] ?? NULL,
 				'kobar1' => $parent['kobar1'],
 				'kobar2' => $parent['kobar2'],
 				'kobar3' => $parent['kobar3'],
@@ -172,6 +244,9 @@ class FormController extends Controller
 				'kobar5' => $parent['kobar5'],
 				'create_date' => date('Y-m-d H:i:s'),
 				'update_date' => date('Y-m-d H:i:s'),
+				'KOBAR_DESK' 	=> $request->desk ?? NULL,
+				'KOBAR_IMG' 	=> $filekobar ?? NULL,
+				'sts' => 1,
 			];
 		Nabar::insert($insert);
 
@@ -189,7 +264,7 @@ class FormController extends Controller
 			where('KOBAR', $kobarclean)
 			->update([
 				'SUBKATEGORI'		=> $nabar,
-				'NAMA_KIB108'		=> $formkelompok . " - " . $nabar,
+				'NAMA_KIB108'		=> $parent['KELOMPOK'] . " - " . $nabar,
 				'kobar2'      		=> $kobarcut,
 				'JENIS' 			=> $nabar,
 				'update_date' 		=> date('Y-m-d H:i:s'),
@@ -218,13 +293,91 @@ class FormController extends Controller
 				'SUB_RINCIAN_OBJEK' => $nabar,
 				'update_date' 		=> date('Y-m-d H:i:s'),
 			]);
+		} 
+
+		return redirect('/form/ubahkobar')
+					->with('message', 'Kode Barang '.$kobar.' dengan nama '. $nabar .' berhasil ditambah')
+					->with('msg_num', 1);
+	}
+
+	public function formupdatekobar(Request $request)
+	{
+		$kobar = $request->kobar;
+		$nabar = $request->nabar;
+
+		if (substr($kobar, 1, 1) == '.') {
+			$kobarclean = str_replace(".", "", $kobar);
+			$kobardot = $kobar;
 		} else {
-			$kobarcut = $kobar;
-			$nabar = ucwords(strtolower($request->nabar)); 
+			$kobarclean = $kobar;
+			$a = substr($kobar, 0, 1);
+			$b = substr($kobar, 1, 1);
+			$c = substr($kobar, 2, 1);
+			$d = substr($kobar, 3, 2);
+			$e = substr($kobar, 5, 2);
+			$f = substr($kobar, 7, 2);
+			$g = substr($kobar, 9, 3);
+			$kobardot = $a . "." . $b . "." . $c . "." . $d . "." . $e . "." . $f . "." . $g; 
 		}
 
-		return redirect('/home')
-					->with('message', 'Kode Barang '.$request->nabar.' berhasil ditambah')
+		$filekobar = '';
+
+		if (isset($request->img)) {
+			$file = $request->img;
+
+			if ($file->getSize() > 600000) {
+				return redirect()->back()->with('message', 'Ukuran file terlalu besar (Maksimal 500KB)');     
+			} 
+
+			if (strtolower($file->getClientOriginalExtension()) != "png" && strtolower($file->getClientOriginalExtension()) != "jpg" && strtolower($file->getClientOriginalExtension()) != "jpeg") {
+				return redirect()->back()->with('message', 'File yang diunggah harus berbentuk JPG / JPEG / PNG');     
+			}
+
+			$filekobar .= "KOBAR_" . $kobarclean . "." . $file->getClientOriginalExtension();
+
+			$tujuan_upload = config('app.savefileimgkobar');
+			$tujuan_upload .= "\\" . $kobarclean . "\\";
+
+			if (file_exists($tujuan_upload . $filekobar )) {
+				unlink($tujuan_upload . $filekobar);
+			}
+
+			$file->move($tujuan_upload, $filekobar);
+		}
+			
+		if ($filekobar != '') {
+			Nabar::where('KOBAR', $kobarclean)
+				->update([
+					'KOBAR_IMG' 	=> $filekobar ?? NULL,
+				]);
+		}
+
+		Nabar::
+		where('KOBAR', $kobarclean)
+		->update([
+			'NABAR'        	=> $nabar,
+			'update_date'	=> date('Y-m-d H:i:s'),
+			'KOBAR_DESK' 	=> $request->desk ?? NULL,
+		]);
+
+		return redirect()->back()
+					->with('message', 'Kode Barang '.$kobar.' dengan nama '. $nabar .' berhasil diubah')
+					->with('msg_num', 1);
+	}
+
+	public function formdeletekobar(Request $request)
+	{
+		$kobar = $request->kobar;
+		$nabar = $request->nabar;
+
+		Nabar::where('KOBAR', $kobar)
+				->update([
+					'sts' => 0,
+					'update_date'	=> date('Y-m-d H:i:s'),
+				]);
+
+		return redirect()->back()
+					->with('message', 'Kode Barang '.$kobar.' dengan nama '. $nabar .' berhasil dihapus')
 					->with('msg_num', 1);
 	}
 

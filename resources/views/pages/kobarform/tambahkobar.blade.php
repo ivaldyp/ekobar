@@ -70,12 +70,13 @@
                         <div class="panel-heading"> Tambah Kode Barang </div>
                         <div class="panel-wrapper collapse in" aria-expanded="true">
                             <div class="panel-body">
-                            	<form class="form-horizontal" method="POST" action="/{{ env('APP_NAME') }}/form/tambahkobar">
+                            	<form class="form-horizontal" method="POST" action="/{{ env('APP_NAME') }}/form/tambahkobar" data-toggle="validator" enctype="multipart/form-data">
                             		@csrf
 									<div class="form-group">
 										<label for="parentid" class="col-sm-2 control-label">Parent Kobar</label>
 										<div class="col-sm-10">
 		                                    <select class="form-control select2" id="parentid">
+		                                    	<option value="type">-- KETIK SENDIRI --</option>
 		                                        @foreach($kobars as $key => $kobar)
 		                                        <option value="{{ $kobar->KOBAR }}||{{ $kobar->NABAR }}||{{ $kobar->KELOMPOK }}||{{ $kobar->JENIS }}||{{ $kobar->OBJEK }}||{{ $kobar->RINCIAN_OBJEK }}||{{ $kobar->SUB_RINCIAN_OBJEK }}||{{ $kobar->KOBAR_KODE }}">[{{ $kobar->KOBAR }}] - {{ $kobar->NABAR }}</option>
 		                                        @endforeach
@@ -133,6 +134,23 @@
 		                                    <input type="text" class="form-control" placeholder="" id="nabar" required="" name="nabar" autocomplete="off">
 		                                </div>
 									</div>
+
+									<div class="form-group">
+										<label for="nabar" class="col-md-2 control-label">Deskripsi</label>
+										<div class="col-md-10">
+											<textarea name="desk" class="form-control" rows="3" id="desk"></textarea>
+		                                </div>
+									</div>
+
+									<div class="form-group">
+                                        <label for="img" class="col-md-2 control-label"> Gambar <br> 
+                                        	<span style="font-size: 10px">Hanya berupa JPG, JPEG, dan PNG</span><br>
+                                        	<span style="font-size: 10px">Maksimal 500KB</span>
+                                        </label>
+                                        <div class="col-md-10">
+                                            <input type="file" class="form-control" id="img" name="img">
+                                        </div>
+                                    </div>
 
 									<input type="hidden" name="formparent" id="formparent" value="">
 									<input type="hidden" name="formkelompok" id="formkelompok" value="">

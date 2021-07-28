@@ -35,6 +35,7 @@ class LandingController extends Controller
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
 							->where('NABAR', 'like', '%'.$cari.'%')
+							->where('sts', 1)
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
@@ -51,6 +52,7 @@ class LandingController extends Controller
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
 							->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
+							->where('sts', 1)
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
@@ -67,8 +69,11 @@ class LandingController extends Controller
 			} elseif ($kat == 'nabarkom') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
-							->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
-							->orWhere('NABAR', 'like', '%'.$cari.'%')
+							->where('sts', 1)
+							->where(function($q) use ($cari) {
+				            $q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
+								->orWhere('NABAR', 'like', '%'.$cari.'%');
+				            })
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
