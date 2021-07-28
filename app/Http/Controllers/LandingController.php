@@ -39,15 +39,6 @@ class LandingController extends Controller
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
-
-				// $datas = DB::select( DB::raw("
-				// 	SELECT *
-				// 	from [2021nabar] as nabar
-				// 	left join [2021nakom] as nakom on nakom.KOBAR_PERMENDAGRI = nabar.KOBAR
-				// 	where NABAR like '%$cari%'
-				// 	order by KOBAR, KOMPONEN_KODE
-				// 	"));
-				// $datas = json_decode(json_encode($datas), true);
 			} elseif ($kat == 'nakom') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
@@ -56,16 +47,6 @@ class LandingController extends Controller
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
-
-				// $datas = DB::select( DB::raw("
-				// 	SELECT *
-				// 	from [2021nabar] as nabar
-				// 	left join [2021nakom] as nakom on nakom.KOBAR_PERMENDAGRI = nabar.KOBAR
-				// 	where KOMPONEN_NAMA like '%$cari%'
-				// 	order by KOBAR, KOMPONEN_KODE
-				// 	"));
-				// $datas = json_decode(json_encode($datas), true);
-				// $datas = Nabarkom::where('komponen_nama', 'like', '%'.$cari.'%')->get();
 			} elseif ($kat == 'nabarkom') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
@@ -77,21 +58,6 @@ class LandingController extends Controller
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
-
-				// $datas = DB::select( DB::raw("
-				// 	SELECT *
-				// 	from [2021nabar] as nabar
-				// 	left join [2021nakom] as nakom on nakom.KOBAR_PERMENDAGRI = nabar.KOBAR
-				// 	where NABAR like '%$cari%'
-				// 	OR KOMPONEN_NAMA like '%$cari%'
-				// 	order by KOBAR, KOMPONEN_KODE
-				// 	"));
-				// $datas = json_decode(json_encode($datas), true);
-
-				// $datas = Nabarkom::
-				// 			where('komponen_nama', 'like', '%'.$cari.'%')
-				// 			->orWhere('nabar_permendagri', 'like', '%'.$cari.'%')
-				// 			->get();
 			}
 		} else {
 			$cari = NULL;

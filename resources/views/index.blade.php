@@ -108,6 +108,11 @@
 		<!-- ============================================================== -->
 		<div id="page-wrapper" style="margin-left: 0px;">
 			<div class="container">
+				<div class="row text-center ">
+					<div class="col-md-12 m-t-20">
+						<h1 style="font-weight: bold;">Selamat Datang di Sistem e-Kobar</h1>	
+					</div>
+				</div>
 				<div class="row" style="margin-top: 25px;">
 					<div class="col-md-12 ">
 						<div class="white-box">
@@ -160,7 +165,7 @@
 								</form>
 							</div>
 							
-							<div class="table-responsive">
+							<div class="table-responsive" style="overflow: visible;">
 								@if (!(isset($datas[0]))) 
 								<table id="demo-foo-row-toggler" class="table table-bordered m-b-0 m-t-20 toggle-circle">
 									<thead>
@@ -187,6 +192,7 @@
 											<th data-toggle="true"> </th>
 											<th>Kode Barang</th>
 											<th> Nama </th>
+											<th> Detail </th>
 											<th> Jenis </th>
 											<th> Objek </th>
 											<th> Rincian </th>
@@ -200,6 +206,30 @@
 											<td></td>
 											<td><b>{{ $datas[$i]['KOBAR'] }}</b></td>
 											<td>{{ $datas[$i]['NABAR'] }}</td>
+											<td>
+												<span class="mytooltip tooltip-effect-1"> 
+													<span class="tooltip-item">Detail</span> 
+													<span class="tooltip-content clearfix"> 
+														<table class="table table-bordered">
+															<tbody>
+																<tr>
+																	<td><strong>Deskripsi</strong></td>
+																	<td>
+																		{{ $datas[$i]['KOBAR_DESK'] ?? '-' }}
+																	</td>
+																</tr>
+																<tr>
+																	<td><strong>Gambar</strong></td>
+																	<td>
+																		<img src="{{ $datas[$i]['KOBAR_IMG'] ? config('app.openfileimgkobar') .'/'. $datas[$i]['KOBAR'] .'/'. $datas[$i]['KOBAR_IMG'] : config('app.openfileimgcontentdefault') }}">
+																	</td>
+																</tr>
+																
+															</tbody>
+														</table> 
+													</span> 
+												</span>
+											</td>
 											<td><b>{{ $datas[$i]['KELOMPOK'] }}</b><br> <span class="text-muted">{{ $datas[$i]['JENIS'] }}</span></td>
 											<td>{{ $datas[$i]['OBJEK'] }}</td>
 											<td>{{ $datas[$i]['RINCIAN_OBJEK'] }}<br><span class="text-muted">{{ $datas[$i]['SUB_RINCIAN_OBJEK'] }}</span></td>
