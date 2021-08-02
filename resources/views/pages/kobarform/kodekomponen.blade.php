@@ -71,6 +71,7 @@
 							<label for="nabar" class="control-label">Nama Barang</label>
 							<input type="text" class="form-control" name="nabar" id="nabar" autocomplete="off" placeholder="Masukkan Nama Barang" value="{{ $nabar }}">
 						</div>
+						{{-- <input type="hidden" name="btnKomp" value="{{ $button }}"> --}}
 						<button id="btnBarang" type="submit" class="btn btn-info waves-effect waves-light m-r-10">Cari</button>
 					</div>
 				</div>

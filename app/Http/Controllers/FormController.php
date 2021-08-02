@@ -129,15 +129,15 @@ class FormController extends Controller
 			$kobars = NULL;
 		}
 
-		// if (isset($request->btnSubmit)) {
+		// if (isset($request->btnSubmit) || $request->btnKomp == "submit") {
 		// 	$button = "submit";
-		// } elseif (isset($request->btnKosong)) {
+		// } elseif (isset($request->btnKosong) || $request->btnKomp == "kosong") {
 		// 	$button = "kosong";
 		// } else {
 		// 	$button = NULL;
 		// }
 		
-		if (isset($request->btnKosong)) {
+		if (isset($request->btnKosong) || is_null($request->nakom)) {
 			$nakomcari = NULL;
 			$komponens = Nakom::
 						whereNull('KOBAR_PERMENDAGRI')
@@ -146,10 +146,10 @@ class FormController extends Controller
 						->OrderBy('KOBAR_PERMENDAGRI')
 						->OrderBy('KOMPONEN_KODE')
 						->get();
-		} elseif (is_null($request->nakom)) {
-			$nakomcari = NULL;
-			$komponens = NULL;
-		} elseif (!(is_null($request->nakom)) || $request->btnKomp == "submit" || isset($request->btnSubmit)) {
+		// } elseif (is_null($request->nakom)) {
+		// 	$nakomcari = NULL;
+		// 	$komponens = NULL;
+		} elseif (!(is_null($request->nakom)) || isset($request->btnSubmit)) {
 			$nakomcari = $request->nakom;
 			$komponens = Nakom::
 						where(function($q) use ($nakomcari) {
