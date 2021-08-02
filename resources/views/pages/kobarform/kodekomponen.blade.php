@@ -71,7 +71,7 @@
 							<label for="nabar" class="control-label">Nama Barang</label>
 							<input type="text" class="form-control" name="nabar" id="nabar" autocomplete="off" placeholder="Masukkan Nama Barang" value="{{ $nabar }}">
 						</div>
-						<button type="submit" class="btn btn-info waves-effect waves-light m-r-10">Cari</button>
+						<button id="btnBarang" type="submit" class="btn btn-info waves-effect waves-light m-r-10">Cari</button>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -80,7 +80,9 @@
 							<label for="nakom" class="control-label">Nama Komponen</label>
 							<input type="text" class="form-control" name="nakom" id="nakom" autocomplete="off" placeholder="Masukkan Nama Komponen" value="{{ $nakom }}">
 						</div>
-						<button type="submit" class="btn btn-info waves-effect waves-light m-r-10">Cari</button>
+						<input id="btnSubmit" type="submit" class="btn btn-info m-r-10" value="Cari" name="btnSubmit">
+						<input id="btnKosong" type="submit" class="btn btn-warning m-r-10" value="Tanpa Kobar" name="btnKosong">
+						<!-- <button type="button" class="btn btn-warning waves-effect waves-light m-r-10" value="Tanpa Kobar" name="btnKosong">a</button> -->
 						</form>
 					</div>
 				</div>
@@ -88,7 +90,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="white-box">
-						<div class="table-responsive">
+						<div class="table-responsive" style="overflow: visible;">
 							@if (!(isset($kobars[0]))) 
 							<table id="" class="table table-bordered m-b-0 m-t-20 toggle-circle">
 								<thead>
@@ -111,6 +113,7 @@
 										<th>No</th>
 										<th>Barang</th>
 										<th>Jenis</th>
+										<th>Detail</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -122,6 +125,7 @@
 										<td>
 											<b>{{ $datas['KOBAR'] }}</b><br>
 											{{ $datas['NABAR'] }}
+											
 										</td>
 										<td>
 											<b>{{ $datas['KELOMPOK'] }}</b><br>
@@ -129,6 +133,30 @@
 											{{ $datas['OBJEK'] }}<br>
 											{{ $datas['RINCIAN_OBJEK'] }}<br>
 											{{ $datas['SUB_RINCIAN_OBJEK'] }}
+										</td>
+										<td>
+											<span class="mytooltip tooltip-effect-1" style="z-index: 10000"> 
+												<span class="tooltip-item">Detail</span> 
+												<span class="tooltip-content clearfix"> 
+													<table class="table table-bordered">
+														<tbody>
+															<tr>
+																<td><strong>Deskripsi</strong></td>
+																<td>
+																	{{ $datas['KOBAR_DESK'] ?? '-' }}
+																</td>
+															</tr>
+															<tr>
+																<td><strong>Gambar</strong></td>
+																<td>
+																	<img src="{{ $datas['KOBAR_IMG'] ? config('app.openfileimgkobar') .'/'. $datas['KOBAR'] .'/'. $datas['KOBAR_IMG'] : config('app.openfileimgcontentdefault') }}">
+																</td>
+															</tr>
+															
+														</tbody>
+													</table> 
+												</span> 
+											</span>
 										</td>
 									@endforeach
 									</tr>
@@ -247,6 +275,32 @@
 
 	<script type="text/javascript">
 		$(function () {
+			$('#nakom').on('keyup keypress', function(e) {
+			  var keyCode = e.keyCode || e.which;
+			  if (keyCode === 13) { 
+			    e.preventDefault();
+			    return false;
+			  }
+			});
+
+			var foo = $('#nakom').val();
+			var bar = $('#nabar').val();  
+		    if(foo.length > 3 && bar.length > 3){  
+				$('#btnSubmit').prop('disabled', false);
+			}else{
+				$('#btnSubmit').prop('disabled', true);
+			}  
+
+			$('#nakom').keyup(function(){
+			  	var foo = $('#nakom').val();  
+			  	var bar = $('#nabar').val();  
+			    if(foo.length > 3 && bar.length > 3){  
+			      	$('#btnSubmit').prop('disabled', false);
+			      }else{
+			      	$('#btnSubmit').prop('disabled', true);
+			      }  
+			});
+
 			$('.btn-kode').on('click', function () {
 				var $el = $(this);
 				$("#form_update_komponen_kode").val($el.data('kodekomp'));
@@ -258,6 +312,9 @@
 
 			$('.myTable').DataTable({
 				// "paging":   false,
+				"oLanguage": {
+					"sSearch": "Filter:"
+				},
 		        "ordering": false,
 		        // "info":     false,
 			});

@@ -30,11 +30,17 @@ class LandingController extends Controller
 
 		if ($request->cari) {
 			$cari = $request->cari;
+			if (substr($cari, 1, 1) == '.' && substr($cari, 3, 1) == '.' && substr($cari, 5, 1) == '.') {
+				$cari = str_replace('.', '', $cari);
+			}
 
 			if ($kat == 'nabar') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
-							->where('NABAR', 'like', '%'.$cari.'%')
+							->where(function($q) use ($cari) {
+							$q->where('NABAR', 'like', '%'.$cari.'%')
+							  ->orWhere('KOBAR', 'like', '%'.$cari.'%');
+							})
 							->where('sts', 1)
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
@@ -42,7 +48,10 @@ class LandingController extends Controller
 			} elseif ($kat == 'nakom') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
-							->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
+							->where(function($q) use ($cari) {
+							$q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
+							  ->orWhere('KOMPONEN_KODE', 'like', '%'.$cari.'%');
+							})
 							->where('sts', 1)
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
@@ -52,9 +61,10 @@ class LandingController extends Controller
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
 							->where('sts', 1)
 							->where(function($q) use ($cari) {
-				            $q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
-								->orWhere('NABAR', 'like', '%'.$cari.'%');
-				            })
+							$q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
+								->orWhere('NABAR', 'like', '%'.$cari.'%')
+								->orWhere('KOBAR', 'like', '%'.$cari.'%');
+							})
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();

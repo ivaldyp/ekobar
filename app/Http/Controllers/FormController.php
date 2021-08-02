@@ -85,10 +85,19 @@ class FormController extends Controller
 
 	public function pageubahkobar(Request $request)
 	{
+		// if ($request->krit) {
+		// 	$krit = $request->krit;
+		// } else {
+		// 	$krit = NULL;
+		// }
+
 		if ($request->nabar) {
 			$nabarcari = $request->nabar;
 			$kobars = Nabar::
-						where('NABAR', 'LIKE', '%'.$nabarcari.'%')
+						where(function($q) use ($nabarcari) {
+						$q->where('NABAR', 'like', '%'.$nabarcari.'%')
+	                   	  ->orWhere('KOBAR', 'like', '%'.$nabarcari.'%');
+			            })
 						->where('sts', 1)
 						->OrderBy('KOBAR')
 						->get();
@@ -99,6 +108,7 @@ class FormController extends Controller
 
 		return view('pages.kobarform.ubahkobar')
 			->with('nabar', $nabarcari)
+			// ->with('krit', $krit)
 			->with('kobars', $kobars);
 	}
 
@@ -107,7 +117,10 @@ class FormController extends Controller
 		if ($request->nabar) {
 			$nabarcari = $request->nabar;
 			$kobars = Nabar::
-						where('NABAR', 'LIKE', '%'.$nabarcari.'%')
+						where(function($q) use ($nabarcari) {
+						$q->where('NABAR', 'like', '%'.$nabarcari.'%')
+	                   	  ->orWhere('KOBAR', 'like', '%'.$nabarcari.'%');
+			            })
 						->where('sts', 1)
 						->OrderBy('KOBAR')
 						->get();
@@ -115,24 +128,47 @@ class FormController extends Controller
 			$nabarcari = NULL;
 			$kobars = NULL;
 		}
+
+		// if (isset($request->btnSubmit)) {
+		// 	$button = "submit";
+		// } elseif (isset($request->btnKosong)) {
+		// 	$button = "kosong";
+		// } else {
+		// 	$button = NULL;
+		// }
 		
-		if ($request->nakom) {
-			$nakomcari = $request->nakom;
+		if (isset($request->btnKosong)) {
+			$nakomcari = NULL;
 			$komponens = Nakom::
-						where('KOMPONEN_NAMA', 'LIKE', '%'.$nakomcari.'%')
+						whereNull('KOBAR_PERMENDAGRI')
+						->orWhere('KOBAR_PERMENDAGRI', '=', '')
+						->orWhere('KOBAR_PERMENDAGRI', '=', '-')
 						->OrderBy('KOBAR_PERMENDAGRI')
 						->OrderBy('KOMPONEN_KODE')
 						->get();
-		} else {
+		} elseif (is_null($request->nakom)) {
 			$nakomcari = NULL;
 			$komponens = NULL;
-		}
+		} elseif (!(is_null($request->nakom)) || $request->btnKomp == "submit" || isset($request->btnSubmit)) {
+			$nakomcari = $request->nakom;
+			$komponens = Nakom::
+						where(function($q) use ($nakomcari) {
+						$q->where('KOMPONEN_NAMA', 'like', '%'.$nakomcari.'%')
+	                   	  ->orWhere('KOMPONEN_KODE', 'like', '%'.$nakomcari.'%');
+			            })
+						->OrderBy('KOBAR_PERMENDAGRI')
+						->OrderBy('KOMPONEN_KODE')
+						->get();
+		} 
+
+		
 
 		return view('pages.kobarform.kodekomponen')
 			->with('kobars', $kobars)
 			->with('komponens', $komponens)
 			->with('nabar', $nabarcari)
 			->with('nakom', $nakomcari);
+			// ->with('button', $button);
 	}
 
 	public function forminsertkobar(Request $request)
@@ -164,12 +200,20 @@ class FormController extends Controller
 			$formparent = $request->formparent;
 		}
 
-		$cek = Nabar::
+		$cekkode = Nabar::
 				where('KOBAR', 'like', $kobarclean)
 				->where('sts', 1)
 				->first();
-		if ($cek) {
-			return redirect()->back()->with('message', 'Kode Barang sudah ada');
+		if ($cekkode) {
+			return redirect()->back()->with('message', 'Kode Barang '.$kobarclean.' sudah ada');
+		}
+
+		$ceknama = Nabar::
+				where('NABAR', 'like', '%'.$request->nabar.'%')
+				->where('sts', 1)
+				->first();
+		if ($ceknama) {
+			return redirect()->back()->with('message', 'Nama Barang '.$request->nabar.' sudah ada');
 		}
 
 		$filekobar = '';

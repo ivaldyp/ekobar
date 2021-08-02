@@ -152,6 +152,11 @@ class HomeController extends Controller
 			'lastlogin' => date('Y-m-d H:i:s'),
 		]);	
 
+		$homeview = DB::select( DB::raw("
+					exec homeview
+					"))[0];
+		$homeview = json_decode(json_encode($homeview), true);
+
 		// $notifs = $this->checknotif(Auth::user()->usname);
 		
 		// if (is_null(Auth::user()->usname)) {
@@ -200,6 +205,7 @@ class HomeController extends Controller
 		$_SESSION['kobar_menus'] = $menus;
 
 		return view('home')
-				->with('iduser', $iduser);
+				->with('iduser', $iduser)
+				->with('homeview', $homeview);
 	}
 }

@@ -120,14 +120,14 @@
 							<div class="row">
 								<div class="col-md-6 col-md-offset-3">
 									<h2 class="text-center" style="font-weight: bold;">Pencarian Kode Barang</h2>
-									<h3 class="text-center">Masukkan Nama Barang yang ingin anda cari</h3>
+									<h3 class="text-center">Masukkan Nama / Kode Barang yang ingin anda cari</h3>
 									<form method="GET" action="/{{ env('APP_NAME') }}/" class="	">
 										<div class="form-group">
 											<div class="col-md-6">
 												<select class="form-control" name="kat" id="kat">
-													<option value="nabar">Nama Barang</option>
-													<option value="nakom">Nama Komponen</option>
-													<option value="nabarkom">Nama Barang dan Komponen</option>
+													<option value="nabar">Barang</option>
+													<option value="nakom">Komponen</option>
+													<option value="nabarkom">Barang dan Komponen</option>
 												</select>
 											</div>
 										</div>
@@ -150,9 +150,9 @@
 									<div class="form-group">
 										<div class="col-md-3">
 											<select class="form-control" name="kat" id="kat">
-												<option <?php if ($katnow == "nabar"): ?> selected <?php endif ?> value="nabar">Nama Barang</option>
-												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Nama Komponen</option>
-												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Nama Barang dan Komponen</option>
+												<option <?php if ($katnow == "nabar"): ?> selected <?php endif ?> value="nabar">Barang</option>
+												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Komponen</option>
+												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Barang dan Komponen</option>
 											</select>
 										</div>
 									</div>
@@ -334,7 +334,11 @@
 
 	<script>
 		$(document).ready(function () {
-			$('.myTable').DataTable();
+			$('.myTable').DataTable({
+				"oLanguage": {
+					"sSearch": "Filter:"
+				},
+			});
 		});
 	</script>
 </body>
