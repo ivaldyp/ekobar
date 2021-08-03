@@ -72,4 +72,5 @@ Route::group(['prefix' => 'form'], function () {
 	Route::post('/hapuskobar', 'FormController@formdeletekobar');
 	Route::get('/kodekomponen', 'FormController@pagekodekomponen');
 	Route::post('/kodekomponen', 'FormController@formupdatekomponen');
+	Route::post('/formupdatekomponenajax', 'FormController@formupdatekomponenajax');
 });

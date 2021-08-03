@@ -189,19 +189,23 @@
 							<table id="" class="myTable table table-bordered m-b-0 m-t-20 toggle-circle">
 								<thead>
 									<tr>
-										<th>Kobar</th>
 										<th>Komponen</th>
 										<th>Edit</th>
 									</tr>
 								</thead>
 								<tbody>
 									@foreach($komponens as $key => $datas)
-									<tr>
+									<tr id="{{ $datas['KOMPONEN_KODE'] }}">
 										<td>
-											<b>{{ $datas['KOBAR_PERMENDAGRI'] }}</b><br>
-											{{ $datas['NABAR_PERMENDAGRI'] }}
-										</td>
-										<td>
+											<b>Barang: </b> 
+											<b><span class="spanEdit kobarKobar">
+												{{ $datas['KOBAR_PERMENDAGRI'] }}
+											</span></b><br>
+											<span class="spanEdit kobarNabar">
+												{{ $datas['NABAR_PERMENDAGRI'] }}
+											</span>
+											<input type="text" data-mask="9.9.9.99.99.99.999" class="form-control inputEdit kobarEdit" name="kobarEdit" style="display: none;">
+											<hr>
 											<b>{{ $datas['KOMPONEN_KODE'] }}</b><br>
 											{{ $datas['KOMPONEN_NAMA'] }}<br>
 											{{ $datas['SPESIFIKASI'] }}<br>
@@ -209,7 +213,10 @@
 											<br>
 										</td>
 										<td>
-											<button type="button" class="btn btn-warning btn-kode" data-toggle="modal" data-target="#modal-kode" data-kodekomp="{{ $datas['KOMPONEN_KODE'] }}"><i class="fa fa-key"></i></button>
+											{{-- <button type="button" class="btn btn-warning btnEdit" data-toggle="modal" data-target="#modal-kode" data-kodekomp="{{ $datas['KOMPONEN_KODE'] }}"><i class="fa fa-key"></i></button>
+											<button type="button" class="btn btn-success btnSave" data-toggle="modal" data-target="#modal-kode" data-kodekomp="{{ $datas['KOMPONEN_KODE'] }}" style="display: none;"><i class="fa fa-check"></i></button> --}}
+											<button type="button" class="btn btn-warning btnEdit"><i class="fa fa-key"></i></button>
+											<button type="button" class="btn btn-success btnSave" style="display: none;"><i class="fa fa-check"></i></button>
 										</td>
 									</tr>
 									@endforeach
@@ -231,7 +238,7 @@
 							<h4 class="modal-title"><b>Sambungkan Kode Komponen dengan Kode Barang</b></h4>
 						</div>
 						<div class="modal-body">
-							<h4>Masukkan Kode Barang  </h4>
+							<h4>Masukkan Kode Barang</h4>
 
 							<input type="text" class="form-control" placeholder="" id="newkobar" required="" data-mask="9.9.9.99.99.99.999" name="newkobar">
 							<input type="hidden" name="komponen_kode" id="form_update_komponen_kode" value="">
@@ -276,6 +283,49 @@
 
 	<script type="text/javascript">
 		$(function () {
+			$('.btnEdit').on('click',function(){
+		        //hide edit span
+		        $(this).closest("tr").find(".spanEdit").hide();
+		        
+		        //show edit input
+		        $(this).closest("tr").find(".inputEdit").show();
+		        
+		        //hide edit button
+		        $(this).closest("tr").find(".btnEdit").hide();
+		        
+		        //show edit button
+		        $(this).closest("tr").find(".btnSave").show();
+		        
+		    });
+
+		    $('.btnSave').on('click',function(){
+		    	var trObj = $(this).closest("tr");
+		        var ID = $(this).closest("tr").attr('id');
+		        var inputData = ($(this).closest("tr").find(".inputEdit").serialize()).split("=");
+		        var csrf_js_var = "{{ csrf_token() }}";
+
+		        $.ajax({ 
+				method: "POST", 
+				url: "/ekobar/form/formupdatekomponenajax",
+				data: { ID : ID, inputData : inputData[1], _token : csrf_js_var },
+				}).done(function( result ) { 
+					if (result == "0") {
+						alert("Kode Barang tidak ditemukan!!");
+					} else {
+						trObj.find(".spanEdit.kobarKobar").text(result['kobar']);
+	                    trObj.find(".spanEdit.kobarNabar").text(result['nabar']);
+	                    trObj.find(".inputEdit.kobarEdit").text(result['kobar']);
+	                    alert("Berhasil mengubah Kobar dengan kode komponen: "+ID);
+					}
+
+					trObj.find(".inputEdit").hide();
+	                trObj.find(".btnSave").hide();
+	                trObj.find(".spanEdit").show();
+	                trObj.find(".btnEdit").show();
+				}); 
+		    });
+
+
 			$('#nakom').on('keyup keypress', function(e) {
 			  var keyCode = e.keyCode || e.which;
 			  if (keyCode === 13) { 
@@ -284,23 +334,23 @@
 			  }
 			});
 
-			var foo = $('#nakom').val();
-			var bar = $('#nabar').val();  
-		    if(foo.length > 3 && bar.length > 3){  
-				$('#btnSubmit').prop('disabled', false);
-			}else{
-				$('#btnSubmit').prop('disabled', true);
-			}  
+			// var foo = $('#nakom').val();
+			// var bar = $('#nabar').val();  
+		 //    if(foo.length > 3 && bar.length > 3){  
+			// 	$('#btnSubmit').prop('disabled', false);
+			// }else{
+			// 	$('#btnSubmit').prop('disabled', true);
+			// }  
 
-			$('#nakom').keyup(function(){
-			  	var foo = $('#nakom').val();  
-			  	var bar = $('#nabar').val();  
-			    if(foo.length > 3 && bar.length > 3){  
-			      	$('#btnSubmit').prop('disabled', false);
-			      }else{
-			      	$('#btnSubmit').prop('disabled', true);
-			      }  
-			});
+			// $('#nakom').keyup(function(){
+			//   	var foo = $('#nakom').val();  
+			//   	var bar = $('#nabar').val();  
+			//     if(foo.length > 3 && bar.length > 3){  
+			//       	$('#btnSubmit').prop('disabled', false);
+			//       }else{
+			//       	$('#btnSubmit').prop('disabled', true);
+			//       }  
+			// });
 
 			$('.btn-kode').on('click', function () {
 				var $el = $(this);

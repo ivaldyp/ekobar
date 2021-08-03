@@ -451,4 +451,33 @@ class FormController extends Controller
 					->with('msg_num', 1);
 	}
 
+	public function formupdatekomponenajax(Request $request)
+	{
+		$komponen = $request->ID;
+		$kobar = $request->inputData;
+		$kobarclean = str_replace(".", "", $kobar);
+
+		$databar = Nabar::
+					where('KOBAR', '=', $kobarclean)
+					->first();
+
+		if (is_null($databar)) {
+			return 0;
+		}
+
+		Nakom::
+			where('KOMPONEN_KODE', $komponen)
+			->update([
+				'KOBAR_PERMENDAGRI'		=> $databar['KOBAR'],
+				'NABAR_PERMENDAGRI'		=> $databar['NABAR'],
+			]);
+
+		$result = [];
+
+		$result['kobar'] = $databar['KOBAR'];
+		$result['nabar'] = $databar['NABAR'];
+
+		return $result;
+	}
+
 }
