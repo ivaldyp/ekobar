@@ -390,14 +390,14 @@ class FormController extends Controller
 		}
 			
 		if ($filekobar != '') {
-			Nabar::where('KOBAR', $kobarclean)
+			Nabar::where('KOBAR', 'like', '%'.$kobarclean.'%')
 				->update([
 					'KOBAR_IMG' 	=> $filekobar ?? NULL,
 				]);
 		}
 
 		Nabar::
-		where('KOBAR', $kobarclean)
+		where('KOBAR', 'like', '%'.$kobarclean.'%')
 		->update([
 			'NABAR'        	=> $nabar,
 			'update_date'	=> date('Y-m-d H:i:s'),
@@ -414,7 +414,7 @@ class FormController extends Controller
 		$kobar = $request->kobar;
 		$nabar = $request->nabar;
 
-		Nabar::where('KOBAR', $kobar)
+		Nabar::where('KOBAR', 'like', '%'.$kobar.'%')
 				->update([
 					'sts' => 0,
 					'update_date'	=> date('Y-m-d H:i:s'),
@@ -458,7 +458,7 @@ class FormController extends Controller
 		$kobarclean = str_replace(".", "", $kobar);
 
 		$databar = Nabar::
-					where('KOBAR', '=', $kobarclean)
+					where('KOBAR', 'like', '%'.$kobarclean.'%')
 					->first();
 
 		if (is_null($databar)) {
@@ -466,10 +466,11 @@ class FormController extends Controller
 		}
 
 		Nakom::
-			where('KOMPONEN_KODE', $komponen)
+			where('KOMPONEN_KODE', 'like', '%'.$komponen.'%')
 			->update([
 				'KOBAR_PERMENDAGRI'		=> $databar['KOBAR'],
 				'NABAR_PERMENDAGRI'		=> $databar['NABAR'],
+				'update_date'			=> date('Y-m-d H:i:s'),
 			]);
 
 		$result = [];
