@@ -1,10 +1,5 @@
 <li class="dropdown">
 	<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"> 
-	  	<!-- <?php if ($_SESSION['kobar_data']['foto'] && $_SESSION['kobar_data']['foto'] != '') : ?>
-			<img src="{{ config('app.openfileimg') }}/{{ $_SESSION['kobar_data']['foto'] }}" width="36" class=" img-circle" alt="img">
-		<?php else : ?>
-			<img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
-		<?php endif ?> -->
 		<img src="{{ config('app.openfileimgdefault') }}" width="36" class=" img-circle" alt="img">
 
 	  <!-- <b class="hidden-xs pull-right">Welcome</b> -->

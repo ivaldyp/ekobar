@@ -141,16 +141,34 @@ class HomeController extends Controller
 
 		date_default_timezone_set('Asia/Jakarta');
 
-		$iduser = Auth::user()->usname;
+		if (isset(Auth::user()->usname)) {
+			$iduser = Auth::user()->usname;
 
-		$user_data = Sec_logins::
-						where('usname', $iduser)
-						->first();
+			$user_data = Sec_logins::
+							where('usname', $iduser)
+							->first();
 
-		Sec_logins::where('usname', $user_data['usname'])
-		->update([
-			'lastlogin' => date('Y-m-d H:i:s'),
-		]);	
+			Sec_logins::where('usname', $user_data['usname'])
+			->update([
+				'lastlogin' => date('Y-m-d H:i:s'),
+			]);	
+		} else {
+			$iduser = Auth::user()->id_emp;
+
+			$user_data = DB::select( DB::raw("
+						SELECT id_emp, nrk_emp, nip_emp, nm_emp, a.idgroup_aset as idgroup, tgl_lahir, jnkel_emp, tgl_join, status_emp, tbjab.idjab, tbjab.idunit, tbunit.child, tbunit.nm_unit from bpaddtfake.dbo.emp_data as a
+						CROSS APPLY (SELECT TOP 1 tmt_jab,idskpd,idunit,idlok,tmt_sk_jab,no_sk_jab,jns_jab,replace(idjab,'NA::','') as idjab,eselon,gambar FROM bpaddtfake.dbo.emp_jab WHERE a.id_emp=emp_jab.noid AND emp_jab.sts='1' ORDER BY tmt_jab DESC) tbjab
+						CROSS APPLY (SELECT TOP 1 * FROM bpaddtfake.dbo.glo_org_unitkerja WHERE glo_org_unitkerja.kd_unit = tbjab.idunit) tbunit
+						,bpaddtfake.dbo.glo_skpd as b,bpaddtfake.dbo.glo_org_unitkerja as c,bpaddtfake.dbo.glo_org_lokasi as d WHERE tbjab.idskpd=b.skpd AND tbjab.idskpd+'::'+tbjab.idunit=c.kd_skpd+'::'+c.kd_unit AND tbjab.idskpd+'::'+tbjab.idlok=d.kd_skpd+'::'+d.kd_lok AND a.sts='1' AND b.sts='1' AND c.sts='1' AND d.sts='1' 
+						and id_emp = '$iduser' and ked_emp = 'aktif'
+						order by tbunit.kd_unit") )[0];
+			$user_data = json_decode(json_encode($user_data), true);
+
+			Emp_data::where('id_emp', $user_data['id_emp'])
+			->update([
+				'lastlogin' => date('Y-m-d H:i:s'),
+			]);	
+		}
 
 		$homeview = DB::select( DB::raw("
 					exec homeview
