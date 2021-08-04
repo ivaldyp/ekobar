@@ -78,7 +78,7 @@
 		                                    <select class="form-control select2" id="parentid">
 		                                    	<option value="type">-- KETIK SENDIRI --</option>
 		                                        @foreach($kobars as $key => $kobar)
-		                                        <option value="{{ $kobar->KOBAR }}||{{ $kobar->NABAR }}||{{ $kobar->KELOMPOK }}||{{ $kobar->JENIS }}||{{ $kobar->OBJEK }}||{{ $kobar->RINCIAN_OBJEK }}||{{ $kobar->SUB_RINCIAN_OBJEK }}||{{ $kobar->KOBAR_KODE }}">[{{ $kobar->KOBAR }}] - {{ $kobar->NABAR }}</option>
+		                                        <option <?php if(Session::get('parentbar') == $kobar->KOBAR): ?> selected <?php endif ?> value="{{ $kobar->KOBAR }}||{{ $kobar->NABAR }}||{{ $kobar->KELOMPOK }}||{{ $kobar->JENIS }}||{{ $kobar->OBJEK }}||{{ $kobar->RINCIAN_OBJEK }}||{{ $kobar->SUB_RINCIAN_OBJEK }}||{{ $kobar->KOBAR_KODE }}">[{{ $kobar->KOBAR }}] - {{ $kobar->NABAR }}</option>
 		                                        @endforeach
 		                                    </select>
 		                                </div>
@@ -108,14 +108,14 @@
 		                                </div>
 									</div>
 									<div class="form-group">
-										<label for="subrincian" class="col-sm-2 control-label">Sub Rincian</label>
+										<label for="subrincian" class="col-sm-2 control-label">Sub Rincian Objek</label>
 										<div class="col-sm-10">
 		                                    <p class="form-control-static" id="subrincian"> </p>
 		                                </div>
 									</div>
 									
 									<div class="form-group">
-										<label for="kobar" class="col-sm-2 control-label">MAX Kode Barang</label>
+										<label for="kobar" class="col-sm-2 control-label">Kode Barang Terakhir</label>
 										<div class="col-sm-10">
 		                                    <input type="text" class="form-control" placeholder="" id="kobar" disabled="">
 		                                </div>
@@ -124,21 +124,21 @@
 									<div class="form-group">
 										<label for="newkobar" class="col-sm-2 control-label">Kode Barang Baru</label>
 										<div class="col-sm-10">
-		                                    <input type="text" class="form-control" placeholder="Copy kode barang diatas, lalu tambahkan 1" id="newkobar" required="" data-mask="9.9.9.99.99.99.999" name="newkobar">
+		                                    <input type="text" class="form-control" placeholder="Copy kode barang diatas, lalu tambahkan 1" id="newkobar" required="" data-mask="9.9.9.99.99.99.999" name="newkobar" value="{{ old('newkobar') }}">
 		                                </div>
 									</div>
 
 									<div class="form-group">
 										<label for="nabar" class="col-sm-2 control-label">Nama Barang</label>
 										<div class="col-sm-10">
-		                                    <input type="text" class="form-control" placeholder="" id="nabar" required="" name="nabar" autocomplete="off">
+		                                    <input type="text" class="form-control" placeholder="" id="nabar" required="" name="nabar" autocomplete="off" value="{{ old('nabar') }}">
 		                                </div>
 									</div>
 
 									<div class="form-group">
 										<label for="nabar" class="col-md-2 control-label">Deskripsi</label>
 										<div class="col-md-10">
-											<textarea name="desk" class="form-control" rows="3" id="desk"></textarea>
+											<textarea name="desk" class="form-control" rows="3" id="desk">{{ old('desk') }}</textarea>
 		                                </div>
 									</div>
 
@@ -162,9 +162,9 @@
 
 									<div class="pull-right">
 									<button type="submit" class="btn btn-success waves-effect waves-light m-r-10">Submit</button>
-                                    <button type="submit" class="btn btn-inverse waves-effect waves-light">Cancel</button>
-										
-									</div>
+									<a href="/{{ env('APP_NAME') }}/form/ubahkobar">
+                                    	<button type="button" class="btn btn-inverse waves-effect waves-light">kembali</button>
+									</div></a>
 								</form>
                             </div>
                         </div>
@@ -203,10 +203,29 @@
 		$(function () {
 			$(".select2").select2();
 
+			var datanow = $(".select2 option:selected").val();
+			$("#newkobar").val('');
+			const myArr = datanow.split("||");
+			$("#formparent").val(myArr[0]);
+			$("#kelompok").text(myArr[2]);
+			$("#jenis").text(myArr[3]);
+			$("#objek").text(myArr[4]);
+			$("#rincian").text(myArr[5]);
+			$("#subrincian").text(myArr[6]);
+			var kode = myArr[7];
+			$.ajax({ 
+			method: "GET", 
+			url: "/ekobar/form/getmaxnewkobar",
+			data: { kode : kode },
+			}).done(function( data ) { 
+				$("#kobar").val(data['max']);
+				$("#level").val(data['level']);
+			}); 
+			
 			$('#parentid').on('change', function() {
+				var data = $(".select2 option:selected").val();
 				$("#newkobar").val('');
 
-		      	var data = $(".select2 option:selected").val();
 		      	const myArr = data.split("||");
 
 		      	$("#formparent").val(myArr[0]);

@@ -119,7 +119,10 @@
 											<th>No</th>
 											<th>Barang</th> 
 											<th>Detail</th>
-											<th>Keterangan</th>
+											<th> Jenis </th>
+											<th> Objek </th>
+											<th> Rincian Objek </th>
+											<th> Sub Rincian Objek </th>
 											<th>Action</th>
 										</tr>
 									</thead>
@@ -155,13 +158,17 @@
 													</span> 
 												</span>
 											</td>
-											<td>
+											{{-- <td>
 												<b>{{ $kobar['KELOMPOK'] ?? '-' }}</b><br>
 												{{ $kobar['JENIS'] ?? '-' }}<br>
 												{{ $kobar['OBJEK'] ?? '-' }}<br>
 												{{ $kobar['RINCIAN_OBJEK'] ?? '-' }}<br>
 												{{ $kobar['SUB_RINCIAN_OBJEK'] ?? '-' }}
-											</td>
+											</td> --}}
+											<td><b>{{ $kobar['KELOMPOK'] }}</b><span class="text-muted">{{ $kobar['JENIS'] ? ' - ' . $kobar['JENIS'] : '-' }}</span></td>
+											<td>{{ $kobar['OBJEK'] ?? '-' }}</td>
+											<td>{{ $kobar['RINCIAN_OBJEK'] ?? '-' }}<br></td>
+											<td>{{ $kobar['SUB_RINCIAN_OBJEK'] ?? '-' }}</td>
 											
 											<td class="text-nowrap">
 												<button type="submit" class="btn btn-warning btn-update-kobar" data-toggle="modal" data-target="#modal-ubah"

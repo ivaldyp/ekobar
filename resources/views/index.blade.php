@@ -107,7 +107,7 @@
 		<!-- Page Content -->
 		<!-- ============================================================== -->
 		<div id="page-wrapper" style="margin-left: 0px;">
-			<div class="container">
+			<div class="container-fluid">
 				<div class="row text-center ">
 					<div class="col-md-12 m-t-20">
 						<h1 style="font-weight: bold;">Selamat Datang di Sistem e-Kobar</h1>	
@@ -191,11 +191,12 @@
 										<tr>
 											<th data-toggle="true"> </th>
 											<th>Kode Barang</th>
-											<th> Nama </th>
+											<th> Nama Barang </th>
 											<th> Detail </th>
 											<th> Jenis </th>
 											<th> Objek </th>
-											<th> Rincian </th>
+											<th> Rincian Objek </th>
+											<th> Sub Rincian Objek </th>
 											<th data-hide="all"> </th>
 										</tr>
 									</thead>
@@ -230,9 +231,10 @@
 													</span> 
 												</span>
 											</td>
-											<td><b>{{ $datas[$i]['KELOMPOK'] }}</b><br> <span class="text-muted">{{ $datas[$i]['JENIS'] }}</span></td>
-											<td>{{ $datas[$i]['OBJEK'] }}</td>
-											<td>{{ $datas[$i]['RINCIAN_OBJEK'] }}<br><span class="text-muted">{{ $datas[$i]['SUB_RINCIAN_OBJEK'] }}</span></td>
+											<td><b>{{ $datas[$i]['KELOMPOK'] }}</b><span class="text-muted">{{ $datas[$i]['JENIS'] ? ' - ' . $datas[$i]['JENIS'] : '-' }}</span></td>
+											<td>{{ $datas[$i]['OBJEK'] ?? '-' }}</td>
+											<td>{{ $datas[$i]['RINCIAN_OBJEK'] ?? '-' }}<br></td>
+											<td>{{ $datas[$i]['SUB_RINCIAN_OBJEK'] ?? '-' }}</td>
 											<td>														
 												<div class="white-box">
 													<div class="table-responsive">

@@ -75,8 +75,10 @@ class FormController extends Controller
 	public function pagetambahkobar(Request $request)
 	{
 		$kobars = Nabar::
-					where('KOBAR', 'like', '%000')
-					->where('sts', 1)
+					where('sts', 1)
+					->where('KOBAR', 'like', '%000')
+					->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
+					->where('KOBAR', 'not like', '%00000')
 					->OrderBy('KOBAR')->get(['KOBAR','NABAR','KELOMPOK','JENIS','OBJEK','RINCIAN_OBJEK','SUB_RINCIAN_OBJEK','KOBAR_KODE']);
 
 		return view('pages.kobarform.tambahkobar')
@@ -175,29 +177,50 @@ class FormController extends Controller
 	{
 		$kobar = $request->newkobar;
 		$kobarclean = str_replace(".", "", $kobar);
+		$dropdownparent = $request->formparent;
 
-		if (is_null($request->formparent) || $request->formparent == 'type') {
-			if (substr($kobar, 4) == "0") {
-				$formparent = str_replace(".", "", substr($kobar, 0, 1));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
-			} elseif (substr($kobar, 6, 2) == "00") {
-				$formparent = str_replace(".", "", substr($kobar, 0, 3));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-			} elseif (substr($kobar, 9, 2) == "00") {
-				$formparent = str_replace(".", "", substr($kobar, 0, 5));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
-			} elseif (substr($kobar, 12, 2) == "00") {
-				$formparent = str_replace(".", "", substr($kobar, 0, 8));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-			} elseif (substr($kobar, 15, 3) == "000") {
-				$formparent = str_replace(".", "", substr($kobar, 0, 11));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);  
-			} else {
-				$formparent = str_replace(".", "", substr($kobar, 0, 14));
-				$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-			}
+		// if (is_null($request->formparent) || $request->formparent == 'type') {
+		// 	if (substr($kobar, 4) == "0") {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 1));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+		// 	} elseif (substr($kobar, 6, 2) == "00") {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 3));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+		// 	} elseif (substr($kobar, 9, 2) == "00") {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 5));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+		// 	} elseif (substr($kobar, 12, 2) == "00") {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 8));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+		// 	} elseif (substr($kobar, 15, 3) == "000") {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 11));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);  
+		// 	} else {
+		// 		$formparent = str_replace(".", "", substr($kobar, 0, 14));
+		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+		// 	}
+		// } else {
+		// 	$formparent = $request->formparent;
+		// }
+
+		if (substr($kobar, 4) == "0") {
+			$formparent = str_replace(".", "", substr($kobar, 0, 1));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+		} elseif (substr($kobar, 6, 2) == "00") {
+			$formparent = str_replace(".", "", substr($kobar, 0, 3));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+		} elseif (substr($kobar, 9, 2) == "00") {
+			$formparent = str_replace(".", "", substr($kobar, 0, 5));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
+		} elseif (substr($kobar, 12, 2) == "00") {
+			$formparent = str_replace(".", "", substr($kobar, 0, 8));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
+		} elseif (substr($kobar, 15, 3) == "000") {
+			$formparent = str_replace(".", "", substr($kobar, 0, 11));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);  
 		} else {
-			$formparent = $request->formparent;
+			$formparent = str_replace(".", "", substr($kobar, 0, 14));
+			$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
 		}
 
 		$cekkode = Nabar::
@@ -205,7 +228,10 @@ class FormController extends Controller
 				->where('sts', 1)
 				->first();
 		if ($cekkode) {
-			return redirect()->back()->with('message', 'Kode Barang '.$kobarclean.' sudah ada');
+			return redirect()->back()
+					->with('parentbar', $dropdownparent)
+					->with('message', 'Kode Barang '.$kobarclean.' sudah ada')
+					->withInput($request->input());
 		}
 
 		$ceknama = Nabar::
@@ -213,7 +239,10 @@ class FormController extends Controller
 				->where('sts', 1)
 				->first();
 		if ($ceknama) {
-			return redirect()->back()->with('message', 'Nama Barang '.$request->nabar.' sudah ada');
+			return redirect()->back()
+					->with('parentbar', $dropdownparent)
+					->with('message', 'Nama Barang '.$request->nabar.' sudah ada')
+					->withInput($request->input());
 		}
 
 		$filekobar = '';
@@ -222,11 +251,17 @@ class FormController extends Controller
 			$file = $request->img;
 
 			if ($file->getSize() > 600000) {
-				return redirect()->back()->with('message', 'Ukuran file terlalu besar (Maksimal 500KB)');     
+				return redirect()->back()
+						->with('parentbar', $dropdownparent)
+						->with('message', 'Ukuran file terlalu besar (Maksimal 500KB)')
+						->withInput($request->input());     
 			} 
 
 			if (strtolower($file->getClientOriginalExtension()) != "png" && strtolower($file->getClientOriginalExtension()) != "jpg" && strtolower($file->getClientOriginalExtension()) != "jpeg") {
-				return redirect()->back()->with('message', 'File yang diunggah harus berbentuk JPG / JPEG / PNG');     
+				return redirect()->back()
+						->with('parentbar', $dropdownparent)
+						->with('message', 'File yang diunggah harus berbentuk JPG / JPEG / PNG')
+						->withInput($request->input());     
 			}
 
 			$filekobar .= "KOBAR_" . $kobarclean . "." . $file->getClientOriginalExtension();
@@ -339,7 +374,8 @@ class FormController extends Controller
 			]);
 		} 
 
-		return redirect('/form/ubahkobar')
+		return redirect('/form/tambahkobar')
+					->with('parentbar', $dropdownparent)
 					->with('message', 'Kode Barang '.$kobar.' dengan nama '. $nabar .' berhasil ditambah')
 					->with('msg_num', 1);
 	}

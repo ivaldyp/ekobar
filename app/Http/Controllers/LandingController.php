@@ -42,6 +42,7 @@ class LandingController extends Controller
 							  ->orWhere('KOBAR', 'like', '%'.$cari.'%');
 							})
 							->where('sts', 1)
+							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
@@ -53,6 +54,7 @@ class LandingController extends Controller
 							  ->orWhere('KOMPONEN_KODE', 'like', '%'.$cari.'%');
 							})
 							->where('sts', 1)
+							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
 							->get();
@@ -60,6 +62,7 @@ class LandingController extends Controller
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
 							->where('sts', 1)
+							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->where(function($q) use ($cari) {
 							$q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
 								->orWhere('NABAR', 'like', '%'.$cari.'%')
