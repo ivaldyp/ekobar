@@ -25,13 +25,40 @@ class FormController extends Controller
 	{
 		$kobar = $request->kode;
 		$kobarclean = str_replace(".", "", $kobar);
+		$kobarfull = str_pad($kobarclean, 12, '0', STR_PAD_RIGHT);
 		$arr = [];
+
+		$arrkobar1 = [];
+		$arrkobar2 = [];
 
 		if ($kobar == '1.0') {
 			$max = Nabar::
 					where('KOBAR', 'LIKE', '1_%')
 					->where('KOBAR', 'LIKE', '%0000000000')
 					->max('KOBAR');
+
+			$max = substr($max, 0, 2);
+			$max = $max + 1;
+			$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
+
+			$child = Nabar::
+					where('KOBAR', 'LIKE', '1_%')
+					->where('KOBAR', '<>', $kobarfull)
+					->orderBy('KOBAR')
+					->get();
+
+			if(count($child) > 1) {
+				foreach($child as $data){
+					$arrkobar1[] = substr($data['KOBAR'], 0, 2);
+				}
+				$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+				if(count($arrkobar1) == count($arrkobar2)){
+					$missing = $max;
+				} else {
+					$missing = min(array_diff($arrkobar2, $arrkobar1));
+				}
+			}
+
 			$level = 0;
 		} else {
 			if (substr_count($kobar, ".") == 1) {
@@ -39,36 +66,155 @@ class FormController extends Controller
 						where('KOBAR', 'LIKE', $kobarclean.'_%')
 						->where('KOBAR', 'LIKE', '%000000000')
 						->max('KOBAR');
+
+				$max = substr($max, 0, 3);
+				$max = $max + 1;
+				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
+
+				$child = Nabar::
+						where('KOBAR', 'LIKE', $kobarclean.'_%')
+						->where('KOBAR', '<>', $kobarfull)
+						->orderBy('KOBAR')
+						->get();
+
+				if(count($child) > 1) {
+					foreach($child as $data){
+						$arrkobar1[] = substr($data['KOBAR'], 0, 3);
+					}
+					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					if(count($arrkobar1) == count($arrkobar2)){
+						$missing = $max;
+					} else {
+						$missing = min(array_diff($arrkobar2, $arrkobar1));
+					}
+				}
+
 				$level = 1;
 			} elseif (substr_count($kobar, ".") == 2) {
 				$max = Nabar::
 						where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%0000000')
 						->max('KOBAR');
+
+				$max = substr($max, 0, 5);
+				$max = $max + 1;
+				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
+
+				$child = Nabar::
+						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						->where('KOBAR', '<>', $kobarfull)
+						->orderBy('KOBAR')
+						->get();
+
+				if(count($child) > 1) {
+					foreach($child as $data){
+						$arrkobar1[] = substr($data['KOBAR'], 0, 5);
+					}
+					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					if(count($arrkobar1) == count($arrkobar2)){
+						$missing = $max;
+					} else {
+						$missing = min(array_diff($arrkobar2, $arrkobar1));
+					}
+				}
+
 				$level = 2;
 			} elseif (substr_count($kobar, ".") == 3) {
 				$max = Nabar::
 						where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%00000')
 						->max('KOBAR');
+
+				$max = substr($max, 0, 7);
+				$max = $max + 1;
+				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
+
+				$child = Nabar::
+						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						->where('KOBAR', '<>', $kobarfull)
+						->orderBy('KOBAR')
+						->get();
+
+				if(count($child) > 1) {
+					foreach($child as $data){
+						$arrkobar1[] = substr($data['KOBAR'], 0, 7);
+					}
+					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					if(count($arrkobar1) == count($arrkobar2)){
+						$missing = $max;
+					} else {
+						$missing = min(array_diff($arrkobar2, $arrkobar1));
+					}
+				}
+
 				$level = 3;
 			} elseif (substr_count($kobar, ".") == 4) {
 				$max = Nabar::
 						where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%000')
 						->max('KOBAR');
+
+				$max = substr($max, 0, 9);
+				$max = $max + 1;
+				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
+
+				$child = Nabar::
+						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						->where('KOBAR', '<>', $kobarfull)
+						->orderBy('KOBAR')
+						->get();
+
+				if(count($child) > 1) {
+					foreach($child as $data){
+						$arrkobar1[] = substr($data['KOBAR'], 0, 9);
+					}
+					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					if(count($arrkobar1) == count($arrkobar2)){
+						$missing = $max;
+					} else {
+						$missing = min(array_diff($arrkobar2, $arrkobar1));
+					}
+				}
+
 				$level = 4;
 			} elseif (substr_count($kobar, ".") == 5) {
 				$max = Nabar::
 						where('KOBAR', 'LIKE', $kobarclean.'___%')
 						->max('KOBAR');
+				
+				$max++;
+
+				$child = Nabar::
+						where('KOBAR', 'LIKE', $kobarclean.'___%')
+						->where('KOBAR', '<>', $kobarfull)
+						->orderBy('KOBAR')
+						->get();
+
+				if(count($child) > 1) {
+					foreach($child as $data){
+						$arrkobar1[] = $data['KOBAR'];
+					}
+					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					if(count($arrkobar1) == count($arrkobar2)){
+						$missing = $max;
+					} else {
+						$missing = min(array_diff($arrkobar2, $arrkobar1));
+					}
+					
+				} else {
+					$missing = $max;
+				}
+
 				$level = 5;
 			}
 		}
 
 		$arr['max'] = $max;
+		$arr['child'] = $child;
 		$arr['level'] = $level;
-
+		$arr['missing'] = $missing;
+		
+		// die;
 		return $arr;
 	}
 

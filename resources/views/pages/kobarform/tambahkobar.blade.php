@@ -3,6 +3,7 @@
 @section('css')
 	<!-- Bootstrap Core CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
@@ -64,6 +65,7 @@
 					@endif
 				</div>
 			</div>
+			
 			<div class="row">
 				<div class="col-md-12">
 					<div class="panel panel-info">
@@ -113,18 +115,45 @@
 		                                    <p class="form-control-static" id="subrincian"> </p>
 		                                </div>
 									</div>
+
+									<div id="tablechild" class="table-responsive" style="height: 300px; overflow-y: scroll;">
+										<label for="tablechild" class="control-label">List Sub Sub Rincian Objek</label>
+										<table class="table table-hover table-bordered" >
+											<thead>
+												<tr>
+													<th>Kode</th>
+													<th>Barang</th>
+													<th>Deskripsi</th>
+													<!-- <th>Kategori</th> -->
+												</tr>
+											</thead>
+											<tbody id="bodychild">
+												<tr>
+													<td>-</td>
+													<td>-</td>
+													<td>-</td>
+													<!-- <td>-</td> -->
+												</tr>
+											</tbody>
+										</table>
+									</div>
 									
-									<div class="form-group">
-										<label for="kobar" class="col-sm-2 control-label">Kode Barang Terakhir</label>
-										<div class="col-sm-10">
+									<div class="form-group m-t-20">
+										<label for="kobar" class="col-sm-2 control-label">Rekomendasi Kode Barang</label>
+										<div class="col-sm-4">
 		                                    <input type="text" class="form-control" placeholder="" id="kobar" disabled="">
+		                                </div>
+									
+										<label for="missingkobar" class="col-sm-2 control-label">Missing Kode Barang</label>
+										<div class="col-sm-4">
+		                                    <input type="text" class="form-control" placeholder="" id="missingkobar" disabled="" readonly>
 		                                </div>
 									</div>
 
 									<div class="form-group">
 										<label for="newkobar" class="col-sm-2 control-label">Kode Barang Baru</label>
 										<div class="col-sm-10">
-		                                    <input type="text" class="form-control" placeholder="Copy kode barang diatas, lalu tambahkan 1" id="newkobar" required="" data-mask="9.9.9.99.99.99.999" name="newkobar" value="{{ old('newkobar') }}">
+		                                    <input type="text" class="form-control" placeholder="Copy kode barang diatas" id="newkobar" required="" data-mask="9.9.9.99.99.99.999" name="newkobar" value="{{ old('newkobar') }}">
 		                                </div>
 									</div>
 
@@ -195,13 +224,18 @@
 	<!-- Custom Theme JavaScript -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 	<!--Style Switcher -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 
 
 	<script type="text/javascript">
 		$(function () {
+
 			$(".select2").select2();
+
+			$("#tablechild").hide();
+			// $("#tablechild table").removeClass("myTable");
 
 			var datanow = $(".select2 option:selected").val();
 			$("#newkobar").val('');
@@ -213,13 +247,45 @@
 			$("#rincian").text(myArr[5]);
 			$("#subrincian").text(myArr[6]);
 			var kode = myArr[7];
+			var mykobar = myArr[0];
 			$.ajax({ 
 			method: "GET", 
 			url: "/ekobar/form/getmaxnewkobar",
-			data: { kode : kode },
+			data: { kode : kode, mykobar : mykobar },
 			}).done(function( data ) { 
 				$("#kobar").val(data['max']);
 				$("#level").val(data['level']);
+				$("#missingkobar").val(data['missing']);
+
+				$("#bodychild").empty();
+
+				if(data['child'].length){
+					for (var i = 0; i < data['child'].length; i++) {
+						var kobar = data['child'][i]['KOBAR'];
+						var nabar = data['child'][i]['NABAR'];
+						var desk = data['child'][i]['KOBAR_DESK'] ?? '-';
+						var kelompok = data['child'][i]['KELOMPOK'] ?? '-';
+						var jenis = data['child'][i]['JENIS'] ?? '-';
+						var objek = data['child'][i]['OBJEK'] ?? '-';
+						var rincian = data['child'][i]['RINCIAN_OBJEK'] ?? '-';
+						var sub = data['child'][i]['SUB_RINCIAN_OBJEK'] ?? '-';
+
+						$('#bodychild').append("<tr>"+
+													"<td>"+kobar+"</td>"+
+													"<td>"+nabar+"</td>"+
+													"<td>"+desk+"</td>"+
+													// "<td>"+kelompok+"<br>"+jenis+"<br>"+objek+"<br>"+rincian+"<br>"+sub+"</td>"+
+												"</tr>");
+					}
+				} else {
+					$('#bodychild').append("<tr>"+
+												"<td>-</td>"+
+												"<td>-</td>"+
+												"<td>-</td>"+
+											"</tr>");
+				}
+
+				$("#tablechild").show();
 			}); 
 			
 			$('#parentid').on('change', function() {
@@ -243,16 +309,54 @@
 				$("#formsubrincian").val(myArr[6]);
 
 				var kode = myArr[7];
+				var mykobar = myArr[0];
 
 				$.ajax({ 
 				method: "GET", 
 				url: "/ekobar/form/getmaxnewkobar",
-				data: { kode : kode },
+				data: { kode : kode, mykobar : mykobar },
 				}).done(function( data ) { 
 					$("#kobar").val(data['max']);
+					$("#missingkobar").val(data['missing']);
 					$("#level").val(data['level']);
-				}); 
+
+					$("#bodychild").empty();
+
+					if(data['child'].length){
+						for (var i = 0; i < data['child'].length; i++) {
+							var kobar = data['child'][i]['KOBAR'];
+							var nabar = data['child'][i]['NABAR'];
+							var desk = data['child'][i]['KOBAR_DESK'] ?? '-';
+							var kelompok = data['child'][i]['KELOMPOK'] ?? '-';
+							var jenis = data['child'][i]['JENIS'] ?? '-';
+							var objek = data['child'][i]['OBJEK'] ?? '-';
+							var rincian = data['child'][i]['RINCIAN_OBJEK'] ?? '-';
+							var sub = data['child'][i]['SUB_RINCIAN_OBJEK'] ?? '-';
+	
+							$('#bodychild').append("<tr>"+
+														"<td>"+kobar+"</td>"+
+														"<td>"+nabar+"</td>"+
+														"<td>"+desk+"</td>"+
+														// "<td>"+kelompok+"<br>"+jenis+"<br>"+objek+"<br>"+rincian+"<br>"+sub+"</td>"+
+													"</tr>");
+						}
+					} else {
+						$('#bodychild').append("<tr>"+
+													"<td>-</td>"+
+													"<td>-</td>"+
+													"<td>-</td>"+
+												"</tr>");
+					}
+
+					$("#tablechild").show();
+				});
 		    })
+
+			$('#myTable').DataTable({
+				"oLanguage": {
+					"sSearch": "Filter:"
+				},
+			});
 		});
 	</script>
 @endsection
