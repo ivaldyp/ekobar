@@ -149,7 +149,9 @@
 																<tr>
 																	<td><strong>Gambar</strong></td>
 																	<td>
+																		<a href="javascript:void(0)" @if($kobar['KOBAR_IMG']) class="pop" @endif>
 																		<img src="{{ $kobar['KOBAR_IMG'] ? config('app.openfileimgkobar') .'/'. $kobar['KOBAR'] .'/'. $kobar['KOBAR_IMG'] : config('app.openfileimgcontentdefault') }}">
+																		</a>
 																	</td>
 																</tr>
 																
@@ -275,6 +277,16 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">              
+					<div class="modal-body">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+						<img src="" class="imagepreview" style="width: 100%;">
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- /.container-fluid -->
 		<footer class="footer text-center"> {{ date('Y') }} &copy; Ample Admin brought to you by themedesigner.in </footer>
 	</div>
@@ -306,6 +318,11 @@
 	<script type="text/javascript">
 		$(function () {
 			$(".select2").select2();
+
+			$('.pop').on('click', function() {
+				$('.imagepreview').attr('src', $(this).find('img').attr('src'));
+				$('#imagemodal').modal('show');   
+			});	
 
 		    $('#myTable').DataTable({
 		    	"oLanguage": {
