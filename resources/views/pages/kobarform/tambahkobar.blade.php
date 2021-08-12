@@ -116,26 +116,29 @@
 		                                </div>
 									</div>
 
-									<div id="tablechild" class="table-responsive" style="height: 300px; overflow-y: scroll;">
-										<label for="tablechild" class="control-label">List Sub Sub Rincian Objek</label>
-										<table class="table table-hover table-bordered" >
-											<thead>
-												<tr>
-													<th>Kode</th>
-													<th>Barang</th>
-													<th>Deskripsi</th>
-													<!-- <th>Kategori</th> -->
-												</tr>
-											</thead>
-											<tbody id="bodychild">
-												<tr>
-													<td>-</td>
-													<td>-</td>
-													<td>-</td>
-													<!-- <td>-</td> -->
-												</tr>
-											</tbody>
-										</table>
+									<div id="tablechild" class="form-group table-responsive" >
+										<label for="tablechild" class="col-sm-2 control-label">List Sub Sub Rincian Objek</label>
+										<div class="col-sm-10 table-responsive" style="height: 300px; overflow-y: scroll;">
+											<table class="table table-hover table-bordered" >
+												<thead>
+													<tr>
+														<th>Kode</th>
+														<th>Barang</th>
+														<th>Deskripsi</th>
+														<!-- <th>Kategori</th> -->
+													</tr>
+												</thead>
+												<tbody id="bodychild">
+													<tr>
+														<td>-</td>
+														<td>-</td>
+														<td>-</td>
+														<!-- <td>-</td> -->
+													</tr>
+												</tbody>
+											</table>
+										</div>
+											
 									</div>
 									
 									<div class="form-group m-t-20">

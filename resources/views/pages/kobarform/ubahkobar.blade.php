@@ -176,12 +176,15 @@
 													data-nabar="{{ $kobar['NABAR'] }}"
 													data-desk="{{ $kobar['KOBAR_DESK'] }}"
 													data-img="{{ $kobar['KOBAR_IMG'] }}"
+													data-sts="{{ $kobar['sts'] }}"
 												><i class="fa fa-edit"></i></button>
+												@if($kobar['sts'] == '1')
 												<button type="submit" class="btn btn-danger btn-delete-kobar" data-toggle="modal" data-target="#modal-hapus"
 													data-kobar="{{ $kobar['KOBAR'] }}"
 													data-kobarkode="{{ $kobar['KOBAR_KODE'] }}"
 													data-nabar="{{ $kobar['NABAR'] }}"
 												><i class="fa fa-trash"></i></button>
+												@endif
 											</td>
 										</tr>
 										@endforeach
@@ -213,10 +216,10 @@
 									</div>
 								</div>
 
-								<div class="form-group">
+								<div class="form-group" id="formnabar">
 									<label for="modal_update_nabar" class="col-md-3 control-label"> Nama Barang <span style="color: red; font-size: 20px;"> *</span></label>
 									<div class="col-md-9">
-										<input autocomplete="off" type="text" name="nabar" class="form-control" id="modal_update_nabar" required="">
+										<input autocomplete="off" type="text" name="nabar" class="form-control" id="modal_update_nabar" required>
 									</div>
 								</div>
 
@@ -318,10 +321,18 @@
 				$("#modal_update_desk").val($el.data('desk'));
 				$("#modal_update_img").val('');
 
+				if($el.data('sts') == '1'){
+					$("#formnabar").show();
+				} else {
+					$("#formnabar").hide();
+				}
+
 				if ($el.data('img') == null || $el.data('img') == '') {
+					$("#kobarimg").hide();
 					var urlimg = '/ekobar/public/publicimg/imgnotfound.jpg';
 					$("#kobarimg").attr("href", urlimg);
 				} else {
+					$("#kobarimg").show();
 					var urlimg = '/ekobar/public/publicfile/kobar/' + $el.data('kobar') + '/' +  $el.data('img');
 					$("#kobarimg").attr("href", urlimg);
 				}

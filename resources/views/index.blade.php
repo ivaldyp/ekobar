@@ -265,7 +265,9 @@
 																	<th class="col-md-3">KOMPONEN</th>
 																	<th class="col-md-2">SATUAN</th>
 																	<th class="col-md-4">KETERANGAN</th>
+																	@if(Auth::check())
 																	<th class="col-md-2">HARGA</th>
+																	@endif
 																</tr>
 															</thead>
 															<tbody>
@@ -276,7 +278,9 @@
 																	<td><b>{{ $datas[$i]['KOMPONEN_KODE'] }}</b><br>{{ $datas[$i]['KOMPONEN_NAMA'] }}</span></td>
 																	<td>{{ $datas[$i]['SATUAN'] ?? '-' }}</td>
 																	<td>{{ $datas[$i]['SPESIFIKASI'] ?? '-' }}</td>
+																	@if(Auth::check())
 																	<td>Rp {{ $datas[$i]['HARGA'] ? number_format($datas[$i]['HARGA'],2,',','.') : '-' }}</td>
+																	@endif
 																</tr>
 
 																@if(isset($datas[$i+1]['KOBAR_PERMENDAGRI']) && $datas[$i]['KOBAR_PERMENDAGRI'] == $datas[$i+1]['KOBAR_PERMENDAGRI'])

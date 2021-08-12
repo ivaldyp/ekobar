@@ -33,7 +33,11 @@ class FormController extends Controller
 
 		if ($kobar == '1.0') {
 			$max = Nabar::
-					where('KOBAR', 'LIKE', '1_%')
+					where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+					->where('KOBAR', 'LIKE', '1_%')
 					->where('KOBAR', 'LIKE', '%0000000000')
 					->max('KOBAR');
 
@@ -42,7 +46,11 @@ class FormController extends Controller
 			$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
 			$child = Nabar::
-					where('KOBAR', 'LIKE', '1_%')
+					where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+					->where('KOBAR', 'LIKE', '1_%')
 					->where('KOBAR', '<>', $kobarfull)
 					->orderBy('KOBAR')
 					->get();
@@ -63,7 +71,11 @@ class FormController extends Controller
 		} else {
 			if (substr_count($kobar, ".") == 1) {
 				$max = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'_%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'_%')
 						->where('KOBAR', 'LIKE', '%000000000')
 						->max('KOBAR');
 
@@ -72,7 +84,11 @@ class FormController extends Controller
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
 				$child = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'_%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'_%')
 						->where('KOBAR', '<>', $kobarfull)
 						->orderBy('KOBAR')
 						->get();
@@ -92,7 +108,11 @@ class FormController extends Controller
 				$level = 1;
 			} elseif (substr_count($kobar, ".") == 2) {
 				$max = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%0000000')
 						->max('KOBAR');
 
@@ -101,7 +121,11 @@ class FormController extends Controller
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
 				$child = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
 						->orderBy('KOBAR')
 						->get();
@@ -121,7 +145,11 @@ class FormController extends Controller
 				$level = 2;
 			} elseif (substr_count($kobar, ".") == 3) {
 				$max = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%00000')
 						->max('KOBAR');
 
@@ -130,7 +158,11 @@ class FormController extends Controller
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
 				$child = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
 						->orderBy('KOBAR')
 						->get();
@@ -150,7 +182,11 @@ class FormController extends Controller
 				$level = 3;
 			} elseif (substr_count($kobar, ".") == 4) {
 				$max = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%000')
 						->max('KOBAR');
 
@@ -159,7 +195,11 @@ class FormController extends Controller
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
 				$child = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'__%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
 						->orderBy('KOBAR')
 						->get();
@@ -179,13 +219,21 @@ class FormController extends Controller
 				$level = 4;
 			} elseif (substr_count($kobar, ".") == 5) {
 				$max = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'___%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'___%')
 						->max('KOBAR');
 				
 				$max++;
 
 				$child = Nabar::
-						where('KOBAR', 'LIKE', $kobarclean.'___%')
+						where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
+						->where('KOBAR', 'LIKE', $kobarclean.'___%')
 						->where('KOBAR', '<>', $kobarfull)
 						->orderBy('KOBAR')
 						->get();
@@ -221,7 +269,10 @@ class FormController extends Controller
 	public function pagetambahkobar(Request $request)
 	{
 		$kobars = Nabar::
-					where('sts', 1)
+					where(function($q) {
+					$q->where('sts', 1)
+						->orWhereNull('sts');
+					})
 					->where('KOBAR', 'like', '%000')
 					->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
 					->where('KOBAR', 'not like', '%00000')
@@ -246,7 +297,10 @@ class FormController extends Controller
 						$q->where('NABAR', 'like', '%'.$nabarcari.'%')
 	                   	  ->orWhere('KOBAR', 'like', '%'.$nabarcari.'%');
 			            })
-						->where('sts', 1)
+						->where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
 						->OrderBy('KOBAR')
 						->get();
 		} else {
@@ -269,7 +323,10 @@ class FormController extends Controller
 						$q->where('NABAR', 'like', '%'.$nabarcari.'%')
 	                   	  ->orWhere('KOBAR', 'like', '%'.$nabarcari.'%');
 			            })
-						->where('sts', 1)
+						->where(function($q) {
+						$q->where('sts', 1)
+							->orWhereNull('sts');
+						})
 						->OrderBy('KOBAR')
 						->get();
 		} else {
@@ -371,7 +428,10 @@ class FormController extends Controller
 
 		$cekkode = Nabar::
 				where('KOBAR', 'like', $kobarclean)
-				->where('sts', 1)
+				->where(function($q) {
+				$q->where('sts', 1)
+					->orWhereNull('sts');
+				})
 				->first();
 		if ($cekkode) {
 			return redirect()->back()
@@ -382,7 +442,10 @@ class FormController extends Controller
 
 		$ceknama = Nabar::
 				where('NABAR', 'like', '%'.$request->nabar.'%')
-				->where('sts', 1)
+				->where(function($q) {
+				$q->where('sts', 1)
+					->orWhereNull('sts');
+				})
 				->first();
 		if ($ceknama) {
 			return redirect()->back()

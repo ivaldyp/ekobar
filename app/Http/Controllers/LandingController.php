@@ -41,7 +41,10 @@ class LandingController extends Controller
 							$q->where('NABAR', 'like', '%'.$cari.'%')
 							  ->orWhere('KOBAR', 'like', '%'.$cari.'%');
 							})
-							->where('sts', 1)
+							->where(function($q) {
+								$q->where('sts', 1)
+									->orWhereNull('sts');
+								})
 							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
@@ -53,7 +56,10 @@ class LandingController extends Controller
 							$q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
 							  ->orWhere('KOMPONEN_KODE', 'like', '%'.$cari.'%');
 							})
-							->where('sts', 1)
+							->where(function($q) {
+								$q->where('sts', 1)
+									->orWhereNull('sts');
+								})
 							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->orderBy('KOBAR', 'ASC')
 							->orderBy('KOMPONEN_KODE', 'ASC')
@@ -61,7 +67,10 @@ class LandingController extends Controller
 			} elseif ($kat == 'nabarkom') {
 				$datas = Nabar::
 							leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
-							->where('sts', 1)
+							->where(function($q) {
+								$q->where('sts', 1)
+									->orWhereNull('sts');
+								})
 							->whereRaw('RIGHT(KOBAR, 3) != '."000".'')
 							->where(function($q) use ($cari) {
 							$q->where('KOMPONEN_NAMA', 'like', '%'.$cari.'%')
