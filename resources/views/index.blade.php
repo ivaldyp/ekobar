@@ -209,7 +209,7 @@
 											<td><b>{{ $datas[$i]['KOBAR'] }}</b></td>
 											<td>{{ $datas[$i]['NABAR'] }}</td>
 											<td>
-												<span class="mytooltip tooltip-effect-1"> 
+												<span class="mytooltip tooltip-effect-1" style="z-index: 0"> 
 													<span class="tooltip-item">Detail</span> 
 													<span class="tooltip-content clearfix"> 
 														<table class="table table-bordered">
