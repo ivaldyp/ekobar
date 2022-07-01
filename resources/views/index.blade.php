@@ -187,7 +187,7 @@
 									</tbody>
 								</table>
 								@else
-								<table id="demo-foo-row-toggler" class="table table-bordered m-b-0 m-t-20 toggle-circle">
+								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle">
 									<thead>
 										<tr>
 											<th data-toggle="true"> </th>
@@ -205,10 +205,10 @@
 										@for($i=0; $i < count($datas); $i++)
 										<?php $flag = 0; ?>
 										<tr>
-											<td></td>
-											<td><b>{{ $datas[$i]['KOBAR'] }}</b></td>
-											<td>{{ $datas[$i]['NABAR'] }}</td>
-											<td>
+											<td style="vertical-align: middle;"></td>
+											<td style="vertical-align: middle;"><b>{{ $datas[$i]['KOBAR'] }}</b></td>
+											<td style="vertical-align: middle;">{{ $datas[$i]['NABAR'] }}</td>
+											<td style="vertical-align: middle;">
 												<span class="mytooltip tooltip-effect-1" style="z-index: 0"> 
 													<span class="tooltip-item">Detail</span> 
 													<span class="tooltip-content clearfix"> 
@@ -234,10 +234,10 @@
 													</span> 
 												</span>
 											</td>
-											<td><b>{{ $datas[$i]['KELOMPOK'] }}</b><span class="text-muted">{{ $datas[$i]['JENIS'] ? ' - ' . $datas[$i]['JENIS'] : '-' }}</span></td>
-											<td>{{ $datas[$i]['OBJEK'] ?? '-' }}</td>
-											<td>{{ $datas[$i]['RINCIAN_OBJEK'] ?? '-' }}<br></td>
-											<td>{{ $datas[$i]['SUB_RINCIAN_OBJEK'] ?? '-' }}</td>
+											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 3) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;"><strong>{{ $datas[$i]['KELOMPOK'] }}</strong><span class="text-muted">{{ $datas[$i]['JENIS'] ? ' - ' . $datas[$i]['JENIS'] : '-' }}</span></td>
+											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 5) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['OBJEK'] ?? '-' }}</td>
+											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 7) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['RINCIAN_OBJEK'] ?? '-' }}<br></td>
+											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 9) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['SUB_RINCIAN_OBJEK'] ?? '-' }}</td>
 											<td>														
 												<div class="white-box">
 													<div class="table-responsive">
