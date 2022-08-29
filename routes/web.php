@@ -67,9 +67,11 @@ Route::group(['prefix' => 'form'], function () {
 
 	Route::get('/tambahkobar', 'FormController@pagetambahkobar');
 	Route::post('/tambahkobar', 'FormController@forminsertkobar');
+
 	Route::get('/ubahkobar', 'FormController@pageubahkobar');
 	Route::post('/ubahkobar', 'FormController@formupdatekobar');
 	Route::post('/hapuskobar', 'FormController@formdeletekobar');
+    
 	Route::get('/kodekomponen', 'FormController@pagekodekomponen');
 	Route::post('/kodekomponen', 'FormController@formupdatekomponen');
 	Route::post('/formupdatekomponenajax', 'FormController@formupdatekomponenajax');

@@ -8,7 +8,7 @@ class Sec_menu extends Model
 {
     protected $connection = 'sqlsrv';
     protected $primaryKey = "ids"; 
-    protected $table = "sec_menu";
+    protected $table = "bpadkobar.dbo.sec_menu";
     
     public $timestamps = false;
 

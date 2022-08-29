@@ -42,23 +42,42 @@ class HomeController extends Controller
 
 	public function display_menus($query, $parent, $level = 0, $idgroup)
 	{
-		if ($parent == 0) {
-			$sao = "(sao = 0 or sao is null)";
-		} else {
-			$sao = "(sao = ".$parent.")";
-		}
+		// if ($parent == 0) {
+		// 	$sao = "(sao = 0 or sao is null)";
+		// } else {
+		// 	$sao = "(sao = ".$parent.")";
+		// }
 							
-		$query = DB::select( DB::raw("
-					SELECT *
-					FROM ".$this->db.".dbo.sec_menu
-					JOIN ".$this->db.".dbo.sec_access ON ".$this->db.".dbo.sec_access.idtop = ".$this->db.".dbo.sec_menu.ids
-					WHERE ".$this->db.".dbo.sec_access.idgroup = '$idgroup'
-					AND ".$this->db.".dbo.sec_access.zviw = 'y'
-					AND $sao
-					AND ".$this->db.".dbo.sec_menu.tampilnew = 1
-					ORDER BY ".$this->db.".dbo.sec_menu.urut
-					"));
-		$query = json_decode(json_encode($query), true);
+		// $query = DB::select( DB::raw("
+		// 			SELECT *
+		// 			FROM ".$this->db.".dbo.sec_menu
+		// 			JOIN ".$this->db.".dbo.sec_access ON ".$this->db.".dbo.sec_access.idtop = ".$this->db.".dbo.sec_menu.ids
+		// 			WHERE ".$this->db.".dbo.sec_access.idgroup = '$idgroup'
+		// 			AND ".$this->db.".dbo.sec_access.zviw = 'y'
+		// 			AND $sao
+		// 			AND ".$this->db.".dbo.sec_menu.tampilnew = 1
+		// 			ORDER BY ".$this->db.".dbo.sec_menu.urut
+		// 			"));
+		// $query = json_decode(json_encode($query), true);
+
+        $query = DB::connection('sqlsrv')->table('bpadkobar.dbo.sec_menu AS menu')->select()
+                ->join('bpadkobar.dbo.sec_access AS access', 'access.idtop', '=', 'menu.ids')
+                ->where('access.idgroup', $idgroup)
+                ->where('access.zviw', 'y')
+                ->where('menu.tampilnew', 1)
+                ->orderBy('menu.urut')->orderBy('menu.ids');
+                
+        if ($parent == 0) {
+			$query = $query
+                        ->where(function($q) {
+                            $q->where('menu.sao', 0)
+                                ->orWhereNull('menu.sao');
+                            });
+		} else {
+			$query = $query->where('menu.sao', $parent);
+		}
+        $query = $query->get();
+        $query = json_decode(json_encode($query), true);
 
 		$result = '';
 

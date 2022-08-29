@@ -8,7 +8,7 @@ class Nabar extends Model
 {
     protected $connection = 'sqlsrv';
 	// protected $primaryKey = "id_emp"; 
-	protected $table = "2021nabar";
+	protected $table = "bpadkobar.dbo.data_nabar";
 	
 	public $incrementing = 'false';
 	public $timestamps = false;

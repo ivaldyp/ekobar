@@ -8,6 +8,6 @@ class Sec_logins extends Model
 {
     protected $connection = 'sqlsrv';
     protected $primaryKey = "ids"; 
-    protected $table = "sec_logins";
+    protected $table = "bpadkobar.dbo.sec_logins";
     public $timestamps = false;
 }

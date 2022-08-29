@@ -28,20 +28,15 @@ class CmsController extends Controller
 
 	public function display_roles($query, $idgroup, $access, $parent, $level = 0)
 	{
-
-		if ($parent == 0) {
-			$sao = "(sao = 0 or sao is null)";
+        $query = DB::connection('sqlsrv')->table('bpadkobar.dbo.sec_menu')->select();
+        if ($parent == 0) {
+			$query = $query->where('sao', 0)->orWhereNull('sao');
 		} else {
-			$sao = "(sao = ".$parent.")";
+			$query = $query->where('sao', $parent);
 		}
-
-		$query = DB::select( DB::raw("
-					SELECT *
-					FROM ".$this->db.".dbo.sec_menu
-					WHERE $sao
-					ORDER BY urut, ids
-				"));
-		$query = json_decode(json_encode($query), true);
+        $query->orderBy('urut')->orderBy('ids');
+        $query = $query->get();
+        $query = json_decode(json_encode($query), true);
 
 		$result = '';
 

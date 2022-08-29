@@ -31,13 +31,15 @@ class FormController extends Controller
 		$arrkobar1 = [];
 		$arrkobar2 = [];
 
-		if ($kobar == '1.0') {
+		if (strlen($kobar) == 3 && substr($kobar, -1) == '0') {
+			$angkadepan = substr($kobar, 0, 1);
+
 			$max = Nabar::
 					where(function($q) {
 						$q->where('sts', 1)
 							->orWhereNull('sts');
 						})
-					->where('KOBAR', 'LIKE', '1_%')
+					->where('KOBAR', 'LIKE', $angkadepan.'_%')
 					->where('KOBAR', 'LIKE', '%0000000000')
 					->max('KOBAR');
 
@@ -50,8 +52,9 @@ class FormController extends Controller
 						$q->where('sts', 1)
 							->orWhereNull('sts');
 						})
-					->where('KOBAR', 'LIKE', '1_%')
+					->where('KOBAR', 'LIKE', $angkadepan.'_%')
 					->where('KOBAR', '<>', $kobarfull)
+					->where('KOBAR', 'LIKE', '%0000000000')
 					->orderBy('KOBAR')
 					->get();
 
@@ -65,6 +68,8 @@ class FormController extends Controller
 				} else {
 					$missing = min(array_diff($arrkobar2, $arrkobar1));
 				}
+			} else {
+				$missing = $max;
 			}
 
 			$level = 0;
@@ -83,6 +88,8 @@ class FormController extends Controller
 				$max = $max + 1;
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
 
+				
+
 				$child = Nabar::
 						where(function($q) {
 						$q->where('sts', 1)
@@ -90,6 +97,7 @@ class FormController extends Controller
 						})
 						->where('KOBAR', 'LIKE', $kobarclean.'_%')
 						->where('KOBAR', '<>', $kobarfull)
+						->where('KOBAR', 'LIKE', '%000000000')
 						->orderBy('KOBAR')
 						->get();
 
@@ -103,6 +111,8 @@ class FormController extends Controller
 					} else {
 						$missing = min(array_diff($arrkobar2, $arrkobar1));
 					}
+				} else {
+					$missing = $max;
 				}
 
 				$level = 1;
@@ -115,11 +125,11 @@ class FormController extends Controller
 						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', 'LIKE', '%0000000')
 						->max('KOBAR');
-
+						
 				$max = substr($max, 0, 5);
 				$max = $max + 1;
 				$max = str_pad($max, 12, '0', STR_PAD_RIGHT);
-
+				
 				$child = Nabar::
 						where(function($q) {
 						$q->where('sts', 1)
@@ -127,6 +137,7 @@ class FormController extends Controller
 						})
 						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
+						->where('KOBAR', 'LIKE', '%0000000')
 						->orderBy('KOBAR')
 						->get();
 
@@ -135,11 +146,14 @@ class FormController extends Controller
 						$arrkobar1[] = substr($data['KOBAR'], 0, 5);
 					}
 					$arrkobar2 = range(min($arrkobar1), max($arrkobar1));
+					
 					if(count($arrkobar1) == count($arrkobar2)){
 						$missing = $max;
 					} else {
 						$missing = min(array_diff($arrkobar2, $arrkobar1));
 					}
+				} else {
+					$missing = $max;
 				}
 
 				$level = 2;
@@ -164,6 +178,7 @@ class FormController extends Controller
 						})
 						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
+						->where('KOBAR', 'LIKE', '%00000')
 						->orderBy('KOBAR')
 						->get();
 
@@ -177,6 +192,8 @@ class FormController extends Controller
 					} else {
 						$missing = min(array_diff($arrkobar2, $arrkobar1));
 					}
+				} else {
+					$missing = $max;
 				}
 
 				$level = 3;
@@ -201,6 +218,7 @@ class FormController extends Controller
 						})
 						->where('KOBAR', 'LIKE', $kobarclean.'__%')
 						->where('KOBAR', '<>', $kobarfull)
+						->where('KOBAR', 'LIKE', '%000')
 						->orderBy('KOBAR')
 						->get();
 
@@ -214,6 +232,8 @@ class FormController extends Controller
 					} else {
 						$missing = min(array_diff($arrkobar2, $arrkobar1));
 					}
+				} else {
+					$missing = $max;
 				}
 
 				$level = 4;
@@ -248,7 +268,6 @@ class FormController extends Controller
 					} else {
 						$missing = min(array_diff($arrkobar2, $arrkobar1));
 					}
-					
 				} else {
 					$missing = $max;
 				}
@@ -257,12 +276,13 @@ class FormController extends Controller
 			}
 		}
 
+		$missing = str_pad($missing, 12, '0', STR_PAD_RIGHT);
+
 		$arr['max'] = $max;
 		$arr['child'] = $child;
 		$arr['level'] = $level;
 		$arr['missing'] = $missing;
 		
-		// die;
 		return $arr;
 	}
 
@@ -273,9 +293,9 @@ class FormController extends Controller
 					$q->where('sts', 1)
 						->orWhereNull('sts');
 					})
-					->where('KOBAR', 'like', '%000')
-					->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
-					->where('KOBAR', 'not like', '%00000')
+					// ->where('KOBAR', 'like', '%000')
+					// ->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
+					// ->where('KOBAR', 'not like', '%00000')
 					->OrderBy('KOBAR')->get(['KOBAR','NABAR','KELOMPOK','JENIS','OBJEK','RINCIAN_OBJEK','SUB_RINCIAN_OBJEK','KOBAR_KODE']);
 
 		return view('pages.kobarform.tambahkobar')
@@ -321,7 +341,7 @@ class FormController extends Controller
 			$kobars = Nabar::
 						where(function($q) use ($nabarcari) {
 						$q->where('NABAR', 'like', '%'.$nabarcari.'%')
-	                   	  ->orWhere('KOBAR', 'like', '%'.$nabarcari.'%');
+	                   	  ->orWhere('KOBAR', 'like', $nabarcari.'%');
 			            })
 						->where(function($q) {
 						$q->where('sts', 1)

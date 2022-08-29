@@ -8,7 +8,7 @@ class Nakom extends Model
 {
     protected $connection = 'sqlsrv';
 	// protected $primaryKey = "id_emp"; 
-	protected $table = "2021nakom";
+	protected $table = "bpadkobar.dbo.data_nakom";
 	
 	public $incrementing = 'false';
 	public $timestamps = false;
