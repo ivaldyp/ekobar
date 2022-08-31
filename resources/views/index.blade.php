@@ -11,8 +11,6 @@
 	<title>Kode Barang</title>
 	<!-- Bootstrap Core CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-	<!-- <link href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" /> -->
 	<!-- Footable CSS -->
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/css/footable.core.css') }}" rel="stylesheet">
 	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
@@ -168,7 +166,7 @@
 							
 							<div class="table-responsive" style="overflow: visible;">
 								@if (!(isset($datas[0]))) 
-								<table id="demo-foo-row-toggler" class="table table-bordered m-b-0 m-t-20 toggle-circle">
+								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle">
 									<thead>
 										<tr>
 											<th data-toggle="true"> </th>
@@ -206,8 +204,8 @@
 										<?php $flag = 0; ?>
 										<tr>
 											<td style="vertical-align: middle;"></td>
-											<td style="vertical-align: middle;"><b>{{ $datas[$i]['KOBAR'] }}</b></td>
-											<td style="vertical-align: middle;">{{ $datas[$i]['NABAR'] }}</td>
+											<td style="vertical-align: middle;"><b>{{ $datas[$i]->KOBAR }}</b></td>
+											<td style="vertical-align: middle;">{{ $datas[$i]->NABAR }}</td>
 											<td style="vertical-align: middle;">
 												<span class="mytooltip tooltip-effect-1" style="z-index: 0"> 
 													<span class="tooltip-item">Detail</span> 
@@ -217,14 +215,14 @@
 																<tr>
 																	<td><strong>Deskripsi</strong></td>
 																	<td>
-																		{{ $datas[$i]['KOBAR_DESK'] ?? '-' }}
+																		{{ $datas[$i]->KOBAR_DESK ?? '-' }}
 																	</td>
 																</tr>
 																<tr>
 																	<td><strong>Gambar</strong></td>
 																	<td>
-																		<a href="javascript:void(0)" @if($datas[$i]['KOBAR_IMG']) class="pop" @endif>
-																			<img src="{{ $datas[$i]['KOBAR_IMG'] ? config('app.openfileimgkobar') .'/'. $datas[$i]['KOBAR'] .'/'. $datas[$i]['KOBAR_IMG'] : config('app.openfileimgcontentdefault') }}">
+																		<a href="javascript:void(0)" @if($datas[$i]->KOBAR_IMG) class="pop" @endif>
+																			<img src="{{ $datas[$i]->KOBAR_IMG ? config('app.openfileimgkobar') .'/'. $datas[$i]->KOBAR .'/'. $datas[$i]->KOBAR_IMG : config('app.openfileimgcontentdefault') }}">
 																		</a>
 																	</td>
 																</tr>
@@ -234,16 +232,16 @@
 													</span> 
 												</span>
 											</td>
-											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 3) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;"><strong>{{ $datas[$i]['KELOMPOK'] }}</strong><span class="text-muted">{{ $datas[$i]['JENIS'] ? ' - ' . $datas[$i]['JENIS'] : '-' }}</span></td>
-											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 5) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['OBJEK'] ?? '-' }}</td>
-											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 7) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['RINCIAN_OBJEK'] ?? '-' }}<br></td>
-											<td><strong>{{ substr($datas[$i]['KOBAR'], 0, 9) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]['SUB_RINCIAN_OBJEK'] ?? '-' }}</td>
+											<td><strong>{{ substr($datas[$i]->KOBAR, 0, 3) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;"><strong>{{ $datas[$i]->KELOMPOK }}</strong><span class="text-muted">{{ $datas[$i]->JENIS ? ' - ' . $datas[$i]->JENIS : '-' }}</span></td>
+											<td><strong>{{ substr($datas[$i]->KOBAR, 0, 5) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]->OBJEK ?? '-' }}</td>
+											<td><strong>{{ substr($datas[$i]->KOBAR, 0, 7) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]->RINCIAN_OBJEK ?? '-' }}<br></td>
+											<td><strong>{{ substr($datas[$i]->KOBAR, 0, 9) }}</strong><br><hr style="margin-top: 3px; margin-bottom: 3px;">{{ $datas[$i]->SUB_RINCIAN_OBJEK ?? '-' }}</td>
 											<td>														
 												<div class="white-box">
 													<div class="table-responsive">
 														<h5 class="box-title m-b-0">Tabel Komponen</h5>
 														<p class="text-muted m-b-20"><b> </b> </p>
-														@if (!(isset($datas[$i]['KOMPONEN_KODE'])))
+														@if (!(isset($datas[$i]->KOMPONEN_KODE)))
 														<table class="table table-hover table-bordered">
 															<thead>
 																<tr>
@@ -261,7 +259,7 @@
 															</tbody>
 														</table>
 														@else
-														<table id="" class="table myTable table-hover table-bordered">
+														<table id="" class="table table-hover table-bordered">
 															<thead>
 																<tr>
 																	<th>No</th>
@@ -278,15 +276,15 @@
 																@while(true)
 																<tr>
 																	<td>{{ $num }}</td>
-																	<td><b>{{ $datas[$i]['KOMPONEN_KODE'] }}</b><br>{{ $datas[$i]['KOMPONEN_NAMA'] }}</span></td>
-																	<td>{{ $datas[$i]['SATUAN'] ?? '-' }}</td>
-																	<td>{{ $datas[$i]['SPESIFIKASI'] ?? '-' }}</td>
+																	<td><b>{{ $datas[$i]->KOMPONEN_KODE }}</b><br>{{ $datas[$i]->KOMPONEN_NAMA }}</span></td>
+																	<td>{{ $datas[$i]->SATUAN ?? '-' }}</td>
+																	<td>{{ $datas[$i]->SPESIFIKASI ?? '-' }}</td>
 																	@if(Auth::check())
-																	<td>Rp {{ $datas[$i]['HARGA'] ? number_format($datas[$i]['HARGA'],2,',','.') : '-' }}</td>
+																	<td>Rp {{ $datas[$i]->HARGA ? number_format($datas[$i]->HARGA,2,',','.') : '-' }}</td>
 																	@endif
 																</tr>
 
-																@if(isset($datas[$i+1]['KOBAR_PERMENDAGRI']) && $datas[$i]['KOBAR_PERMENDAGRI'] == $datas[$i+1]['KOBAR_PERMENDAGRI'])
+																@if(isset($datas[$i+1]->KOBAR) && $datas[$i]->KOBAR == $datas[$i+1]->KOBAR)
 																<?php $i++; $num++; ?>
 																@else
 																<?php $flag = 1; ?>
@@ -342,7 +340,6 @@
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 	<!-- Footable -->
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/js/footable.all.min.js') }}"></script>
 	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
@@ -357,12 +354,6 @@
 				$('.imagepreview').attr('src', $(this).find('img').attr('src'));
 				$('#imagemodal').modal('show');   
 			});	
-
-			$('.myTable').DataTable({
-				"oLanguage": {
-					"sSearch": "Filter:"
-				},
-			});
 		});
 	</script>
 </body>

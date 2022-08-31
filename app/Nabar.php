@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nabar extends Model
 {
-    protected $connection = 'sqlsrv';
+    protected $connection = 'server76';
 	// protected $primaryKey = "id_emp"; 
 	protected $table = "bpadkobar.dbo.data_nabar";
 	
-	public $incrementing = 'false';
+	// public $incrementing = 'false';
 	public $timestamps = false;
 }

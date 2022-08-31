@@ -35,33 +35,59 @@ class LandingController extends Controller
 			}
 
 			if ($kat == 'nabar') {
-                $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabarkom AS nabarkom')->select([
-                        'nabarkom.KOBAR_PERMENDAGRI',
-                        'nabarkom.KOBAR_PERMENDAGRI as KOBAR',
-                        'nabarkom.NABAR_PERMENDAGRI as NABAR',
-                        'nabarkom.KOMPONEN_KODE',
-                        'nabarkom.KOMPONEN_NAMA',
-                        'nabarkom.SATUAN',
-                        'nabarkom.SPESIFIKASI',
-                        'nabarkom.HARGA',
-                        'nabar.KOBAR_DESK',
-                        'nabar.KOBAR_IMG',                                                                                          
-                        'nabar.KELOMPOK',
-                        'nabar.JENIS',
-                        'nabar.OBJEK',
-                        'nabar.RINCIAN_OBJEK',
-                        'nabar.SUB_RINCIAN_OBJEK',
-                    ])
-                    ->join('bpadkobar.dbo.data_nabar AS nabar', 'nabarkom.KOBAR_PERMENDAGRI', '=', 'nabar.KOBAR')
-                    ->whereRaw('RIGHT(nabarkom.KOBAR_PERMENDAGRI, 3) != '."000".'')
-                    ->where(function($q) use ($cari) {
-                        $q->where('NABAR_PERMENDAGRI', 'like', '%'.$cari.'%')
-                            ->orWhere('KOBAR_PERMENDAGRI', 'like', '%'.$cari.'%');
-                        })
-                    ->orderBy('nabarkom.KOBAR_PERMENDAGRI', 'ASC')
-                    ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
-                    ->get();
-                $datas = json_decode(json_encode($datas), true);
+                // $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabarkom AS nabarkom')->select([
+                //         'nabarkom.KOBAR_PERMENDAGRI',
+                //         'nabarkom.KOBAR_PERMENDAGRI as KOBAR',
+                //         'nabarkom.NABAR_PERMENDAGRI as NABAR',
+                //         'nabarkom.KOMPONEN_KODE',
+                //         'nabarkom.KOMPONEN_NAMA',
+                //         'nabarkom.SATUAN',
+                //         'nabarkom.SPESIFIKASI',
+                //         'nabarkom.HARGA',
+                //         'nabar.KOBAR_DESK',
+                //         'nabar.KOBAR_IMG',                                                                                          
+                //         'nabar.KELOMPOK',
+                //         'nabar.JENIS',
+                //         'nabar.OBJEK',
+                //         'nabar.RINCIAN_OBJEK',
+                //         'nabar.SUB_RINCIAN_OBJEK',
+                //     ])
+                //     ->join('bpadkobar.dbo.data_nabar AS nabar', 'nabarkom.KOBAR_PERMENDAGRI', '=', 'nabar.KOBAR')
+                //     ->whereRaw('RIGHT(nabarkom.KOBAR_PERMENDAGRI, 3) != '."000".'')
+                //     ->where(function($q) use ($cari) {
+                //         $q->where('NABAR_PERMENDAGRI', 'like', '%'.$cari.'%')
+                //             ->orWhere('KOBAR_PERMENDAGRI', 'like', '%'.$cari.'%');
+                //         })
+                //     ->orderBy('nabarkom.KOBAR_PERMENDAGRI', 'ASC')
+                //     ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
+                //     ->get();
+                $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
+                    'nabar.KOBAR',
+                    'nabar.NABAR',
+                    'nabar.KOBAR_DESK',
+                    'nabar.KOBAR_IMG',                                                                                          
+                    'nabar.KELOMPOK',
+                    'nabar.JENIS',
+                    'nabar.OBJEK',
+                    'nabar.RINCIAN_OBJEK',
+                    'nabar.SUB_RINCIAN_OBJEK',
+                    // 'nabarkom.KOBAR_PERMENDAGRI',
+                    'nabarkom.KOMPONEN_KODE',
+                    'nabarkom.KOMPONEN_NAMA',
+                    // 'nabarkom.SATUAN',
+                    // 'nabarkom.SPESIFIKASI',
+                    // 'nabarkom.HARGA',
+                ])
+                ->leftJoin('bpadkobar.dbo.data_nabarkom AS nabarkom', 'nabar.KOBAR', '=', 'nabarkom.KOBAR_PERMENDAGRI')
+                ->whereRaw('RIGHT(nabar.KOBAR, 3) != '."000".'')
+                ->where(function($q) use ($cari) {
+                    $q->where('NABAR', 'like', '%'.$cari.'%')
+                        ->orWhere('KOBAR', 'like', '%'.$cari.'%');
+                    })
+                ->orderBy('nabar.KOBAR', 'ASC')
+                ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
+                ->get();
+                // $datas = json_decode(json_encode($datas), true);
 
 				// $datas = Nabar::
 				// 			leftJoin($this->tabelnakom, 'KOBAR_PERMENDAGRI', '=', 'KOBAR')
