@@ -185,7 +185,7 @@
 									</tbody>
 								</table>
 								@else
-								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle">
+								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle" data-page-size="10">
 									<thead>
 										<tr>
 											<th data-toggle="true"> </th>
@@ -301,6 +301,15 @@
 										</tr>
 										@endfor
 									</tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="8">
+                                                <div class="text-right">
+                                                    <ul class="pagination pagination-split m-t-30"> </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
 								</table>
 								@endif
 							</div>
