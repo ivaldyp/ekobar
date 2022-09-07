@@ -150,8 +150,8 @@
 										<div class="col-md-3">
 											<select class="form-control" name="kat" id="kat">
 												<option <?php if ($katnow == "nabar"): ?> selected <?php endif ?> value="nabar">Barang</option>
-												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Komponen</option>
-												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Barang dan Komponen</option>
+												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Komponen 🚫</option>
+												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Barang dan Komponen 🚫</option>
 											</select>
 										</div>
 									</div>
