@@ -125,8 +125,8 @@
 											<div class="col-md-6">
 												<select class="form-control" name="kat" id="kat">
 													<option value="nabar">Barang</option>
-													<option value="nakom">Komponen</option>
-													<option value="nabarkom">Barang dan Komponen</option>
+													<option value="nakom" disabled>Komponen</option>
+													<option value="nabarkom" disabled>Barang dan Komponen</option>
 												</select>
 											</div>
 										</div>
