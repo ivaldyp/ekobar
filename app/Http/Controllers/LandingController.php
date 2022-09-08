@@ -135,6 +135,8 @@ class LandingController extends Controller
             $countkobar = array_map(function($kobar) {
                 return $kobar['KOBAR'];
             }, $arrdatas);
+
+            $countkobar = count(array_count_values($countkobar));
 		} else {
 			$cari = NULL;
 			$datas = NULL;
@@ -144,7 +146,7 @@ class LandingController extends Controller
 		return view('index')
 				->with('searchnow', $cari)
 				->with('katnow', $kat)
-				->with('countkobar', count(array_count_values($countkobar)))
+				->with('countkobar', $countkobar)
 				->with('datas', $datas);
 	}
 }
