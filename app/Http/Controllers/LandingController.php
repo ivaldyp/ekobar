@@ -84,6 +84,10 @@ class LandingController extends Controller
                     $q->where('NABAR', 'like', '%'.$cari.'%')
                         ->orWhere('KOBAR', 'like', '%'.$cari.'%');
                     })
+                ->where(function($q) {
+                    $q->where('sts', 1)
+                        ->orWhereNull('sts');
+                    })
                 ->orderBy('nabar.KOBAR', 'ASC')
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
                 ->get();
@@ -154,6 +158,10 @@ class LandingController extends Controller
                 ->where(function($q) use ($cari) {
                     $q->where('nabarkom.KOMPONEN_KODE', 'like', '%'.$cari.'%')
                         ->orWhere('nabarkom.KOMPONEN_NAMA', 'like', '%'.$cari.'%');
+                    })
+                ->where(function($q) {
+                    $q->where('sts', 1)
+                        ->orWhereNull('sts');
                     })
                 ->orderBy('nabar.KOBAR', 'ASC')
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
