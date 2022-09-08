@@ -130,15 +130,16 @@ class LandingController extends Controller
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
                 ->get();
 			}
+
+            $arrdatas = json_decode(json_encode($datas), true);
+            $countkobar = array_map(function($kobar) {
+                return $kobar['KOBAR'];
+            }, $arrdatas);
 		} else {
 			$cari = NULL;
 			$datas = NULL;
+            $countkobar = 0;
 		}
-
-        $arrdatas = json_decode(json_encode($datas), true);
-        $countkobar = array_map(function($kobar) {
-            return $kobar['KOBAR'];
-        }, $arrdatas);
 
 		return view('index')
 				->with('searchnow', $cari)
