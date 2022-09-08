@@ -85,8 +85,8 @@ class LandingController extends Controller
                         ->orWhere('KOBAR', 'like', '%'.$cari.'%');
                     })
                 ->where(function($q) {
-                    $q->where('sts', 1)
-                        ->orWhereNull('sts');
+                    $q->where('nabar.sts', 1)
+                        ->orWhereNull('nabar.sts');
                     })
                 ->orderBy('nabar.KOBAR', 'ASC')
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
@@ -160,8 +160,8 @@ class LandingController extends Controller
                         ->orWhere('nabarkom.KOMPONEN_NAMA', 'like', '%'.$cari.'%');
                     })
                 ->where(function($q) {
-                    $q->where('sts', 1)
-                        ->orWhereNull('sts');
+                    $q->where('nabar.sts', 1)
+                        ->orWhereNull('nabar.sts');
                     })
                 ->orderBy('nabar.KOBAR', 'ASC')
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
