@@ -126,7 +126,7 @@
 												<select class="form-control" name="kat" id="kat">
 													<option value="nabar">Barang</option>
 													<option value="nakom">Komponen</option>
-													<option value="nabarkom" disabled>Barang dan Komponen 🚫</option>
+													<option value="nabarkom">Barang dan Komponen</option>
 												</select>
 											</div>
 										</div>
@@ -151,7 +151,7 @@
 											<select class="form-control" name="kat" id="kat">
 												<option <?php if ($katnow == "nabar"): ?> selected <?php endif ?> value="nabar">Barang</option>
 												<option <?php if ($katnow == "nakom"): ?> selected <?php endif ?> value="nakom">Komponen</option>
-												<option disabled <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Barang dan Komponen 🚫</option>
+												<option <?php if ($katnow == "nabarkom"): ?> selected <?php endif ?> value="nabarkom">Barang dan Komponen</option>
 											</select>
 										</div>
 									</div>
@@ -164,6 +164,8 @@
 								</form>
 							</div>
 							
+
+                            <h5 class="text-muted">Menampilkan <b>{{ $countkobar }}</b> data barang</h5>
 							<div class="table-responsive" style="overflow: visible;">
 								@if (!(isset($datas[0]))) 
 								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle">
@@ -185,7 +187,7 @@
 									</tbody>
 								</table>
 								@else
-								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle" data-page-size="10">
+								<table id="demo-foo-accordion" class="table table-bordered m-b-0 m-t-20 toggle-circle" data-page-size="1000">
 									<thead>
 										<tr>
 											<th data-toggle="true"> </th>
@@ -301,15 +303,6 @@
 										</tr>
 										@endfor
 									</tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="8">
-                                                <div class="text-right">
-                                                    <ul class="pagination pagination-split m-t-30"> </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
 								</table>
 								@endif
 							</div>
