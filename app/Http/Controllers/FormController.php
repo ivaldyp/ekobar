@@ -293,7 +293,7 @@ class FormController extends Controller
 					$q->where('sts', 1)
 						->orWhereNull('sts');
 					})
-					// ->where('KOBAR', 'like', '%000')
+					->where('KOBAR', 'like', '%000')
 					// ->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
 					// ->where('KOBAR', 'not like', '%00000')
 					->OrderBy('KOBAR')->get(['KOBAR','NABAR','KELOMPOK','JENIS','OBJEK','RINCIAN_OBJEK','SUB_RINCIAN_OBJEK','KOBAR_KODE']);

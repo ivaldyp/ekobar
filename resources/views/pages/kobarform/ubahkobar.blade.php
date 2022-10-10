@@ -326,8 +326,9 @@
 
 		    $('#myTable').DataTable({
 		    	"oLanguage": {
-					"sSearch": "Filter:"
-				}
+					"sSearch": "Filter Barang:"
+				},
+                paging: false,
 		    });
 
 		    $('.btn-update-kobar').on('click', function () {
@@ -340,6 +341,7 @@
 
 				if($el.data('sts') == '1'){
 					$("#formnabar").show();
+
 				} else {
 					$("#formnabar").hide();
 				}
