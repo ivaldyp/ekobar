@@ -644,11 +644,7 @@ class FormController extends Controller
 
 			$filekobar .= "KOBAR_" . $kobarclean . "." . $file->getClientOriginalExtension();
 
-            if(env('APP_SRV') == 'localhost') {
-                $tujuan_upload = config('app.savefileimgkobar');
-            } else if (env('APP_SRV') == 'simaster') {
-                $tujuan_upload = config('app.savefileimgkobar_srv');
-            }
+            $tujuan_upload = config('app.savefileimgkobar');
 			$tujuan_upload .= "\\" . $kobarclean . "\\";
 
 			if (file_exists($tujuan_upload . $filekobar )) {
