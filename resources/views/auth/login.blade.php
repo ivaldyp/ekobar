@@ -2,15 +2,15 @@
 <html>
 	<head>
 		<title>Login</title>
-		<link href="/{{ env('APP_NAME') }}{{ ('/public/landing/bootstrap400/css/bootstrap.min.css') }}" rel="stylesheet">
-		<link href="/{{ env('APP_NAME') }}{{ ('/public/landing/css/custom.css') }}" rel="stylesheet">
+		<link href="/{{ env('APP_NAME') }}{{ ('/landing/bootstrap400/css/bootstrap.min.css') }}" rel="stylesheet">
+		<link href="/{{ env('APP_NAME') }}{{ ('/landing/css/custom.css') }}" rel="stylesheet">
 	</head>
 	<body style="background-color: #fbe6a5" class="login-body">
 		<div class="content col-md-12" style="background-color: white">
 			<!-- <nav class="navbar navbar-expand-sm bg-light"> -->
 			<nav class="navbar navbar-expand-sm">
 				<div class="container">
-				  	<img src="/{{ env('APP_NAME') }}{{ ('/public/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="100" class="navbar-brand">
+				  	<img src="/{{ env('APP_NAME') }}{{ ('/landing/img/bpad-logo-01.png') }}" alt="BPAD" width="100" class="navbar-brand">
 					<ul class="navbar-nav">
 						<li class="nav-item">
 						  	<a class="nav-link cust-nav" href="#">Manual Book</a>
@@ -71,12 +71,12 @@
 						</div>
 					</div>
 					<div class="col-md-6" align="center" style="padding-top: 65px;">
-						<img src="/{{ env('APP_NAME') }}{{ ('/public/img/photo/ico-laporan.png32') }}" width="90%">
+						<img src="/{{ env('APP_NAME') }}{{ ('/img/photo/ico-laporan.png32') }}" width="90%">
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<script src="/{{ env('APP_NAME') }}{{ ('/public/landing/bootstrap400/js/bootstrap.min.js') }}"></script>
+		<script src="/{{ env('APP_NAME') }}{{ ('/landing/bootstrap400/js/bootstrap.min.js') }}"></script>
 	</body>
 </html>
