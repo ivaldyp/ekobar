@@ -193,6 +193,8 @@
 											<th data-toggle="true"> </th>
 											<th>Kode Barang</th>
 											<th> Nama Barang </th>
+											<th> Masa Manfaat </th>
+											<th> Satuan </th>
 											<th> Detail </th>
 											<th> Jenis </th>
 											<th> Objek </th>
@@ -208,6 +210,8 @@
 											<td style="vertical-align: middle;"></td>
 											<td style="vertical-align: middle;"><b>{{ $datas[$i]->KOBAR }}</b></td>
 											<td style="vertical-align: middle;">{{ $datas[$i]->NABAR }}</td>
+											<td style="vertical-align: middle;">{{ $datas[$i]->MASA_MANFAAT ? $datas[$i]->MASA_MANFAAT.' Tahun' : '-' }} </td>
+											<td style="vertical-align: middle;">{{ $datas[$i]->KD_SATUAN ?? '-' }}</td>
 											<td style="vertical-align: middle;">
 												<span class="mytooltip tooltip-effect-1" style="z-index: 0"> 
 													<span class="tooltip-item">Detail</span> 
