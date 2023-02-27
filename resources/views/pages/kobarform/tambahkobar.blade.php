@@ -2,18 +2,18 @@
 
 @section('css')
 	<!-- Bootstrap Core CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 	<!-- Menu CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/css/style.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
 	<!-- page CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
+	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/custom-select/custom-select.css') }}" rel="stylesheet" type="text/css" />
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -213,23 +213,23 @@
 <!-- /////////////////////////////////////////////////////////////// -->
 
 @section('js')
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/js/waves.js') }}"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/js/mask.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/waves.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/mask.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/js/custom.min.js') }}"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/custom-select/custom-select.min.js') }}" type="text/javascript"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 	<!--Style Switcher -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 
 
 	<script type="text/javascript">

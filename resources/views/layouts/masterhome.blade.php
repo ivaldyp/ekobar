@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('APP_NAME') }}{{ ('/img/excel/excel-logo-dki2.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="/{{ env('APP_NAME') }}{{ ('/public/img/excel/excel-logo-dki2.png') }}">
 
     <title>e-Kode Barang</title>
     @yield('css')
