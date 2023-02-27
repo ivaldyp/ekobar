@@ -10,18 +10,18 @@
 	<link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png">
 	<title>Kode Barang</title>
 	<!-- Bootstrap Core CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
 	<!-- Footable CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/css/footable.core.css') }}" rel="stylesheet">
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/footable/css/footable.core.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
 	<!-- Menu CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.css') }}" rel="stylesheet">
 	<!-- animation CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/animate.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/css/animate.css') }}" rel="stylesheet">
 	<!-- Custom CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/style.css') }}" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/css/style.css') }}" rel="stylesheet">
 	<!-- color CSS -->
-	<link href="/{{ env('APP_NAME') }}{{ ('/public/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
+	<link href="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/css/colors/blue-dark.css') }}" id="theme" rel="stylesheet">
 
 	<style type="text/css">
 		.footable-row-detail-inner {
@@ -335,24 +335,24 @@
 	</div>
 	<!-- /#wrapper -->
 	<!-- jQuery -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>
 	<!-- Bootstrap Core JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 	<!-- Menu Plugin JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js') }}"></script>
 	<!--slimscroll JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/jquery.slimscroll.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/js/jquery.slimscroll.js') }}"></script>
 	<!--Wave Effects -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/waves.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/js/waves.js') }}"></script>
 	<!-- Custom Theme JavaScript -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/custom.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/js/custom.min.js') }}"></script>
 	<!-- Footable -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/footable/js/footable.all.min.js') }}"></script>
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/footable/js/footable.all.min.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/bootstrap-select/bootstrap-select.min.js') }}" type="text/javascript"></script>
 	<!--FooTable init-->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/js/footable-init.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/js/footable-init.js') }}"></script>
 	<!--Style Switcher -->
-	<script src="/{{ env('APP_NAME') }}{{ ('/public/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
+	<script src="/{{ env('APP_NAME') }}{{ env('APP_ADD_PUBLIC') }}{{ ('/ample/plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 
 	<script>
 		$(document).ready(function () {
