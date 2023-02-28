@@ -294,8 +294,8 @@ class FormController extends Controller
 						->orWhereNull('sts');
 					})
 					->where('KOBAR', 'like', '%000')
-					// ->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
-					// ->where('KOBAR', 'not like', '%00000')
+					->whereRaw('SUBSTRING(KOBAR, 7, 2) != '."00".'')
+					->where('KOBAR', 'not like', '%00000')
 					->OrderBy('KOBAR')->get(['KOBAR','NABAR','KELOMPOK','JENIS','OBJEK','RINCIAN_OBJEK','SUB_RINCIAN_OBJEK','KOBAR_KODE']);
 
 		return view('pages.kobarform.tambahkobar')
