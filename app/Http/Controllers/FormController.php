@@ -304,12 +304,6 @@ class FormController extends Controller
 
 	public function pageubahkobar(Request $request)
 	{
-		// if ($request->krit) {
-		// 	$krit = $request->krit;
-		// } else {
-		// 	$krit = NULL;
-		// }
-
 		if ($request->nabar) {
 			$nabarcari = $request->nabar;
 			$kobars = Nabar::
@@ -330,7 +324,6 @@ class FormController extends Controller
 
 		return view('pages.kobarform.ubahkobar')
 			->with('nabar', $nabarcari)
-			// ->with('krit', $krit)
 			->with('kobars', $kobars);
 	}
 
@@ -354,14 +347,6 @@ class FormController extends Controller
 			$kobars = NULL;
 		}
 
-		// if (isset($request->btnSubmit) || $request->btnKomp == "submit") {
-		// 	$button = "submit";
-		// } elseif (isset($request->btnKosong) || $request->btnKomp == "kosong") {
-		// 	$button = "kosong";
-		// } else {
-		// 	$button = NULL;
-		// }
-		
 		if (isset($request->btnKosong) || is_null($request->nakom)) {
 			$nakomcari = NULL;
 			$komponens = Nakom::
@@ -371,9 +356,6 @@ class FormController extends Controller
 						->OrderBy('KOBAR_PERMENDAGRI')
 						->OrderBy('KOMPONEN_KODE')
 						->get();
-		// } elseif (is_null($request->nakom)) {
-		// 	$nakomcari = NULL;
-		// 	$komponens = NULL;
 		} elseif (!(is_null($request->nakom)) || isset($request->btnSubmit)) {
 			$nakomcari = $request->nakom;
 			$komponens = Nakom::
@@ -386,14 +368,11 @@ class FormController extends Controller
 						->get();
 		} 
 
-		
-
 		return view('pages.kobarform.kodekomponen')
 			->with('kobars', $kobars)
 			->with('komponens', $komponens)
 			->with('nabar', $nabarcari)
 			->with('nakom', $nakomcari);
-			// ->with('button', $button);
 	}
 
 	public function forminsertkobar(Request $request)
@@ -401,30 +380,6 @@ class FormController extends Controller
 		$kobar = $request->newkobar;
 		$kobarclean = str_replace(".", "", $kobar);
 		$dropdownparent = $request->formparent;
-
-		// if (is_null($request->formparent) || $request->formparent == 'type') {
-		// 	if (substr($kobar, 4) == "0") {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 1));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
-		// 	} elseif (substr($kobar, 6, 2) == "00") {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 3));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-		// 	} elseif (substr($kobar, 9, 2) == "00") {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 5));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);
-		// 	} elseif (substr($kobar, 12, 2) == "00") {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 8));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-		// 	} elseif (substr($kobar, 15, 3) == "000") {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 11));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT);  
-		// 	} else {
-		// 		$formparent = str_replace(".", "", substr($kobar, 0, 14));
-		// 		$formparent = str_pad($formparent, 12, '0', STR_PAD_RIGHT); 
-		// 	}
-		// } else {
-		// 	$formparent = $request->formparent;
-		// }
 
 		if (substr($kobar, 4) == "0") {
 			$formparent = str_replace(".", "", substr($kobar, 0, 1));
