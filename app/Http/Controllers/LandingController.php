@@ -85,8 +85,11 @@ class LandingController extends Controller
                     'nabarkom.SATUAN',
                     'nabarkom.SPESIFIKASI',
                     'nabarkom.HARGA',
+                    'm_barang.MASA_MANFAAT',
+                    'm_barang.KD_SATUAN',
                 ])
                 ->leftJoin('bpadkobar.dbo.data_nabarkom AS nabarkom', 'nabar.KOBAR', '=', 'nabarkom.KOBAR_PERMENDAGRI')
+                ->leftJoin('SERVER77.bpadmaster.dbo.master_barang AS m_barang', 'm_barang.kobar_108', '=', 'nabar.KOBAR')
                 ->whereRaw('RIGHT(nabar.KOBAR, 3) != '."000".'')
                 ->where(function($q) use ($cari) {
                     $q->where('nabarkom.KOMPONEN_KODE', 'like', '%'.$cari.'%')
@@ -116,8 +119,11 @@ class LandingController extends Controller
                     'nabarkom.SATUAN',
                     'nabarkom.SPESIFIKASI',
                     'nabarkom.HARGA',
+                    'm_barang.MASA_MANFAAT',
+                    'm_barang.KD_SATUAN',
                 ])
                 ->leftJoin('bpadkobar.dbo.data_nabarkom AS nabarkom', 'nabar.KOBAR', '=', 'nabarkom.KOBAR_PERMENDAGRI')
+                ->leftJoin('SERVER77.bpadmaster.dbo.master_barang AS m_barang', 'm_barang.kobar_108', '=', 'nabar.KOBAR')
                 ->whereRaw('RIGHT(nabar.KOBAR, 3) != '."000".'')
                 ->where(function($q) use ($cari) {
                     $q->where('nabarkom.KOMPONEN_KODE', 'like', '%'.$cari.'%')
