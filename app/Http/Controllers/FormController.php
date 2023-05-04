@@ -415,19 +415,21 @@ class FormController extends Controller
 					->withInput($request->input());
 		}
 
-		$ceknama = Nabar::
-				where('NABAR', 'like', '%'.$request->nabar.'%')
-				->where(function($q) {
-				$q->where('sts', 1)
-					->orWhereNull('sts');
-				})
-				->first();
-		if ($ceknama) {
-			return redirect()->back()
-					->with('parentbar', $dropdownparent)
-					->with('message', 'Nama Barang '.$request->nabar.' sudah ada')
-					->withInput($request->input());
-		}
+        /* awalnya buat cek kalau ada nama yang sama, tapi gajadi dipake */
+         
+		// $ceknama = Nabar::
+		// 		where('NABAR', $request->nabar)
+		// 		->where(function($q) {
+		// 		$q->where('sts', 1)
+		// 			->orWhereNull('sts');
+		// 		})
+		// 		->first();
+		// if ($ceknama) {
+		// 	return redirect()->back()
+		// 			->with('parentbar', $dropdownparent)
+		// 			->with('message', 'Nama Barang '.$request->nabar.' sudah ada')
+		// 			->withInput($request->input());
+		// }
 
 		$filekobar = '';
 
