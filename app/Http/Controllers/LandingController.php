@@ -35,7 +35,7 @@ class LandingController extends Controller
 			}
 
 			if ($kat == 'nabar') {
-                $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
+                $datas = DB::connection('server12')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
                     'nabar.KOBAR',
                     'nabar.NABAR',
                     'nabar.KOBAR_DESK',
@@ -69,7 +69,7 @@ class LandingController extends Controller
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
                 ->get();
 			} elseif ($kat == 'nakom') {
-                $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
+                $datas = DB::connection('server12')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
                     'nabar.KOBAR',
                     'nabar.NABAR',
                     'nabar.KOBAR_DESK',
@@ -103,7 +103,7 @@ class LandingController extends Controller
                 ->orderBy('nabarkom.KOMPONEN_KODE', 'ASC')
                 ->get();
 			} elseif ($kat == 'nabarkom') {
-                $datas = DB::connection('server76')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
+                $datas = DB::connection('server12')->table('bpadkobar.dbo.data_nabar AS nabar')->select([     
                     'nabar.KOBAR',
                     'nabar.NABAR',
                     'nabar.KOBAR_DESK',
